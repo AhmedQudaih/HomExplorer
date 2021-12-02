@@ -20,7 +20,7 @@ exports.getAllEstates = function(req, res) {
 
 exports.findEstate = function(req, res) {
   estate.estateModel.findById({
-    _id: req.body._id
+    _id: req.params.estateId
   }, function(err,doc) {
     if (err) {
       console.log(err);

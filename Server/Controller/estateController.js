@@ -5,17 +5,46 @@ const estate = require("../Model/estateModel");
 
 
 exports.getAllEstates = function(req, res) {
-  //write ur code here
+  estate.estateModel.find({
+    status: true
+  }, function(err,doc) {
+    if (err) {
+      console.log(err);
+      res.send("Somthing went wrong plz try again later");
+    }
+    console.log(doc);
+    res.send(doc);
+  });
 }
 
+
 exports.findEstate = function(req, res) {
-  //write ur code here
+  estate.estateModel.findById({
+    _id: req.params.estateId
+  }, function(err,doc) {
+    if (err) {
+      console.log(err);
+      res.send("Somthing went wrong plz try again later");
+    }
+    console.log(doc);
+    res.send(doc);
+  });
 }
+
 
 
 exports.deleteEstate = function(req, res) {
-  //write ur code here
+  estate.estateModel.findByIdAndRemove({
+    _id: req.body._id
+  }, req.body, function(err, doc) {
+    if (err) {
+      console.log(err);
+      res.send("Something wrong when deleting data!");
+    }
+    res.send("Deleted Successfully!");
+  });
 }
+
 
 exports.addEstate = function(req, res) {
   var contract = [];

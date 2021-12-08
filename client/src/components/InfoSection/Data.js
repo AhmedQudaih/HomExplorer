@@ -1,3 +1,4 @@
+//data to show in sections
 export const homeObjOne = {
     id: 'recommendations',
     lightBg: false,

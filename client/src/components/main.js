@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
-import { Button } from '../ButtonElements'
-import Video from '../../videos/video.mp4'
+import { Button } from './Styles/buttonElementsStyle'
+import Video from '../videos/video.mp4'
 import { MainContainer, MainBg, VideoBg, MainContent, MainH1,
-MainP, MainBtnWrapper, ArrowForward, ArrowRight } from './MainElements'
-const MainSection = () => {
+MainP, MainBtnWrapper, ArrowForward, ArrowRight } from './Styles/mainElementsStyle'
+const Main = () => {
     const [hover, setHover] = useState(false)
     const onHover = () => {
         setHover(!hover)
@@ -33,4 +33,4 @@ const MainSection = () => {
     )
 }
 
-export default MainSection
+export default Main

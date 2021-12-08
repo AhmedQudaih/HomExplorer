@@ -12,7 +12,7 @@ import {
   NavLinks,
   NavBtn,
   NavBtnLink
- } from './NavbarElements';
+ } from './Styles/navbarElementsStyle';
 const Navbar = ({ toggle }) => {
   const [scrollNav, setScrollNav] = useState(false)
 

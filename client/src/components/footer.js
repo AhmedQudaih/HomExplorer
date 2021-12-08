@@ -15,7 +15,7 @@ import {
     WebsiteRights,
     SocialIcons,
     SocialIconLink
-} from './FooterElements'
+} from './Styles/footerElementsStyle'
 const Footer = () => {
     const toggleHome = () => {
         scroll.scrollToTop()

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '../ButtonElements'
+import { Button } from '../Styles/buttonElementsStyle'
 import { 
     InfoContainer,
      InfoWrapper, 
@@ -13,7 +13,7 @@ import {
      BtnWrap, 
      ImgWrap, 
      Img 
-    } from './InfoElements';
+    } from '../Styles/infoElementsStyle';
 const InfoSection = ({
     lightBg, 
     id, 

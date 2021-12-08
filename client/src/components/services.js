@@ -1,10 +1,10 @@
 import React from 'react'
-import Icon1 from '../../images/svg-4.svg'
-import Icon2 from '../../images/svg-5.svg'
-import Icon3 from '../../images/svg-6.svg'
-import Icon4 from '../../images/svg-4.svg'
-import Icon5 from '../../images/svg-5.svg'
-import Icon6 from '../../images/svg-6.svg'
+import Icon1 from '../images/svg-4.svg'
+import Icon2 from '../images/svg-5.svg'
+import Icon3 from '../images/svg-6.svg'
+import Icon4 from '../images/svg-4.svg'
+import Icon5 from '../images/svg-5.svg'
+import Icon6 from '../images/svg-6.svg'
 import { 
     ServicesContainer, 
     ServicesH1, 
@@ -13,7 +13,7 @@ import {
     ServicesIcon, 
     ServicesH2, 
     ServicesP 
-} from './ServicesElements'
+} from './Styles/servicesElementsStyle'
 const Services = () => {
     return (
         <ServicesContainer id="services">

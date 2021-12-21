@@ -1,13 +1,13 @@
 import React from 'react'
 import { animateScroll as scroll } from 'react-scroll'
-import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa'
-import { 
-    FooterContainer, 
-    FooterWrap, 
-    FooterLinksContainer, 
+import {Instagram ,Facebook ,Twitter ,LinkedIn} from "@material-ui/icons";
+import {
+    FooterContainer,
+    FooterWrap,
+    FooterLinksContainer,
     FooterLinksWrapper,
-    FooterLinkItems, 
-    FooterLinkTitle, 
+    FooterLinkItems,
+    FooterLinkTitle,
     FooterLink,
     SocialMedia,
     SocialMediaWrap,
@@ -16,7 +16,7 @@ import {
     SocialIcons,
     SocialIconLink
 } from './Styles/footerElementsStyle'
-const Footer = () => {
+function Footer(){
     const toggleHome = () => {
         scroll.scrollToTop()
       }
@@ -67,19 +67,19 @@ const Footer = () => {
                         <SocialIcons>
                             <SocialIconLink href="/" target="_blank"
                             aria-label="Facebook">
-                                <FaFacebook />
+                                <Facebook />
                             </SocialIconLink>
                             <SocialIconLink href="/" target="_blank"
                             aria-label="Instagram">
-                                <FaInstagram />
+                                <Instagram />
                             </SocialIconLink>
                             <SocialIconLink href="/" target="_blank"
                             aria-label="Twitter">
-                                <FaTwitter />
+                                <Twitter />
                             </SocialIconLink>
                             <SocialIconLink href="/" target="_blank"
                             aria-label="Linkedin">
-                                <FaLinkedin />
+                                <LinkedIn />
                             </SocialIconLink>
                         </SocialIcons>
                     </SocialMediaWrap>

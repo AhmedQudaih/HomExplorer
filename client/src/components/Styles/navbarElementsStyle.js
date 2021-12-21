@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import { Link as LinkR} from 'react-router-dom'
-import { Link as LinkS } from 'react-scroll'
+import styled from 'styled-components';
+import { Link as LinkR} from 'react-router-dom';
+import { Link as LinkS } from 'react-scroll';
 export const Nav = styled.nav`
 background: ${({scrollNav}) => (scrollNav ? '#000' : 'transparent')};
 height: 80px;
@@ -26,6 +26,7 @@ width: 100%;
 padding: 0 24px;
 max-width: 1100px;
 `
+
 export const NavLogo = styled(LinkR)`
 color: #fff;
 justify-self: flex-start;

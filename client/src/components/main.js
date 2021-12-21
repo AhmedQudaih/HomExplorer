@@ -1,9 +1,10 @@
-import React, {useState} from 'react'
-import { Button } from './Styles/buttonElementsStyle'
-import Video from '../videos/video.mp4'
+import React, {useState} from 'react';
+import { Button } from './Styles/buttonElementsStyle';
+import Video from '../videos/video.mp4';
 import { MainContainer, MainBg, VideoBg, MainContent, MainH1,
-MainP, MainBtnWrapper, ArrowForward, ArrowRight } from './Styles/mainElementsStyle'
-const Main = () => {
+MainP, MainBtnWrapper, MainBtnArrowStyle } from './Styles/mainElementsStyle';
+import { ArrowForward, KeyboardArrowRight  } from '@material-ui/icons';
+function Main() {
     const [hover, setHover] = useState(false)
     const onHover = () => {
         setHover(!hover)
@@ -24,11 +25,11 @@ const Main = () => {
                     primary="true"
                     dark="true"
                     >
-                        Get Started {hover ? <ArrowForward /> : <ArrowRight />}
+                        Get Started {hover ? <ArrowForward  style={MainBtnArrowStyle} /> : <KeyboardArrowRight style={MainBtnArrowStyle}/>}
                     </Button>
                 </MainBtnWrapper>
             </MainContent>
-            
+
         </MainContainer>
     )
 }

@@ -1,13 +1,13 @@
 import React from 'react';
-import { SidebarContainer, Icon, CloseIcon, SidebarWrapper,
+import { SidebarContainer, Icon, CloseIconStyle, SidebarWrapper,
   SidebarMenu, SidebarLink, SideBtnWrap,
   SidebarRoute } from './Styles/sidebarElementsStyle';
-
+import CloseIcon from '@material-ui/icons/Close';
 const Sidebar = ({isOpen, toggle}) => {
   return (
     <SidebarContainer isOpen={isOpen} onClick={toggle}>
       <Icon onClick={toggle}>
-        <CloseIcon />
+        <CloseIcon fontSize="large" style={CloseIconStyle} />
       </Icon>
       <SidebarWrapper>
         <SidebarMenu>

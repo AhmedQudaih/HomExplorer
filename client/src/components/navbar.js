@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import {FaBars} from 'react-icons/fa'
-import { IconContext } from 'react-icons/lib';
-import { animateScroll as scroll } from 'react-scroll';
+import FaBars from '@material-ui/icons/Menu';
+import {animateScroll as scroll} from 'react-scroll';
 import {
   Nav,
   NavbarContainer,
@@ -12,12 +11,12 @@ import {
   NavLinks,
   NavBtn,
   NavBtnLink
- } from './Styles/navbarElementsStyle';
-const Navbar = ({ toggle }) => {
+} from './Styles/navbarElementsStyle';
+const Navbar = ({toggle}) => {
   const [scrollNav, setScrollNav] = useState(false)
 
   const changeNav = () => {
-    if(window.scrollY >= 80){
+    if (window.scrollY >= 80) {
       setScrollNav(true)
     } else {
       setScrollNav(false)
@@ -30,63 +29,33 @@ const Navbar = ({ toggle }) => {
   const toggleHome = () => {
     scroll.scrollToTop()
   }
-return (
-  <>
-  <IconContext.Provider value={{ color: '#fff'}}>
-    <Nav scrollNav={scrollNav}> 
-      <NavbarContainer>
-        <NavLogo to='/' onClick={toggleHome}>HomExplorer</NavLogo>
-          <MobileIcon onClick={toggle}>
-            <FaBars />
-          </MobileIcon>
-          <NavMenu>
-            <NavItem>
-              <NavLinks 
-              to="recommendations" 
-              smooth={true} 
-              duration={500} 
-              spy={true}
-              exact='true' 
-              offset={-80}
-              >
-              Recommendations</NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinks to="auction"
-              smooth={true} 
-              duration={500} 
-              spy={true}
-              exact='true' 
-              offset={-80}
-              >Auction</NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinks to="services"
-              smooth={true} 
-              duration={500} 
-              spy={true}
-              exact='true' 
-              offset={-80}
-              >Services</NavLinks>
-            </NavItem>
-            <NavItem>
-              <NavLinks to="signup"
-              smooth={true} 
-              duration={500} 
-              spy={true}
-              exact='true' 
-              offset={-80}
-              >Sign Up</NavLinks>
-            </NavItem>
-          </NavMenu>
-          <NavBtn>
-            <NavBtnLink to="/signin"> Sign In</NavBtnLink>
-          </NavBtn>
-      </NavbarContainer>
-        </Nav>
-        </IconContext.Provider>
-  </>
-  )
+  return (<Nav scrollNav={scrollNav}>
+    <NavbarContainer>
+      <NavLogo to='/' onClick={toggleHome}>HomExplorer</NavLogo>
+      <MobileIcon onClick={toggle}>
+        <FaBars fontSize="large"/>
+      </MobileIcon>
+      <NavMenu>
+        <NavItem>
+          <NavLinks to="recommendations" smooth={true} duration={500} spy={true} exact='true' offset={-80}>
+            Recommendations</NavLinks>
+        </NavItem>
+        <NavItem>
+          <NavLinks to="auction" smooth={true} duration={500} spy={true} exact='true' offset={-80}>Auction</NavLinks>
+        </NavItem>
+        <NavItem>
+          <NavLinks to="services" smooth={true} duration={500} spy={true} exact='true' offset={-80}>Services</NavLinks>
+        </NavItem>
+        <NavItem>
+          <NavLinks to="signup" smooth={true} duration={500} spy={true} exact='true' offset={-80}>Sign Up</NavLinks>
+        </NavItem>
+      </NavMenu>
+      <NavBtn>
+        <NavBtnLink to="/signin">
+          Sign In</NavBtnLink>
+      </NavBtn>
+    </NavbarContainer>
+  </Nav>)
 }
 
 export default Navbar

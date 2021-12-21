@@ -12,7 +12,7 @@ import {
   ServicesCard,
   ServicesIcon, 
   ServicesH2, 
-  ServicesP 
+  ServicesDiv 
 } from './Styles/servicesElementsStyle';
 
 function Estate(props) {
@@ -31,12 +31,12 @@ function Estate(props) {
             <ServicesCard>
                 <ServicesIcon src={Icon1} />
                 <ServicesH2>{props.HomeType}</ServicesH2>
-                <ServicesP>Size:{props.Size}</ServicesP>
-                <ServicesP><AttachMoneyIcon /> {props.Price}</ServicesP>
-                <ServicesP>{props.Bathroom} <BathtubIcon /></ServicesP>
-                <ServicesP>{props.Room} <LocalHotelIcon /> </ServicesP>
-                <ServicesP>{props.ToBuy}</ServicesP>
-                <ServicesP>Address is : {props.Address}</ServicesP>
+                <ServicesDiv>Size:{props.Size}</ServicesDiv>
+                <ServicesDiv><AttachMoneyIcon /> {props.Price}</ServicesDiv>
+                <ServicesDiv>{props.Bathroom} <BathtubIcon /></ServicesDiv>
+                <ServicesDiv>{props.Room} <LocalHotelIcon /> </ServicesDiv>
+                <ServicesDiv>{props.ToBuy}</ServicesDiv>
+                <ServicesDiv>Address is : {props.Address}</ServicesDiv>
                 <button onClick={handleClick}>
                 <DeleteIcon />
                 </button>

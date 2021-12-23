@@ -1,9 +1,13 @@
-
+import React from 'react';
+import './App.css';
+import {BrowserRouter as Router} from 'react-router-dom'
+import Home from './pages/homePage.js';
 function App() {
   return (
-    <div>
-    <h1>Lets do it!</h1>
-    </div>
+    <Router>
+      <Home />
+      
+    </Router>
   );
 }
 

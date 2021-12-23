@@ -3,6 +3,7 @@ import { SidebarContainer, Icon, CloseIconStyle, SidebarWrapper,
   SidebarMenu, SidebarLink, SideBtnWrap,
   SidebarRoute } from './Styles/sidebarElementsStyle';
 import CloseIcon from '@material-ui/icons/Close';
+import OptionsBar from './optionsBar.js';
 const Sidebar = ({isOpen, toggle}) => {
   return (
     <SidebarContainer isOpen={isOpen} onClick={toggle}>
@@ -16,9 +17,11 @@ const Sidebar = ({isOpen, toggle}) => {
           <SidebarLink to="services" onClick={toggle}>Services</SidebarLink>
           <SidebarLink to="signup" onClick={toggle}>Sign Up</SidebarLink>
         </SidebarMenu>
+          {false?
         <SideBtnWrap>
           <SidebarRoute to="/signin">Sign In</SidebarRoute>
-        </SideBtnWrap>
+        </SideBtnWrap>:
+    <OptionsBar Mobile={true}/> }
       </SidebarWrapper>
     </SidebarContainer>
   );

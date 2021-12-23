@@ -5,7 +5,10 @@ import {
   NavBtn,
   NavBtnLink
 } from './Styles/navbarElementsStyle';
-function OptionsBar(){
+import { SideBtnWrap, SidebarRoute } from './Styles/sidebarElementsStyle';
+
+
+function OptionsBar(props){
   const [state, setState] = React.useState(false);
     const toggleDrawer = ( open) => (event) => {
       setState(  open );
@@ -21,7 +24,23 @@ function OptionsBar(){
 
       </div>
     );
+    if(props.Mobile){
+    return (
 
+      <SideBtnWrap>
+        <SidebarRoute to="#" onClick={toggleDrawer(true)}>View Bar</SidebarRoute>
+          <Drawer
+            anchor={"right"}
+            open={state}
+            onClose={toggleDrawer(false)}
+          >
+            {list("right")}
+          </Drawer>
+      </SideBtnWrap>
+
+
+    );
+    }
     return (
             <NavBtn>
               <NavBtnLink to="#" onClick={toggleDrawer(true)} >
@@ -38,3 +57,6 @@ function OptionsBar(){
 }
 
 export default OptionsBar;
+OptionsBar.defaultProps = {
+  Mobile: false
+}

@@ -16,7 +16,6 @@ function EstateForm(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-
 const data =  {
   sellerId: "61a81506d4c8835ca4a20610",
     details: {
@@ -48,6 +47,10 @@ if(props.data){
   data.pics= props.data.pics;
 
 }
+const [estate, setEstate] = React.useState(data);
+const [category, setCategory] = React.useState([]);
+const [type, setType] = React.useState([]);
+
 
 React.useEffect(() => {
   fetch('http://localhost:4000/getCategoryAndType').then(response => {
@@ -126,12 +129,24 @@ React.useEffect(() => {
   }
 
 
+function handlefile(event){
+  console.log(event.target.files);
+  let pic =  event.target.files[0];
+  setEstate((prevEstate) => {
+   return {
+      ...prevEstate,
+      pics :[
+        ...prevEstate.pics,
+        pic
+      ]
+    };
+  });
+
+}
 
 
+console.log(estate);
 
-const [estate, setEstate] = React.useState(data);
-const [category, setCategory] = React.useState([]);
-const [type, setType] = React.useState([]);
 
   if (category.length === 0 || type.length ===0) {
     return (
@@ -251,6 +266,9 @@ const [type, setType] = React.useState([]);
                TextField color = "success"
                label = "pics"
                type = "file"
+               onChange = {
+               handlefile
+               }
                InputLabelProps = {
                {
                 shrink: true,
@@ -260,6 +278,9 @@ const [type, setType] = React.useState([]);
                TextField color = "success"
                label = "contract"
                type = "file"
+               onChange = {
+               handlefile
+               }
                InputLabelProps = {
                {
                 shrink: true,

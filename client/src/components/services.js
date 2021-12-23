@@ -1,8 +1,6 @@
 import React from 'react';
 import Icon1 from '../images/svg-4.svg';
-import Pagination from '@mui/material/Pagination';
-import {Button , Box } from '@mui/material';
-import Collapse from '@mui/material/Collapse';
+import {Button , Box ,Pagination , Collapse} from '@mui/material';
 import Loading from './loading';
 import EstateDetails from './estateDetails';
 import {
@@ -54,7 +52,8 @@ function Services() {
     </ServicesContainer>);
   }
   return (
-   <ServicesContainer name="services">
+
+   <ServicesContainer id="services" name="services">
     <ServicesH1>Services</ServicesH1>
     <ServicesWrapper>
       {
@@ -82,14 +81,13 @@ function Services() {
       }
 
     </ServicesWrapper>
-
     <Box sx={{
         m: 5,
         padding: "1%",
         backgroundColor: 'white',
         borderRadius: "10px"
       }}>
-      <Pagination count={Math.ceil(data.length / 6)} page={page} color="success" onChange={handlePageChange}/>
+      <Button href="#services"><Pagination count={Math.ceil(data.length / 6)} page={page} color="success" onChange={handlePageChange}/></Button>
     </Box>
 
   </ServicesContainer>
@@ -100,6 +98,7 @@ function Services() {
 export default Services
 /*{
 
+------------------------------------------------------
 
       <ServicesCard>
           <ServicesIcon src={Icon1} />

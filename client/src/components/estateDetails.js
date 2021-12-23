@@ -20,7 +20,22 @@ import {
 function EstateDetails(props){
 
     const handelDeleteBtn = (id) => {
-      console.log(id, "delete");
+      const requestOptions = {
+         method: 'delete',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({ _id: id })
+     };
+  fetch("http://localhost:4000/deleteEstate",requestOptions).then(response => {
+    if (response.ok) {
+      return response.json();
+    }
+    throw response;
+  }).then(data => {
+  console.log(data);
+  }).catch(error => {
+    console.error("Error fetching data: ", error);
+  })
+
     };
 
 

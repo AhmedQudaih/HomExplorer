@@ -3,10 +3,11 @@ import {
   EstateMainForm,
   EstateFormTitle,
   EstateFormClose,
-  EstateFormSubmitBtn
+  EstateFormSubmitBtn,
+  EstateFormAnimation
 } from './Styles/estateFormStyle';
 import MyMap from './map';
-import {Button,  MenuItem ,TextField , Dialog ,DialogContent} from '@mui/material';
+import {Button, MenuItem ,TextField , Dialog ,DialogContent} from '@mui/material';
 import Loading from './loading';
 import { AddCircleOutline as AddCircleOutlineIcon ,Cached as CachedIcon, Save as SaveIcon , Close as CloseIcon} from "@material-ui/icons";
 function EstateForm(props) {
@@ -147,7 +148,7 @@ const [type, setType] = React.useState([]);
        </Button>
      }
      <div>
-           <Dialog open={open} onClose={handleClose} scroll={"paper"}>
+           <Dialog style={EstateFormAnimation} open={open} onClose={handleClose} scroll={"paper"}>
              <div style={EstateFormClose}>
              <Button onClick={handleClose} color="success" >
              <CloseIcon />

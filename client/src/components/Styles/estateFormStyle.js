@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {DialogTitle} from '@mui/material';
+import 'animate.css';
 export const EstateMainForm = styled.form`
 display: grid;
 grid-template-columns: 1fr 1fr;
@@ -17,6 +18,11 @@ background: #ffff;
 `
 export const EstateFormClose = {
     textAlign: "end",
+}
+
+export const EstateFormAnimation = {
+  animation: "fadeIn",
+  animationDuration: "0.5s"
 }
 
 export const EstateFormTitle = styled(DialogTitle)`

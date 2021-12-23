@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import 'animate.css';
 export const ServicesContainer = styled.div`
 min-height: 30%;
 padding:5%;
@@ -13,7 +14,7 @@ export const ServicesWrapper = styled.div`
 max-width: 1000px;
 margin: 0 auto;
 display: grid;
-grid-template-columns: 1fr 1fr 1fr;
+grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
 align-items: center;
 grid-gap: 16px;
 padding: 0 50px;
@@ -30,6 +31,8 @@ padding: 0 50px;
 
 
 export const ServicesCard = styled.div`
+animation: bounceInRight;
+animation-duration: 2s;
 background: #fff;
 display: flex;
 flex-direction: column;
@@ -43,6 +46,7 @@ transition: all 0.2s ease-in-out;
   align-self: end;
 }
  &.expandClass{
+
    grid-row-start: 2;
    grid-column: span 3;
    @media screen and (max-width: 1000px){

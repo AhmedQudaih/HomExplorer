@@ -12,6 +12,7 @@ import {
   NavBtn,
   NavBtnLink
 } from './Styles/navbarElementsStyle';
+import OptionsBar from './optionsBar.js';
 const Navbar = ({toggle}) => {
   const [scrollNav, setScrollNav] = useState(false)
 
@@ -50,10 +51,12 @@ const Navbar = ({toggle}) => {
           <NavLinks to="signup" smooth={true} duration={500} spy={true} exact='true' offset={-80}>Sign Up</NavLinks>
         </NavItem>
       </NavMenu>
+      {false?
       <NavBtn>
         <NavBtnLink to="/signin">
           Sign In</NavBtnLink>
-      </NavBtn>
+      </NavBtn>:
+        <OptionsBar />}
     </NavbarContainer>
   </Nav>)
 }

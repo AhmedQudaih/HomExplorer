@@ -5,8 +5,8 @@ import Info from '../components/infoSection/info.js';
 import { homeObjOne, homeObjTwo ,homeObjThree } from '../components/infoSection/data.js';
 import Services from '../components/services';
 import Navbar from '../components/navbar.js';
-//import AllEstates from '../components/allEstates.js';
 import Sidebar from '../components/sidebar.js';
+
 
 function Home() {
     const [isOpen, setIsOpen] = useState(false);

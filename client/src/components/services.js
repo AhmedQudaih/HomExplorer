@@ -1,7 +1,10 @@
 import React from 'react';
 import Icon1 from '../images/svg-4.svg';
-
+import Pagination from '@mui/material/Pagination';
+import {Button , Box } from '@mui/material';
+import Collapse from '@mui/material/Collapse';
 import Loading from './loading';
+import EstateDetails from './estateDetails';
 import {
   ServicesContainer,
   ServicesH1,
@@ -10,24 +13,11 @@ import {
   ServicesIcon,
   ServicesH2,
   ServicesDiv,
-  ExpandedIconServicesCard,
-  ServicesBtnCard
 } from './Styles/servicesElementsStyle';
-import Pagination from '@mui/material/Pagination';
-import {Button , Box } from '@mui/material';
-import Collapse from '@mui/material/Collapse';
 import {
-  LocalOffer as LocalOfferIcon,
-  LocationOnSharp as LocationOnSharpIcon,
-  Home as VillaIcone,
-  Apartment as ApartmentIcon,
-  Cached as CachedIcon,
-  Delete as DeleteIcon,
-  LocalHotel as LocalHotelIcon,
-  Bathtub as BathtubIcon,
-  FullscreenExit as FullscreenExitIcon,
   Close as CloseIcon
 } from "@material-ui/icons";
+
 
 
 function Services() {
@@ -40,12 +30,7 @@ function Services() {
   };
 
   const handleDetailsClick = (id) => {
-    console.log(id , "details");
     setExpand(id);
-  };
-
-  const handelDeleteBtn = (id) => {
-    console.log(id, "delete");
   };
 
   React.useEffect(() => {
@@ -90,47 +75,7 @@ function Services() {
             </p>
           </ServicesDiv>
           <Collapse in={expand === e._id} timeout="auto" unmountOnExit={true}>
-            <ExpandedIconServicesCard>
-              <ServicesDiv>
-                {e.category === "Apartment" ? <ApartmentIcon /> : <VillaIcone/>}
-                <p>
-                  {e.category.name}
-                </p>
-              </ServicesDiv>
-              <ServicesDiv>
-                <FullscreenExitIcon/>
-                <p>
-                  {e.details['size']}
-                </p>
-              </ServicesDiv>
-              <ServicesDiv>
-                <LocalHotelIcon/>
-                <p>{e.details['numOfRooms']}
-                </p>
-              </ServicesDiv>
-              <ServicesDiv>
-                <BathtubIcon/>
-                <p>
-                  {e.details['numOfBathRooms']}
-                </p>
-              </ServicesDiv>
-              <ServicesDiv>
-                <LocalOfferIcon/>
-                <p> {e.type.name}</p>
-              </ServicesDiv>
-            </ExpandedIconServicesCard>
-            <ServicesDiv>
-              <LocationOnSharpIcon/>
-              <p>Address Address Address Address Address Address{e.Address}</p>
-            </ServicesDiv>
-            <ServicesBtnCard>
-              <Button color="error" onClick={()=>handelDeleteBtn(e._id)} variant="outlined" startIcon={<DeleteIcon />}>
-                Delete
-              </Button>
-              <Button color="success" variant="outlined" startIcon={<CachedIcon />}>
-                Update
-              </Button>
-            </ServicesBtnCard >
+            <EstateDetails data={e} />
           </Collapse>
         </ServicesCard>
          ))
@@ -146,6 +91,7 @@ function Services() {
       }}>
       <Pagination count={Math.ceil(data.length / 6)} page={page} color="success" onChange={handlePageChange}/>
     </Box>
+
   </ServicesContainer>
 
 );

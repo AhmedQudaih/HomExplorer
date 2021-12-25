@@ -8,18 +8,16 @@ const estateSchema = new Schema ({
       sellerId: { type: Schema.Types.ObjectId, ref: 'user', required: true },
       address: { type: String, required: true },
       price: { type: Number, required: true },
-      details: {
         numOfRooms : {type: Number, required: true},
         numOfBathRooms : {type: Number, required: true},
         size : {type: Number, required: true},
-        desc: { type: String, required: true }
-      },
+        desc: { type: String, required: true },
       status:{ type: Boolean, default: false},
       type: {  type:  Schema.Types.ObjectId, ref: 'estateType', required: true },
       category: {  type:  Schema.Types.ObjectId, ref: 'category', required: true },
       addressOnMap:{type: [Number] ,required:true},
-      contract:[{data: Buffer, name: String }],
-      pics:[{data: Buffer, name: String }]
+      contract:  {type: [{path:String , name:String}] },
+       pic:  {type: [{path:String , name:String}] }
 });
 
 const estateModel = mongoose.model('estate', estateSchema)

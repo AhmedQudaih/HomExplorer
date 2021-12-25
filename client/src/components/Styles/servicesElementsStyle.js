@@ -82,6 +82,7 @@ transition: all 0.2s ease-in-out;
 
 
 export const ServicesIcon = styled.img`
+border-radius: 10px;
 height: 160px;
 width: 160px;
 margin-bottom: 10px;

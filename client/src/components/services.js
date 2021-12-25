@@ -1,5 +1,4 @@
 import React from 'react';
-import Icon1 from '../images/svg-4.svg';
 import {Button , Box ,Pagination , Collapse} from '@mui/material';
 import Loading from './loading';
 import EstateDetails from './estateDetails';
@@ -31,8 +30,10 @@ function Services() {
     setExpand(id);
   };
 
+    var partition =0;
+
   React.useEffect(() => {
-    fetch('http://localhost:4000/').then(response => {
+    fetch('http://localhost:4000/'+partition).then(response => {
       if (response.ok) {
         return response.json();
       }
@@ -43,7 +44,6 @@ function Services() {
       console.error("Error fetching data: ", error);
     })
   }, [])
-
 
   if (data == null) {
     return (<ServicesContainer >
@@ -65,12 +65,13 @@ function Services() {
               <CloseIcon />
             </Button>
           : null}
-          <ServicesIcon src={Icon1}/>
+
+          <ServicesIcon src={'uploads/'+e.pic[0].name}  />
           <ServicesH2>{e.price}
             $</ServicesH2>
           <ServicesDiv>
             <p>
-              {expand === e._id ? e.details['desc'] : (e.details['desc'].substring(0, 50) + "....")}
+              {expand === e._id ? e.desc : (e.desc.substring(0, 50) + "....")}
             </p>
           </ServicesDiv>
           <Collapse in={expand === e._id} timeout="auto" unmountOnExit={true}>

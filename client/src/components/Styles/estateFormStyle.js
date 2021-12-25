@@ -6,9 +6,8 @@ display: grid;
 grid-template-columns: 1fr 1fr;
 align-items: center;
 grid-gap: 16px;
-padding:2.5%;
+padding: 2% 0%;
 background: #ffff;
-
 
 }
 @media screen and (max-width: 768px){
@@ -20,6 +19,9 @@ export const EstateFormClose = {
     textAlign: "end",
 }
 
+export const Input = styled('input')({
+  display: 'none',
+});
 export const EstateFormAnimation = {
   animation: "fadeIn",
   animationDuration: "0.5s"

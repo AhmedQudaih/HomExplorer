@@ -3,28 +3,42 @@ const category = require("../Model/categoryModel");
 const type = require("../Model/estateTypeModel");
 const estate = require("../Model/estateModel");
 
+function picOperation(req,estate){
+      req.files.contract.forEach((e) => {
+        estate.contract.push({
+            path:e.path,
+            name:e.filename
+        });
+      })
+    req.files.pics.forEach((e) => {
+      estate.pic.push({
+        path:e.path,
+        name:e.filename
+      });
+    })
+}
+
 
 exports.getAllEstates = function(req, res) {
+  console.log(typeof req.params.partition)
   estate.estateModel.find({
     status: true
-  }, function(err,doc) {
-    if (err) {
-      console.log(err);
-      res.send("Somthing went wrong plz try again later");
+  }).skip(parseInt(req.params.partition)).limit(30).populate('category').populate("type").exec(function(error,doc) {
+    if (error) {
+      return  res.status(400).send(JSON.stringify(error));
     }
-    console.log(doc);
     res.send(doc);
   });
+
 }
 
 
 exports.findEstate = function(req, res) {
   estate.estateModel.findById({
     _id: req.params.estateId
-  }, function(err,doc) {
-    if (err) {
-      console.log(err);
-      res.send("Somthing went wrong plz try again later");
+  }, function(error,doc) {
+    if (error) {
+     return res.status(400).send(JSON.stringify(error));
     }
     console.log(doc);
     res.send(doc);
@@ -34,75 +48,52 @@ exports.findEstate = function(req, res) {
 
 
 exports.deleteEstate = function(req, res) {
+
   estate.estateModel.findByIdAndRemove({
     _id: req.body._id
-  }, req.body, function(err, doc) {
-    if (err) {
-      console.log(err);
-      res.send("Something wrong when deleting data!");
+  }, req.body, function(error, doc) {
+    if (error) {
+      return res.status(400).send(JSON.stringify(error));
     }
-    res.send("Deleted Successfully!");
+    res.status(200).send(JSON.stringify("Ok"));
   });
 }
 
 
 exports.addEstate = function(req, res) {
-  var contract = [];
-  var pics = [];
-  if (req.files) {
-    if (req.files.Contract.length == 0) {
-      req.files.Contract.forEach((e) => {
-        contract.push({
-          buffer: e.buffer,
-          name: e.originalname
-        });
-      })
-    }
-    if (req.files.Pics.length == 0) {
-      req.files.Pics.forEach((e) => {
-        pics.push({
-          buffer: e.buffer,
-          name: e.originalname
-        });
-      })
-    }
-  }
+  console.log(req.files)
   var newEstate = new estate.estateModel(req.body);
-  newEstate.contract = contract
-  newEstate.pics = pics
-  console.log(newEstate);
-  newEstate.save(function(err) {
-    if (err) {
-      console.log(err);
-      res.send("Somthing went wrong plz try again later");
+    picOperation(req ,newEstate);
+  newEstate.save(function(error) {
+    if (error) {
+      console.log(error);
+         return res.status(400).send(JSON.stringify(error));
     }
-    res.send("Add request sended ");
+    res.status(200).send(JSON.stringify("Ok"));
   });
-
 }
 
 exports.updateEstate = function(req, res) {
+
   estate.estateModel.findOneAndUpdate({
     _id: req.body._id
-  }, req.body, function(err, doc) {
-    if (err) {
-      console.log(err);
-      res.send("Something wrong when updating data!");
+  }, req.body, function(error) {
+    if (error) {
+      console.log(error);
+         res.status(400).send(JSON.stringify(error));
     }
-    res.send("Update request sended!");
-
+    res.status(200).send(JSON.stringify("Ok"));
   });
 }
 
 exports.getApproveEstateRequests = function(req, res) {
   estate.estateModel.find({
     status: false
-  }, function(err, aproveReq) {
-    if (err) {
-      console.log(err);
-      res.send("Somthing went wrong plz try again later");
+  }, function(error, aproveReq) {
+    if (error) {
+      console.log(error)
+    return  res.status(400).send(JSON.stringify(error));
     }
-    console.log(aproveReq);
     res.send(aproveReq);
   });
 }

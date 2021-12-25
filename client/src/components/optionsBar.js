@@ -18,7 +18,7 @@ function OptionsBar(props){
       >
         <List>
           <ListItem button>
-            <EstateForm/>
+            <EstateForm />
           </ListItem >
         </List>
 

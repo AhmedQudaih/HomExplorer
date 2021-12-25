@@ -38,7 +38,6 @@ function EstateDetails(props){
 
     };
 
-
   return(
     <div>
     <ExpandedIconServicesCard>
@@ -51,18 +50,18 @@ function EstateDetails(props){
       <ServicesDiv>
         <FullscreenExitIcon/>
         <p>
-          {props.data.details['size']}
+          {props.data.size}
         </p>
       </ServicesDiv>
       <ServicesDiv>
         <LocalHotelIcon/>
-        <p>{props.data.details['numOfRooms']}
+        <p>{props.data.numOfRooms}
         </p>
       </ServicesDiv>
       <ServicesDiv>
         <BathtubIcon/>
         <p>
-          {props.data.details['numOfBathRooms']}
+          {props.data.numOfBathRooms}
         </p>
       </ServicesDiv>
       <ServicesDiv>
@@ -81,7 +80,7 @@ function EstateDetails(props){
       <Button color="error" onClick={()=>handelDeleteBtn(props.data._id)} variant="outlined" startIcon={<DeleteIcon />}>
         Delete
       </Button>
-      <EstateForm data={props.data}/>
+      <EstateForm type={"Update"} data={props.data}/>
     </ServicesBtnCard >
     </div>
   );

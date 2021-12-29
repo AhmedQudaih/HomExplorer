@@ -2,28 +2,42 @@ const express = require("express");
 const category = require("../Model/categoryModel");
 const type = require("../Model/estateTypeModel");
 const estate = require("../Model/estateModel");
+const fs = require('fs')
 
-function picOperation(req,estate){
-      req.files.contract.forEach((e) => {
-        estate.contract.push({
-            path:e.path,
-            name:e.filename
-        });
-      })
-    req.files.pics.forEach((e) => {
+
+
+function picAddOperation(files,estate){
+  if(files.contract){
+            estate.contract={};
+            estate.contract.path =files.contract[0].path;
+            estate.contract.name =files.contract[0].filename;
+      }
+      if(files.pic){
+    files.pic.forEach((e) => {
       estate.pic.push({
         path:e.path,
         name:e.filename
       });
-    })
+    })}
+  }
+
+function picDeleteOperation(picPath){
+  picPath.forEach((e)=>{
+    try {
+      fs.unlinkSync(e.path)
+    } catch(err) {
+      console.error(err)
+    }
+  })
 }
 
 
+
 exports.getAllEstates = function(req, res) {
-  console.log(typeof req.params.partition)
+  partitionNumber =(parseInt(req.params.partition)*30);
   estate.estateModel.find({
     status: true
-  }).skip(parseInt(req.params.partition)).limit(30).populate('category').populate("type").exec(function(error,doc) {
+  }).skip(partitionNumber).limit(30).populate('category').populate("type").exec(function(error,doc) {
     if (error) {
       return  res.status(400).send(JSON.stringify(error));
     }
@@ -31,21 +45,6 @@ exports.getAllEstates = function(req, res) {
   });
 
 }
-
-
-exports.findEstate = function(req, res) {
-  estate.estateModel.findById({
-    _id: req.params.estateId
-  }, function(error,doc) {
-    if (error) {
-     return res.status(400).send(JSON.stringify(error));
-    }
-    console.log(doc);
-    res.send(doc);
-  });
-}
-
-
 
 exports.deleteEstate = function(req, res) {
 
@@ -55,18 +54,18 @@ exports.deleteEstate = function(req, res) {
     if (error) {
       return res.status(400).send(JSON.stringify(error));
     }
+      picDeleteOperation([doc.contract,...doc.pic]);
     res.status(200).send(JSON.stringify("Ok"));
   });
 }
 
 
 exports.addEstate = function(req, res) {
-  console.log(req.files)
   var newEstate = new estate.estateModel(req.body);
-    picOperation(req ,newEstate);
+    picAddOperation(req.files ,newEstate);
   newEstate.save(function(error) {
     if (error) {
-      console.log(error);
+  picDeleteOperation([newEstate.contract,...newEstate.pic]);
          return res.status(400).send(JSON.stringify(error));
     }
     res.status(200).send(JSON.stringify("Ok"));
@@ -74,28 +73,40 @@ exports.addEstate = function(req, res) {
 }
 
 exports.updateEstate = function(req, res) {
-
-  estate.estateModel.findOneAndUpdate({
-    _id: req.body._id
-  }, req.body, function(error) {
-    if (error) {
-      console.log(error);
-         res.status(400).send(JSON.stringify(error));
+req.body.deletedPicNames = req.body.deletedPicNames.split(",");
+estate.estateModel.findById({ _id: req.body._id}).then((data)=>{
+if(req.body.deletedPicNames || req.files.contract){
+  req.body.pic=[];
+  req.body.pic = data.pic.filter(e => {
+      if(!req.body.deletedPicNames.includes(e.path)){
+        return e
+      }})
+    picAddOperation(req.files,req.body);
+  if(req.body.contract){
+    req.body.deletedPicNames.push(data.contract.path)
+  }else if(!req.body.contract){
+    req.body.contract = data.contract;
+  }
+  req.body.deletedPicNames.forEach((e)=>{
+    if(e.length > 1){
+    try {
+      fs.unlinkSync(e)
+    } catch(err) {
+      console.error(err)
     }
-    res.status(200).send(JSON.stringify("Ok"));
-  });
+  }
+  })
 }
 
-exports.getApproveEstateRequests = function(req, res) {
-  estate.estateModel.find({
-    status: false
-  }, function(error, aproveReq) {
-    if (error) {
-      console.log(error)
-    return  res.status(400).send(JSON.stringify(error));
-    }
-    res.send(aproveReq);
-  });
+
+  estate.estateModel.updateOne({  _id: req.body._id }, req.body,
+  function(error) {
+   if (error) {
+       return res.status(400).send(JSON.stringify(error));
+   }
+   res.status(200).send(JSON.stringify("Ok"));
+ });});
+
 }
 
 exports.getCategoryAndType = async function(req, res) {
@@ -104,3 +115,28 @@ exports.getCategoryAndType = async function(req, res) {
   categoryAndType.type = await type.estateTypeModel.find({}).exec();
   res.send(categoryAndType);
 }
+
+
+/*
+exports.getApproveEstateRequests = function(req, res) {
+  estate.estateModel.find({
+    status: false
+  }, function(error, aproveReq) {
+    if (error) {
+    return  res.status(400).send(JSON.stringify(error));
+    }
+    res.send(aproveReq);
+  });
+}
+
+exports.findEstate = function(req, res) {
+  estate.estateModel.findById({
+    _id: req.params.estateId
+  }, function(error,doc) {
+    if (error) {
+     return res.status(400).send(JSON.stringify(error));
+    }
+    res.send(doc);
+  });
+}
+*/

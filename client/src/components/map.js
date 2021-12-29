@@ -8,7 +8,7 @@ const style = {
 }
 
 function MyMap(props){
-  function handleChange(event){
+  const handleChange = (event) => {
     event.target = {name : "addressOnMap" ,value :event.latLng};
     props.Change(event);
   };
@@ -22,3 +22,8 @@ function MyMap(props){
 }
 
 export default MyMap;
+MyMap.defaultProps= {
+  Change: ()=>{
+    return null;
+  }
+}

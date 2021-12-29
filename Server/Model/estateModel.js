@@ -6,17 +6,17 @@ const Schema = mongoose.Schema;
 
 const estateSchema = new Schema ({
       sellerId: { type: Schema.Types.ObjectId, ref: 'user', required: true },
-      address: { type: String, required: true },
-      price: { type: Number, required: true },
-        numOfRooms : {type: Number, required: true},
-        numOfBathRooms : {type: Number, required: true},
-        size : {type: Number, required: true},
-        desc: { type: String, required: true },
+      address: { type: String,  minLength:5 , required: true },
+      price: { type: Number,  min: 1, max: 200000000, required: true },
+        numOfRooms : {type: Number,  min: 1, max: 30, required: true},
+        numOfBathRooms : {type: Number,  min: 1, max: 30, required: true},
+        size : {type: Number, min: 1, max: 10000, required: true},
+        desc: { type: String, minLength:30 ,required: true },
       status:{ type: Boolean, default: false},
       type: {  type:  Schema.Types.ObjectId, ref: 'estateType', required: true },
       category: {  type:  Schema.Types.ObjectId, ref: 'category', required: true },
-      addressOnMap:{type: [Number] ,required:true},
-      contract:  {type: [{path:String , name:String}] },
+      addressOnMap:{type: [Number] , required:true},
+          contract: {type: {path:String , name:String}},
        pic:  {type: [{path:String , name:String}] }
 });
 

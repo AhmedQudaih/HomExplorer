@@ -3,7 +3,7 @@ const uploadpPic = require("../Controller/uploadPic");
 const estate = require("../Controller/estateController");
 const router  = express.Router();
 
-router.get("/:partition",function(req,res){
+router.get("/getEstates/:partition",function(req,res){
   estate.getAllEstates(req , res);
 })
 
@@ -15,7 +15,7 @@ router.delete("/deleteEstate",function(req,res){
  estate.deleteEstate(req , res);
 })
 
-const upFi = uploadpPic.upload.fields([{name: 'contract'}, {name: 'pics'}])
+const upFi = uploadpPic.upload.fields([{name: 'contract'}, {name: 'pic'}])
 router.post("/addEstate",upFi,function(req,res){
   estate.addEstate(req , res);
 })

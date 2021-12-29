@@ -26,7 +26,6 @@ function OptionsBar(props){
     );
     if(props.Mobile){
     return (
-
       <SideBtnWrap>
         <SidebarRoute to="#" onClick={toggleDrawer(true)}>View Bar</SidebarRoute>
           <Drawer
@@ -37,8 +36,6 @@ function OptionsBar(props){
             {list("right")}
           </Drawer>
       </SideBtnWrap>
-
-
     );
     }
     return (

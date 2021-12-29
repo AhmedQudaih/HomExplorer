@@ -1,16 +1,17 @@
-const url = "http://localhost:4000/";
 
-exports.getEstates = function() {
-  fetch('http://localhost:4000/').then(response => {
+exports.getEstates = function(partition) {
+    return (fetch('http://localhost:4000/getEstates/'+partition).then(response => {
     if (response.ok) {
       return response.json();
     }
     throw response;
   }).then(data => {
-    setData(data);
+    return data
   }).catch(error => {
     console.error("Error fetching data: ", error);
-  })
+    return [];
+  }));
+
 }
 
 exports.deleteEstate = function(id) {
@@ -19,93 +20,85 @@ exports.deleteEstate = function(id) {
      headers: { 'Content-Type': 'application/json' },
      body: JSON.stringify({ _id: id })
  };
-fetch("http://localhost:4000/deleteEstate",requestOptions).then(response => {
-if (response.ok) {
-  return response.json();
-}
-throw response;
-}).then(data => {
-console.log(data);
-}).catch(error => {
-console.error("Error fetching data: ", error);
-})
+    return(  fetch("http://localhost:4000/deleteEstate",requestOptions).then(response => {
+      if (response.ok) {
+      return response.json();
+      }
+      throw response;
+      }).then(data => {
+      return data;
+      }).catch(error => {
+      console.error("Error fetching data: ", error);
+      return "error";
+      }))
+  }
 
-}
-
-exports.findEstate = function(id) {
-  getData(url + "findEstate/"+id);
-}
-
-exports.addEstate = function(obj) {
-  const requestOptions = {
-         method: 'POST',
-         headers:{'Content-Type': 'multipart/form-data; boundary=something'},
-         body: JSON.stringify(estate)
-     };
-  fetch("http://localhost:4000/addEstate",requestOptions).then(response => {
+  exports.getCategoryAndType = function() {
+    return (fetch('http://localhost:4000/getCategoryAndType').then(response => {
       if (response.ok) {
         return response.json();
       }
       throw response;
     }).then(data => {
+      return data;
     }).catch(error => {
       console.error("Error fetching data: ", error);
-    })
+      return [];
+    }))
+
+  }
+
+
+  exports.addEstate = function(formData) {
+    const requestOptions = {
+           method: 'POST',
+           body: formData
+       };
+    return(fetch("http://localhost:4000/addEstate",requestOptions).then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      }).then(data => {
+          return data;
+      }).catch(error => {
+        console.error("Error fetching data: ", error);
+          return "error";
+      }));
+
+  }
+
+
+  exports.updateEstate = function(formData) {
+    const requestOptions = {
+           method: 'put',
+           body: formData
+       };
+      return(fetch("http://localhost:4000/updateEstate",requestOptions).then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw response;
+        }).then(data => {
+            return data;
+        }).catch(error => {
+          console.error("Error fetching data: ", error);
+            return "error";
+        }));
+  }
+
+
+
+
+/*
+exports.findEstate = function(id) {
+  getData(url + "findEstate/"+id);
 }
 
-exports.updateEstate = function(obj) {
-  const requestOptions = {
-         method: 'put',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify(estate)
-     };
-  fetch("http://localhost:4000/updateEstate",requestOptions).then(response => {
-    if (response.ok) {
-      return response.json();
-    }
-    throw response;
-  }).then(data => {
-  }).catch(error => {
-    console.error("Error fetching data: ", error);
-  })
-}
+
 
 exports.getApproveEstateRequests = function() {
  getData(url + "approveEstate");
 }
-exports.getCategoryAndType = function() {
-  fetch('http://localhost:4000/getCategoryAndType').then(response => {
-    if (response.ok) {
-      console.log(response)
-      return response.json();
-    }
-    throw response;
-  }).then(data => {
-    setCategory(data["category"]);
-    setType(data["type"]);
-  }).catch(error => {
-    console.error("Error fetching data: ", error);
-  })
-
-}
-
-
-/*-------------------used in testing----------------------------*/
-/*const obj= {
-    "_id": "61b7c4f1df3ce21f68f7bea7",
-    "sellerId":{"_id":"61a81506d4c8835ca4a20610"},
-    "address":"egypgds",
-    "price":222222222,
-    "details":{"numOfRooms":7,"numOfBathRooms":1,"size":887,"desc":"hiiii"},
-    "status":true,"type":{"_id":"61a81506d4c8835ca4a2060e"},
-    "category":{"_id":"61a81506d4c8835ca4a2060b"},
-    "addressOnMap":[145 , 748],"contract":[],"pics":[]
-}
- /// put the next code in App.js file/////
- import React from "react";
-const serverEstate = require("./serverFunctions/estate");
-  React.useEffect(() => {
-   serverEstate.getAllEstates();
-  });
 
 */

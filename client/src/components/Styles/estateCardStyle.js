@@ -11,9 +11,9 @@ display: flex;
 flex-direction: column;
 justify-content: flex-start;
 align-items: center;
-border-radius: 10px;
-padding: 30px;
-box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+border-radius: 1rem;
+padding: 3rem;
+box-shadow: 0 0.1rem 0.3rem rgba(0,0,0,0.2);
 transition: all 0.2s ease-in-out;
 
  & > button:first-of-type{
@@ -23,11 +23,11 @@ transition: all 0.2s ease-in-out;
 
    grid-row-start: 3;
    grid-column: 1/-1;
-   @media screen and (max-width: 1000px){
+   @media screen and (max-width: 100rem){
      grid-row-start: 2;
 
    }
-   @media screen and (max-width: 768px){
+   @media screen and (max-width: 76.8rem){
      grid-row-start: auto;
 
    }
@@ -40,33 +40,38 @@ transition: all 0.2s ease-in-out;
 
 `
 
+export const EstateIcobDiv = styled.div`
+height:20rem;
+margin-bottom: 1rem;
+&.expandIcone{
+  height: 30rem;
+  width: 50rem;
+}
+@media screen and (max-width: 76.8rem){
+&.expandIcone{
+  height: 20rem;
+  width: 30rem;
+}
+`
+
 export const EstateIcon = styled.img`
-border-radius: 10px;
-height: 200px;
-width: 300px;
-margin-bottom: 10px;
-&.expandIcone{
-  height: 300px;
-  width: 500px;
-}
-@media screen and (max-width: 768px){
-&.expandIcone{
-  height: 200px;
-  width: 300px;
-}
+border-radius: 1rem;
+height: 100%;
+width: 100%;
+object-fit:cover;
 }
 `
 
 
 
 export const EstateCardH2 = styled.h2`
-font-size: 1rem;
-margin-bottom: 5px;
+font-size: 1.3rem;
+margin-bottom: 0.5rem;
 `
 
 
 
 export const EstateCardDiv = styled.div`
-font-size: 1rem;
+font-size:  1.3rem;
 text-align: center;
 `

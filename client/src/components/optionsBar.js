@@ -1,5 +1,5 @@
 import React from 'react';
-import {Drawer, List, ListItem, ListItemIcon, ListItemText,  } from '@mui/material';
+import {Drawer, List, ListItem, ListItemIcon, ListItemText} from '@mui/material';
 import EstateForm from './estateForm';
 import {
   NavBtn,

@@ -5,7 +5,7 @@ import {
   EstateCardDivCard,
   EstateIcon,
   EstateCardH2,
-  EstateCardDiv,
+  EstateCardDiv,EstateIcobDiv
 } from './Styles/estateCardStyle';
 import {
   Close as CloseIcon,
@@ -35,7 +35,9 @@ function EstateCard(props){
         <CloseIcon />
       </Button>
     }
-    <EstateIcon className ={expand && "expandIcone"} src={'uploads/'+props.data.pic[activeStep].name}  />
+    <EstateIcobDiv className ={expand && "expandIcone"} >
+    <EstateIcon src={'uploads/'+props.data.pic[activeStep].name}  />
+</EstateIcobDiv>
     {expand &&
       <div>
             <Button size="small" onClick={handleBack} disabled={activeStep === 0 }>

@@ -79,7 +79,7 @@ function Services() {
         }
 
       </ServicesWrapper>
-    <Box sx={{ m: "2%", padding: "1%",backgroundColor: 'white',borderRadius: "10px"}}>
+    <Box sx={{ m: "2%", padding: "0.5%",backgroundColor: 'white',borderRadius: "1rem"}}>
       <Button href="#services"><Pagination count={totalPages} page={page} color="success" onChange={handlePageChange}/></Button>
     </Box>
   </ServicesContainer>

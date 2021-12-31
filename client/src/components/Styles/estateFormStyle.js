@@ -5,12 +5,12 @@ export const EstateMainForm = styled.form`
 display: grid;
 grid-template-columns: 1fr 1fr;
 align-items: center;
-grid-gap: 16px;
+grid-gap: 1.6rem;
 padding: 2% 0%;
 background: #ffff;
 
 }
-@media screen and (max-width: 768px){
+@media screen and (max-width: 76.8rem){
     grid-template-columns: 1fr;
 }
 
@@ -30,11 +30,12 @@ export const EstateFormAnimation = {
 export const EstateFormTitle = styled(DialogTitle)`
  text-align: center;
  color: #01bf71;
+
 `
 export const EstateFormSubmitBtn = styled.div`
  grid-column: span 2;
  text-align: center;
- @media screen and (max-width: 768px){
+ @media screen and (max-width: 76.8rem){
      grid-column: 1;
 
  }

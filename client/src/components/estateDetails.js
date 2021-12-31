@@ -30,35 +30,35 @@ function EstateDetails(props){
     <div>
     <ExpandedIconDetailsCard>
       <EstateCardDiv>
-        {props.data.category === "Apartment" ? <ApartmentIcon /> : <VillaIcone/>}
+        {props.data.category === "Apartment" ? <ApartmentIcon fontSize='large' /> : <VillaIcone fontSize='large'/>}
         <p>
           {props.data.category.name}
         </p>
       </EstateCardDiv>
       <EstateCardDiv>
-        <FullscreenExitIcon/>
+        <FullscreenExitIcon fontSize='large' />
         <p>
           {props.data.size}
         </p>
       </EstateCardDiv>
       <EstateCardDiv>
-        <LocalHotelIcon/>
+        <LocalHotelIcon fontSize='large'/>
         <p>{props.data.numOfRooms}
         </p>
       </EstateCardDiv>
       <EstateCardDiv>
-        <BathtubIcon/>
+        <BathtubIcon fontSize='large' />
         <p>
           {props.data.numOfBathRooms}
         </p>
       </EstateCardDiv>
       <EstateCardDiv>
-        <LocalOfferIcon/>
+        <LocalOfferIcon fontSize='large' />
         <p> {props.data.type.name}</p>
       </EstateCardDiv>
     </ExpandedIconDetailsCard>
     <EstateCardDiv>
-      <LocationOnSharpIcon/>
+      <LocationOnSharpIcon  fontSize='large'/>
       <p>{props.data.address}</p>
     </EstateCardDiv>
 

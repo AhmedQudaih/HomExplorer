@@ -62,9 +62,8 @@ function Services() {
 
     fetchData();
   },[partition, change])
-
   if (data.length === 0 ) {
-    return (<ServicesContainer >
+    return (<ServicesContainer  id="services" name="services" >
       <ServicesH1>Services</ServicesH1>
       <Loading/>
     </ServicesContainer>);
@@ -72,15 +71,15 @@ function Services() {
   return (
    <ServicesContainer id="services" name="services">
     <ServicesH1>Services</ServicesH1>
-    <ServicesWrapper>
-      {
-        data.slice((Math.ceil(page) - 1) * 6, Math.ceil(page) * 6).map((e) => (
-          <EstateCard updateData={updateData} key={e._id} data={e} expand={expand} handleDetailsClick={handleDetailsClick} />
-         ))
-      }
+      <ServicesWrapper>
+        {
+          data.slice((Math.ceil(page) - 1) * 6, Math.ceil(page) * 6).map((e) => (
+            <EstateCard updateData={updateData} key={e._id} data={e} expand={expand} handleDetailsClick={handleDetailsClick} />
+           ))
+        }
 
-    </ServicesWrapper>
-    <Box sx={{ m: 5, padding: "1%",backgroundColor: 'white',borderRadius: "10px"}}>
+      </ServicesWrapper>
+    <Box sx={{ m: "2%", padding: "1%",backgroundColor: 'white',borderRadius: "10px"}}>
       <Button href="#services"><Pagination count={totalPages} page={page} color="success" onChange={handlePageChange}/></Button>
     </Box>
   </ServicesContainer>

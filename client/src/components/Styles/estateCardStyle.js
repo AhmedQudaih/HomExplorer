@@ -3,6 +3,7 @@ import 'animate.css';
 
 
 export const EstateCardDivCard = styled.div`
+min-width:min-content;
 animation: bounceInRight;
 animation-duration: 2s;
 background: #fff;
@@ -20,15 +21,15 @@ transition: all 0.2s ease-in-out;
 }
  &.expandClass{
 
-   grid-row-start: 2;
-   grid-column: span 3;
+   grid-row-start: 3;
+   grid-column: 1/-1;
    @media screen and (max-width: 1000px){
      grid-row-start: 2;
-     grid-column: span 2;
+
    }
    @media screen and (max-width: 768px){
      grid-row-start: auto;
-     grid-column: span 1;
+
    }
 }
 &:hover{
@@ -47,6 +48,12 @@ margin-bottom: 10px;
 &.expandIcone{
   height: 300px;
   width: 500px;
+}
+@media screen and (max-width: 768px){
+&.expandIcone{
+  height: 200px;
+  width: 300px;
+}
 }
 `
 

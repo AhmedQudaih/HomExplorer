@@ -22,6 +22,12 @@ function EstateCard(props){
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+
+  React.useEffect(() => {
+  setActiveStep(0)
+},[expand])
+
+
   return(
     <EstateCardDivCard className ={expand && "expandClass"} onClick={expand? null : () => props.handleDetailsClick(props.data._id)}>
       {expand &&
@@ -46,9 +52,12 @@ function EstateCard(props){
         {expand ? props.data.desc : (props.data.desc.substring(0, 50) + "....")}
       </p>
     </EstateCardDiv>
+
     <Collapse in={expand} timeout="auto" unmountOnExit={true}>
       <EstateDetails updateData={props.updateData} data={props.data} />
+
     </Collapse>
+
   </EstateCardDivCard>
   );
 }

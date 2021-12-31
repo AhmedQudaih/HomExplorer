@@ -61,6 +61,7 @@ exports.deleteEstate = function(req, res) {
 
 
 exports.addEstate = function(req, res) {
+  req.body.status = true //while testing then remove
   var newEstate = new estate.estateModel(req.body);
     picAddOperation(req.files ,newEstate);
   newEstate.save(function(error) {
@@ -97,8 +98,7 @@ if(req.body.deletedPicNames || req.files.contract){
   }
   })
 }
-
-
+  req.body.status = true; //while testing then false
   estate.estateModel.updateOne({  _id: req.body._id }, req.body,
   function(error) {
    if (error) {

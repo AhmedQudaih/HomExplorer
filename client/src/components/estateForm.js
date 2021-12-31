@@ -25,25 +25,31 @@ function EstateForm(props) {
   const [CategoryAndType, setCategoryAndType] = React.useState([]);
   const [deletedPicNames, setDeletedPicNames] = React.useState([]);
 
-  if(props.type==='Update' && props.data.category._id && open){
-  props.data.category = props.data.category._id
-    props.data.type = props.data.type._id
-
-
-  }
+  const handelUpdateform = React.useCallback(() => {
+        if(props.type==='Update' && props.data.category._id){
+    setEstate((prevEstate) => {
+     return {
+        ...prevEstate,
+          "category": props.data.category._id,
+          "type":props.data.type._id
+      };
+    });
+    }
+  }, [props])
 
 
     React.useEffect(() => {
       const fetchData = async ()=>{
       const data = await serverFunctions.getCategoryAndType();
+        handelUpdateform();
       setCategoryAndType(data);
-    }
+        }
+
       fetchData();
-    },[])
+    },[handelUpdateform])
 
 
  function valid(){
-
    let msg =""
      Object.entries(validation).forEach(([key, value]) => {
        (value === "error") && (msg=msg+"  "+key)});
@@ -119,7 +125,7 @@ function fileValue(event){
   validation.Price = estate.price > 0 && estate.price < 200000000?"success":"error";
   validation.Number_Of_Rooms = estate.numOfRooms > 0 && estate.numOfRooms < 30  ? "success":"error";
   validation.Number_Of_BathRooms= estate.numOfBathRooms > 0 && estate.numOfBathRooms < 30  ? "success":"error";
-  validation.Size= estate.size > 0 && estate.size < 10000?"success":"error" ;
+  validation.Size= estate.size > 20 && estate.size < 10000?"success":"error" ;
   validation.Description= estate.desc.length > 30 ?"success":"error" ;
   validation.Address= estate.address.length > 4 ?"success":"error";
   validation.Type= estate.type.length > 0 ?"success":"error";
@@ -127,13 +133,12 @@ function fileValue(event){
   validation.Contract= estate.contract !== null ?"success":"error";
   validation.Images= estate.pic.length > 0 ?"success":"error";
 
-
   const handleDelete = (index ,path) => {
-     estate.pic.splice(index,1);
+    let pic = estate.pic.filter((element,x) => {  return x !== index})
    setEstate((prevEstate) => {
     return {
        ...prevEstate,
-         "pic":estate.pic
+         "pic":pic
      };
    });
    path && setDeletedPicNames((pre)=>{return [...pre,path]})

@@ -19,7 +19,7 @@ import {
 import {EstateCardDiv} from './Styles/estateCardStyle';
 import serverFunctions from '../serverFunctions/estate'
 function EstateDetails(props){
-  
+
   const handelDeleteBtn = async (id) => {
         const Status = await serverFunctions.deleteEstate(id);
           Status ==='error'? alert(`Somthing went wrong try again later`):props.updateData();
@@ -70,7 +70,7 @@ function EstateDetails(props){
       </Button>
       <EstateForm updateData={props.updateData} type={"Update"} data={props.data}/>
   </DetailsBtnCard >
-    </div>
+</div>
   );
 }
 

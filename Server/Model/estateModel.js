@@ -10,7 +10,7 @@ const estateSchema = new Schema ({
       price: { type: Number,  min: 1, max: 200000000, required: true },
         numOfRooms : {type: Number,  min: 1, max: 30, required: true},
         numOfBathRooms : {type: Number,  min: 1, max: 30, required: true},
-        size : {type: Number, min: 1, max: 10000, required: true},
+        size : {type: Number, min: 20, max: 10000, required: true},
         desc: { type: String, minLength:30 ,required: true },
       status:{ type: Boolean, default: false},
       type: {  type:  Schema.Types.ObjectId, ref: 'estateType', required: true },

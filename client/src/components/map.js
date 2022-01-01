@@ -2,13 +2,13 @@ import React from "react";
 import { Map, Marker } from "pigeon-maps";
 
 const style = {
-  height:"300px",
-  margin: "35px",
+  height:"30rem",
+  margin: "3.5rem",
 
 }
 
 function MyMap(props){
-  function handleChange(event){
+  const handleChange = (event) => {
     event.target = {name : "addressOnMap" ,value :event.latLng};
     props.Change(event);
   };
@@ -22,3 +22,8 @@ function MyMap(props){
 }
 
 export default MyMap;
+MyMap.defaultProps= {
+  Change: ()=>{
+    return null;
+  }
+}

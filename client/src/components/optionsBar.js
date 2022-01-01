@@ -1,5 +1,5 @@
 import React from 'react';
-import {Drawer, List, ListItem, ListItemIcon, ListItemText,  } from '@mui/material';
+import {Drawer, List, ListItem, ListItemIcon, ListItemText} from '@mui/material';
 import EstateForm from './estateForm';
 import {
   NavBtn,
@@ -18,7 +18,7 @@ function OptionsBar(props){
       >
         <List>
           <ListItem button>
-            <EstateForm/>
+            <EstateForm />
           </ListItem >
         </List>
 
@@ -26,7 +26,6 @@ function OptionsBar(props){
     );
     if(props.Mobile){
     return (
-
       <SideBtnWrap>
         <SidebarRoute to="#" onClick={toggleDrawer(true)}>View Bar</SidebarRoute>
           <Drawer
@@ -37,8 +36,6 @@ function OptionsBar(props){
             {list("right")}
           </Drawer>
       </SideBtnWrap>
-
-
     );
     }
     return (

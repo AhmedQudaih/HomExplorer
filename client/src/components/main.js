@@ -29,7 +29,6 @@ function Main() {
                     </Button>
                 </MainBtnWrapper>
             </MainContent>
-
         </MainContainer>
     )
 }

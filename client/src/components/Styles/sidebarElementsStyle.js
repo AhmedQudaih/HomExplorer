@@ -35,11 +35,11 @@ color: #fff;
 export const SidebarMenu = styled.ul`
 display: grid;
 grid-template-columns: 1fr;
-grid-template-rows: repeat(6, 80px);
+grid-template-rows: repeat(6, 8rem);
 text-align: center;
 
-@media screen and (max-width: 480px){
-  grid-template-rows: repeat(6, 60px);
+@media screen and (max-width: 48rem){
+  grid-template-rows: repeat(6, 6rem);
 }
 `
 export const SidebarLink = styled(LinkS)`
@@ -64,12 +64,12 @@ display: flex;
 justify-content: center;
 `
 export const SidebarRoute = styled(LinkR)`
-border-radius: 50px;
+border-radius: 5rem;
 background: #01bf71;
 white-space: nowrap;
-padding: 16px 64px;
+padding: 1.6rem 6.4rem;
 color: #010606;
-font-size: 16px;
+font-size: 1.6rem;
 outline: none;
 border: none;
 cursor: pointer;

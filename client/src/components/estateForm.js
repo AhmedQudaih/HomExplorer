@@ -4,70 +4,91 @@ import {
   EstateFormTitle,
   EstateFormClose,
   EstateFormSubmitBtn,
-  EstateFormAnimation
+  EstateFormAnimation,
+  Input
 } from './Styles/estateFormStyle';
 import MyMap from './map';
-import {Button, MenuItem ,TextField , Dialog ,DialogContent} from '@mui/material';
+import {Button, MenuItem ,TextField , Dialog ,DialogContent,Chip,Stack } from '@mui/material';
 import Loading from './loading';
-import { AddCircleOutline as AddCircleOutlineIcon ,Cached as CachedIcon, Save as SaveIcon , Close as CloseIcon} from "@material-ui/icons";
+import {CameraAltOutlined , AddCircleOutline as AddCircleOutlineIcon ,Cached as CachedIcon, Save as SaveIcon , Close as CloseIcon} from "@material-ui/icons";
+import serverFunctions from '../serverFunctions/estate';
+
+
+
 function EstateForm(props) {
+
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [estate, setEstate] = React.useState(props.data);
+  const [CategoryAndType, setCategoryAndType] = React.useState([]);
+  const [deletedPicNames, setDeletedPicNames] = React.useState([]);
 
-const data =  {
-  sellerId: "61a81506d4c8835ca4a20610",
-    details: {
-        numOfRooms: "",
-        numOfBathRooms: "",
-        size: "",
-        desc: ""
-    },
-    address: "",
-    price: "",
-    type: "",
-    category: "",
-    addressOnMap: [30.044417093043883 ,31.235753400264315],
-    contract: [],
-    pics: []
-}
-if(props.data){
-  data._id = props.data._id;
-  data.details.numOfBathRooms = props.data.details.numOfBathRooms;
-  data.details.numOfRooms = props.data.details.numOfRooms;
-  data.details.size = props.data.details.size;
-  data.details.desc = props.data.details.desc;
-  data.address= props.data.address;
-  data.price= props.data.price;
-  data.category= props.data.category._id;
-  data.type= props.data.type._id;
-  data.addressOnMap= props.data.addressOnMap;
-  data.contract= props.data.contract;
-  data.pics= props.data.pics;
-
-}
-const [estate, setEstate] = React.useState(data);
-const [category, setCategory] = React.useState([]);
-const [type, setType] = React.useState([]);
-
-
-React.useEffect(() => {
-  fetch('http://localhost:4000/getCategoryAndType').then(response => {
-    if (response.ok) {
-      return response.json();
+  const handelUpdateform = React.useCallback(() => {
+        if(props.type==='Update' && props.data.category._id){
+    setEstate((prevEstate) => {
+     return {
+        ...prevEstate,
+          "category": props.data.category._id,
+          "type":props.data.type._id
+      };
+    });
     }
-    throw response;
-  }).then(data => {
-    setCategory(data["category"]);
-    setType(data["type"]);
-  }).catch(error => {
-    console.error("Error fetching data: ", error);
-  })
-}, [])
+  }, [props])
+
+
+    React.useEffect(() => {
+      const fetchData = async ()=>{
+      const data = await serverFunctions.getCategoryAndType();
+        handelUpdateform();
+      setCategoryAndType(data);
+        }
+
+      fetchData();
+    },[handelUpdateform])
+
+
+ function valid(){
+   let msg =""
+     Object.entries(validation).forEach(([key, value]) => {
+       (value === "error") && (msg=msg+"  "+key)});
+      if(msg.length !==0){
+        alert(`Please check the (${msg}) input`);
+        return false;
+      }
+      return true;
+
+ }
+    const submitEstate = async (event) =>{
+      event.preventDefault();
+      event.target.pic.files = fileValue();
+      if(!valid()){
+        return;
+      }
+        const formData = new FormData(event.target);
+          formData.append('sellerId',estate.sellerId);
+          estate.addressOnMap.forEach(element =>{
+              formData.append('addressOnMap',element);
+            });
+
+            if(props.type !== 'Add'){
+                formData.append('_id',estate._id);
+                    formData.append('deletedPicNames',deletedPicNames);
+              const Status = await serverFunctions.updateEstate(formData);
+                Status ==='error'? alert(`Somthing went wrong try again later`): props.updateData();
+            }else{
+                const Status = await serverFunctions.addEstate(formData);
+                  Status ==='error'? alert(`Somthing went wrong try again later`):handleClose();
+            }
+    }
+
+
 
   function handleChange(event) {
-    const { name, value } = event.target;
+
+    let name = event.target.name;
+     let value=  name ==="contract"? event.target.files[0]: event.target.value
     setEstate((prevEstate) => {
      return {
         ...prevEstate,
@@ -75,87 +96,62 @@ React.useEffect(() => {
       };
     });
   }
-  function handleDetailsChange(event) {
-    const { name, value } = event.target;
-    setEstate((prevEstate) => {
-     return {
-        ...prevEstate,
-        details :{
-          ...prevEstate.details,
-          [name]:value
-        }
-      };
-    });
-  }
-/*-------------------------------------------------------------------*/
-
-
-  function submitEstate(event) {
-    if(props.data){
-      const requestOptions = {
-             method: 'put',
-             headers: { 'Content-Type': 'application/json' },
-             body: JSON.stringify(estate)
-         };
-      fetch("http://localhost:4000/updateEstate",requestOptions).then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      }).then(data => {
-      console.log(data);
-      }).catch(error => {
-        console.error("Error fetching data: ", error);
-      })
-    }else{
-      const requestOptions = {
-             method: 'POST',
-             headers: { 'Content-Type': 'application/json' },
-             body: JSON.stringify(estate)
-         };
-      fetch("http://localhost:4000/addEstate",requestOptions).then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw response;
-        }).then(data => {
-        console.log(data);
-        }).catch(error => {
-          console.error("Error fetching data: ", error);
-        })
-    }
-
-      event.preventDefault();
-  }
-
 
 function handlefile(event){
-  console.log(event.target.files);
-  let pic =  event.target.files[0];
+  let pic =  event.target.files;
   setEstate((prevEstate) => {
    return {
       ...prevEstate,
-      pics :[
-        ...prevEstate.pics,
-        pic
+      "pic" :[
+        ...prevEstate["pic"],
+          ...pic,
       ]
     };
   });
-
 }
 
+function fileValue(event){
+  let list = new DataTransfer();
+  estate.pic.forEach((e)=>{
+    if(!e.path){
+        let file = new File([e], e.name ,{type:e.type});
+          list.items.add(file);
+    }
+  })
+  return list.files
+}
 
-console.log(estate);
+  let validation ={};
+  validation.Price = estate.price > 0 && estate.price < 200000000?"success":"error";
+  validation.Number_Of_Rooms = estate.numOfRooms > 0 && estate.numOfRooms < 30  ? "success":"error";
+  validation.Number_Of_BathRooms= estate.numOfBathRooms > 0 && estate.numOfBathRooms < 30  ? "success":"error";
+  validation.Size= estate.size > 20 && estate.size < 10000?"success":"error" ;
+  validation.Description= estate.desc.length > 30 ?"success":"error" ;
+  validation.Address= estate.address.length > 4 ?"success":"error";
+  validation.Type= estate.type.length > 0 ?"success":"error";
+  validation.Category= estate.category.length > 0 ?"success":"error";
+  validation.Contract= estate.contract !== null ?"success":"error";
+  validation.Images= estate.pic.length > 0 ?"success":"error";
 
+  const handleDelete = (index ,path) => {
+    let pic = estate.pic.filter((element,x) => {  return x !== index})
+   setEstate((prevEstate) => {
+    return {
+       ...prevEstate,
+         "pic":pic
+     };
+   });
+   path && setDeletedPicNames((pre)=>{return [...pre,path]})
+  };
 
-  if (category.length === 0 || type.length ===0) {
+  if (CategoryAndType.length === 0) {
     return (
       <Loading/>
     );
   }
   return (
     <div >
-    {props.data ?
+    {props.type !=="Add" ?
        <Button onClick={handleOpen} color="success" variant="outlined" startIcon={<CachedIcon />}>
          Update
        </Button> : <Button onClick={handleOpen} color="success" variant="outlined" startIcon={<AddCircleOutlineIcon />}>
@@ -170,19 +166,19 @@ console.log(estate);
              </Button>
              </div>
              <EstateFormTitle>  Estate Form </EstateFormTitle>
-
             <DialogContent dividers >
-               <EstateMainForm >
-               < TextField name="category" color = "success"
+               <EstateMainForm onSubmit={submitEstate} >
+               < TextField name="category" color = {validation.Category}
                select label = "Select"
+               required
                value = {
-               estate.category
+                estate.category
                }
                onChange = {
                handleChange
                }
                helperText = "Please select estate category" > {
-               category.map((option) => ( <
+               CategoryAndType.category.map((option) => ( <
                 MenuItem key = {
                   option._id
                 }
@@ -194,17 +190,20 @@ console.log(estate);
                 /MenuItem>
                ))
                } <
-               /TextField> <
-               TextField name="type" color = "success"
+               /TextField>
+                <
+               TextField name="type" color = {validation.Type}
                select label = "Select"
+               required
                value = {
-               estate.type
+                estate.type
+
                }
                onChange = {
                handleChange
                }
                helperText = "Please select estate type" > {
-               type.map((option) => ( <
+                CategoryAndType.type.map((option) => ( <
                 MenuItem key = {
                   option._id
                 }
@@ -218,11 +217,14 @@ console.log(estate);
                } <
                /TextField>
                <
-               TextField color = "success"
+               TextField
+               color = {validation.Price}
                type = "number"
                name="price"
                label = "Price"
                variant = "outlined"
+               required
+               helperText = "Please enter price in dollar"
                onChange = {
                handleChange
                }
@@ -230,80 +232,94 @@ console.log(estate);
 
                / >
                <
-               TextField color = "success"
+               TextField  color = {validation.Size}
                type = "number"
                label = "Size"
                variant = "outlined"
                name="size"
+               helperText = "Please enter size in meter square (&#13217;)"
+               required
                onChange = {
-               handleDetailsChange
+               handleChange
                }
-               value = {estate.details.size}
+               value = {estate.size}
                / >
                <
-               TextField color = "success"
+               TextField  color={validation.Number_Of_Rooms}
                type = "number"
                label = "Number of Rooms"
                variant = "outlined"
                name="numOfRooms"
+               required
                onChange = {
-               handleDetailsChange
+               handleChange
                }
-               value = {estate.details["numOfRooms"]}
+               value = {estate.numOfRooms}
                / >
                <
-               TextField color = "success"
+               TextField color = {validation.Number_Of_BathRooms}
                type = "number"
                label = "Number of Bathrooms"
                variant = "outlined"
                name = "numOfBathRooms"
+               required
                onChange = {
-               handleDetailsChange
+               handleChange
                }
-               value = {estate.details["numOfBathRooms"]}
+               value = {estate.numOfBathRooms}
                / >
+               <div>
+               <label>
+                 <Input name = "pic"  onChange = {
+                 handlefile
+                 } multiple type="file" />
+               <Button variant="outlined" color = {validation.Images} component="span"> <CameraAltOutlined />
+                 </Button> Upload Estate Images
+               </label>
+               <Stack sx={{mt:2}} spacing={1}>
+                {  estate.pic.map((e , index)=>{
+                    return(  <Chip  key={e.name} label={e.name.substring(0, 7) + "...."} variant="outlined" onDelete={()=>handleDelete(index ,e.path)} />);
+                  })}
+              </Stack>
+              </div>
+
+               <div>
+                <label>
+                  <Input  name = "contract"  onChange = {handleChange} type="file" />
+                  <Button variant="outlined" color = {validation.Contract} component="span"> <CameraAltOutlined />
+                 </Button> Upload Estate Contract
+               </label>
+               <Stack sx={{mt:2}} spacing={1}>
+              {estate.contract && <Chip key={estate.contract.name} label={estate.contract.name}
+               variant="outlined" onDelete={()=>setEstate((prevEstate) => {
+                return {...prevEstate,"contract":null};})} />
+              }
+
+              </Stack>
+             </div>
+
                <
-               TextField color = "success"
-               label = "pics"
-               type = "file"
-               onChange = {
-               handlefile
-               }
-               InputLabelProps = {
-               {
-                shrink: true,
-               }
-               }
-               /> <
-               TextField color = "success"
-               label = "contract"
-               type = "file"
-               onChange = {
-               handlefile
-               }
-               InputLabelProps = {
-               {
-                shrink: true,
-               }
-               }
-               />
-               <
-               TextField color = "success"
+               TextField color = {validation.Description}
                label = "Description"
                name = "desc"
+               required
+                 helperText = "Please describe the estate, neighborhood and any constraints"
                onChange = {
-               handleDetailsChange
+               handleChange
                }
-               value = {estate.details["desc"]}
+               value = {estate.desc}
                multiline maxRows = {
                4
                }
                variant = "outlined" / >
                <
-               TextField color = "success"
+               TextField color = {validation.Address}
                label = "Address"
                variant = "outlined"
                name = "address"
+               multiline
+               required
+                helperText = "Please enter the estate address and mark it on map"
                onChange = {
                handleChange
                }
@@ -312,7 +328,7 @@ console.log(estate);
                  <MyMap Change={handleChange} Location={estate.addressOnMap} />
                  </EstateFormSubmitBtn>
                <EstateFormSubmitBtn>
-                 <Button type="submit"onClick={submitEstate} color="success" variant="outlined" startIcon={<SaveIcon />}>
+                 <Button type="submit"  color="success" variant="outlined" startIcon={<SaveIcon />}>
                  Save
                  </Button>
                </EstateFormSubmitBtn>
@@ -326,3 +342,20 @@ console.log(estate);
 }
 
 export default EstateForm;
+EstateForm.defaultProps = {
+    data :  {
+      sellerId: "61a81506d4c8835ca4a20610",
+        numOfRooms: "",
+        numOfBathRooms: "",
+        size: "",
+        desc: "",
+        address: "",
+        price: "",
+        type:"",
+        category:"",
+        addressOnMap: [30.044417093043883 ,31.235753400264315],
+        contract:null,
+        pic: []
+    },
+  type:"Add"
+}

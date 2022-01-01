@@ -13,77 +13,64 @@ import {
   FullscreenExit as FullscreenExitIcon,
 } from "@material-ui/icons";
 import {
-  ServicesDiv,
-  ExpandedIconServicesCard,
-  ServicesBtnCard
-} from './Styles/servicesElementsStyle';
+  ExpandedIconDetailsCard,
+  DetailsBtnCard
+} from './Styles/estateDetailsStyle';
+import {EstateCardDiv} from './Styles/estateCardStyle';
+import serverFunctions from '../serverFunctions/estate'
 function EstateDetails(props){
 
-    const handelDeleteBtn = (id) => {
-      const requestOptions = {
-         method: 'delete',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify({ _id: id })
-     };
-  fetch("http://localhost:4000/deleteEstate",requestOptions).then(response => {
-    if (response.ok) {
-      return response.json();
-    }
-    throw response;
-  }).then(data => {
-  console.log(data);
-  }).catch(error => {
-    console.error("Error fetching data: ", error);
-  })
-
-    };
+  const handelDeleteBtn = async (id) => {
+        const Status = await serverFunctions.deleteEstate(id);
+          Status ==='error'? alert(`Somthing went wrong try again later`):props.updateData();
+  }
 
 
   return(
     <div>
-    <ExpandedIconServicesCard>
-      <ServicesDiv>
-        {props.data.category === "Apartment" ? <ApartmentIcon /> : <VillaIcone/>}
+    <ExpandedIconDetailsCard>
+      <EstateCardDiv>
+        {props.data.category === "Apartment" ? <ApartmentIcon fontSize='large' /> : <VillaIcone fontSize='large'/>}
         <p>
           {props.data.category.name}
         </p>
-      </ServicesDiv>
-      <ServicesDiv>
-        <FullscreenExitIcon/>
+      </EstateCardDiv>
+      <EstateCardDiv>
+        <FullscreenExitIcon fontSize='large' />
         <p>
-          {props.data.details['size']}
+          {props.data.size}
         </p>
-      </ServicesDiv>
-      <ServicesDiv>
-        <LocalHotelIcon/>
-        <p>{props.data.details['numOfRooms']}
+      </EstateCardDiv>
+      <EstateCardDiv>
+        <LocalHotelIcon fontSize='large'/>
+        <p>{props.data.numOfRooms}
         </p>
-      </ServicesDiv>
-      <ServicesDiv>
-        <BathtubIcon/>
+      </EstateCardDiv>
+      <EstateCardDiv>
+        <BathtubIcon fontSize='large' />
         <p>
-          {props.data.details['numOfBathRooms']}
+          {props.data.numOfBathRooms}
         </p>
-      </ServicesDiv>
-      <ServicesDiv>
-        <LocalOfferIcon/>
+      </EstateCardDiv>
+      <EstateCardDiv>
+        <LocalOfferIcon fontSize='large' />
         <p> {props.data.type.name}</p>
-      </ServicesDiv>
-    </ExpandedIconServicesCard>
-    <ServicesDiv>
-      <LocationOnSharpIcon/>
-      <p>Address Address Address Address Address Address{props.data.Address}</p>
-    </ServicesDiv>
+      </EstateCardDiv>
+    </ExpandedIconDetailsCard>
+    <EstateCardDiv>
+      <LocationOnSharpIcon  fontSize='large'/>
+      <p>{props.data.address}</p>
+    </EstateCardDiv>
 
     <MyMap Location={[props.data.addressOnMap[0],props.data.addressOnMap[1]]} />
 
-    <ServicesBtnCard>
+    <DetailsBtnCard>
       <Button color="error" onClick={()=>handelDeleteBtn(props.data._id)} variant="outlined" startIcon={<DeleteIcon />}>
         Delete
       </Button>
-      <EstateForm data={props.data}/>
-    </ServicesBtnCard >
-    </div>
+      <EstateForm updateData={props.updateData} type={"Update"} data={props.data}/>
+  </DetailsBtnCard >
+</div>
   );
 }
 

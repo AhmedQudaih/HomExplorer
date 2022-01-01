@@ -2,109 +2,111 @@ const express = require("express");
 const category = require("../Model/categoryModel");
 const type = require("../Model/estateTypeModel");
 const estate = require("../Model/estateModel");
+const fs = require('fs')
+
+
+
+function picAddOperation(files,estate){
+  if(files.contract){
+            estate.contract={};
+            estate.contract.path =files.contract[0].path;
+            estate.contract.name =files.contract[0].filename;
+      }
+      if(files.pic){
+    files.pic.forEach((e) => {
+      estate.pic.push({
+        path:e.path,
+        name:e.filename
+      });
+    })}
+  }
+
+function picDeleteOperation(picPath){
+  picPath.forEach((e)=>{
+    try {
+      fs.unlinkSync(e.path)
+    } catch(err) {
+      console.error(err)
+    }
+  })
+}
+
 
 
 exports.getAllEstates = function(req, res) {
+  partitionNumber =(parseInt(req.params.partition)*30);
   estate.estateModel.find({
     status: true
-  }, function(err,doc) {
-    if (err) {
-      console.log(err);
-      res.send("Somthing went wrong plz try again later");
+  }).skip(partitionNumber).limit(30).populate('category').populate("type").exec(function(error,doc) {
+    if (error) {
+      return  res.status(400).send(JSON.stringify(error));
     }
-    console.log(doc);
     res.send(doc);
   });
+
 }
-
-
-exports.findEstate = function(req, res) {
-  estate.estateModel.findById({
-    _id: req.params.estateId
-  }, function(err,doc) {
-    if (err) {
-      console.log(err);
-      res.send("Somthing went wrong plz try again later");
-    }
-    console.log(doc);
-    res.send(doc);
-  });
-}
-
-
 
 exports.deleteEstate = function(req, res) {
+
   estate.estateModel.findByIdAndRemove({
     _id: req.body._id
-  }, req.body, function(err, doc) {
-    if (err) {
-      console.log(err);
-      res.send("Something wrong when deleting data!");
+  }, req.body, function(error, doc) {
+    if (error) {
+      return res.status(400).send(JSON.stringify(error));
     }
-    res.send("Deleted Successfully!");
+      picDeleteOperation([doc.contract,...doc.pic]);
+    res.status(200).send(JSON.stringify("Ok"));
   });
 }
 
 
 exports.addEstate = function(req, res) {
-  var contract = [];
-  var pics = [];
-  if (req.files) {
-    if (req.files.Contract.length == 0) {
-      req.files.Contract.forEach((e) => {
-        contract.push({
-          buffer: e.buffer,
-          name: e.originalname
-        });
-      })
-    }
-    if (req.files.Pics.length == 0) {
-      req.files.Pics.forEach((e) => {
-        pics.push({
-          buffer: e.buffer,
-          name: e.originalname
-        });
-      })
-    }
-  }
+  req.body.status = true //while testing then remove
   var newEstate = new estate.estateModel(req.body);
-  newEstate.contract = contract
-  newEstate.pics = pics
-  console.log(newEstate);
-  newEstate.save(function(err) {
-    if (err) {
-      console.log(err);
-      res.send("Somthing went wrong plz try again later");
+    picAddOperation(req.files ,newEstate);
+  newEstate.save(function(error) {
+    if (error) {
+  picDeleteOperation([newEstate.contract,...newEstate.pic]);
+         return res.status(400).send(JSON.stringify(error));
     }
-    res.send("Add request sended ");
+    res.status(200).send(JSON.stringify("Ok"));
   });
-
 }
 
 exports.updateEstate = function(req, res) {
-  estate.estateModel.findOneAndUpdate({
-    _id: req.body._id
-  }, req.body, function(err, doc) {
-    if (err) {
-      console.log(err);
-      res.send("Something wrong when updating data!");
+req.body.deletedPicNames = req.body.deletedPicNames.split(",");
+estate.estateModel.findById({ _id: req.body._id}).then((data)=>{
+if(req.body.deletedPicNames || req.files.contract){
+  req.body.pic=[];
+  req.body.pic = data.pic.filter(e => {
+      if(!req.body.deletedPicNames.includes(e.path)){
+        return e
+      }})
+    picAddOperation(req.files,req.body);
+  if(req.body.contract){
+    req.body.deletedPicNames.push(data.contract.path)
+  }else if(!req.body.contract){
+    req.body.contract = data.contract;
+  }
+  req.body.deletedPicNames.forEach((e)=>{
+    if(e.length > 1){
+    try {
+      fs.unlinkSync(e)
+    } catch(err) {
+      console.error(err)
     }
-    res.send("Update request sended!");
-
-  });
+  }
+  })
 }
+  req.body.status = true; //while testing then false
+  estate.estateModel.updateOne({  _id: req.body._id }, req.body,
+  function(error) {
+   if (error) {
+       return res.status(400).send(JSON.stringify(error));
+   }
+   res.status(200).send(JSON.stringify("Ok"));
+ });});
 
-exports.getApproveEstateRequests = function(req, res) {
-  estate.estateModel.find({
-    status: false
-  }, function(err, aproveReq) {
-    if (err) {
-      console.log(err);
-      res.send("Somthing went wrong plz try again later");
-    }
-    console.log(aproveReq);
-    res.send(aproveReq);
-  });
 }
 
 exports.getCategoryAndType = async function(req, res) {
@@ -113,3 +115,28 @@ exports.getCategoryAndType = async function(req, res) {
   categoryAndType.type = await type.estateTypeModel.find({}).exec();
   res.send(categoryAndType);
 }
+
+
+/*
+exports.getApproveEstateRequests = function(req, res) {
+  estate.estateModel.find({
+    status: false
+  }, function(error, aproveReq) {
+    if (error) {
+    return  res.status(400).send(JSON.stringify(error));
+    }
+    res.send(aproveReq);
+  });
+}
+
+exports.findEstate = function(req, res) {
+  estate.estateModel.findById({
+    _id: req.params.estateId
+  }, function(error,doc) {
+    if (error) {
+     return res.status(400).send(JSON.stringify(error));
+    }
+    res.send(doc);
+  });
+}
+*/

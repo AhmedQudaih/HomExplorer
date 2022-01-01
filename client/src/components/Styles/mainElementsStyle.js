@@ -4,8 +4,8 @@ background: #0c0c0c;
 display: flex;
 justify-content: center;
 align-items: center;
-padding: 0 30px;
-height: 800px;
+padding: 0 3rem;
+height: 80rem;
 position: relative;
 z-index: 1;
 :before {
@@ -33,8 +33,8 @@ overflow: hidden;
 `
 
 export const MainBtnArrowStyle = {
-marginLeft: "8px",
-fontSize: "20px",
+marginLeft: "0.8rem",
+fontSize: "2rem",
 }
 
 export const VideoBg = styled.video`
@@ -46,42 +46,42 @@ background: #232a34;
 `
 export const MainContent = styled.div`
 z-index: 3;
-max-width: 1200px;
+max-width: 120rem;
 position: absolute;
-padding: 8px 24px;
+padding: 0.8rem 2.4rem;
 display: flex;
 flex-direction: column;
 align-items: center;
 `
 export const MainH1 = styled.h1`
 color: #fff;
-font-size: 48px;
+font-size: 4.8rem;
 text-align: center;
 
-@media screen and (max-width: 768px){
-    font-size: 40px;
+@media screen and (max-width: 76.8rem){
+    font-size: 4rem;
 }
-@media screen and (max-width: 480px){
-    font-size: 32px;
+@media screen and (max-width: 48rem){
+    font-size: 3.2rem;
 }
 `
 export const MainP = styled.p`
-margin-top: 24px;
+margin-top: 2.4rem;
 color: #fff;
-font-size: 24px;
+font-size: 2.4rem;
 text-align: center;
-max-width: 600px;
+max-width: 60rem;
 
-@media screen and (max-width: 768px){
-    font-size: 24px;
+@media screen and (max-width: 76.8rem){
+    font-size: 2.4rem;
 }
 
-@media screen and (max-width: 480px){
-    font-size: 18px;
+@media screen and (max-width: 48rem){
+    font-size: 1.8rem;
 }
 `
 export const MainBtnWrapper = styled.div`
-margin-top: 32px;
+margin-top: 3.2rem;
 display: flex;
 flex-direction: column;
 align-items: center;

@@ -7,6 +7,7 @@ main().catch(err => console.log(err));
 
 async function main() {
   await mongoose.connect('mongodb://localhost:27017/HomExplorer');
+//  await mongoose.connect('mongodb+srv://wamb:wamb123@cluster0.ykmn0.mongodb.net/HomExplorer')
 }
 
 
@@ -41,7 +42,7 @@ type.estateTypeModel.insertMany([auction , sell , rent ]).then(function(){
 }).catch(function(error){
     console.log(error)      // Failure
 });
-*//*
+
 const newUser = new user.userModel({
   name: "Second-User",
   password: "User22@123",

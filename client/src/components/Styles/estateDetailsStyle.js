@@ -15,7 +15,7 @@ export const ExpandedIconDetailsCard = styled.div`
 margin: 5% auto;
 min-width:100%;
 display: grid;
-grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr ;
 grid-gap: 4rem;
 transition: all 0.2s ease-in-out;
 `

@@ -125,6 +125,7 @@ function fileValue(event){
   validation.Price = estate.price > 0 && estate.price < 200000000?"success":"error";
   validation.Number_Of_Rooms = estate.numOfRooms > 0 && estate.numOfRooms < 30  ? "success":"error";
   validation.Number_Of_BathRooms= estate.numOfBathRooms > 0 && estate.numOfBathRooms < 30  ? "success":"error";
+  validation.floor = estate.floor >= 0 && estate.floor < 164  ? "success":"error";
   validation.Size= estate.size > 20 && estate.size < 10000?"success":"error" ;
   validation.Description= estate.desc.length > 30 ?"success":"error" ;
   validation.Address= estate.address.length > 4 ?"success":"error";
@@ -217,21 +218,6 @@ function fileValue(event){
                } <
                /TextField>
                <
-               TextField
-               color = {validation.Price}
-               type = "number"
-               name="price"
-               label = "Price"
-               variant = "outlined"
-               required
-               helperText = "Please enter price in dollar"
-               onChange = {
-               handleChange
-               }
-               value ={estate.price}
-
-               / >
-               <
                TextField  color = {validation.Size}
                type = "number"
                label = "Size"
@@ -243,6 +229,21 @@ function fileValue(event){
                handleChange
                }
                value = {estate.size}
+               / >
+               <
+               TextField
+               color = {validation.floor}
+               type = "number"
+               name="floor"
+               label = "floor"
+               variant = "outlined"
+               required
+               helperText = "Please enter in which floor or number of floors if villa"
+               onChange = {
+               handleChange
+               }
+               value ={estate.floor}
+
                / >
                <
                TextField  color={validation.Number_Of_Rooms}
@@ -313,18 +314,34 @@ function fileValue(event){
                }
                variant = "outlined" / >
                <
-               TextField color = {validation.Address}
-               label = "Address"
+               TextField
+               color = {validation.Price}
+               type = "number"
+               name="price"
+               label = "Price"
                variant = "outlined"
-               name = "address"
-               multiline
                required
-                helperText = "Please enter the estate address and mark it on map"
+               helperText = "Please enter price in dollar"
                onChange = {
                handleChange
                }
-               value = {estate.address}/ >
+               value ={estate.price}
+
+               / >
+
                <EstateFormSubmitBtn>
+                 <
+                 TextField color = {validation.Address}
+                 label = "Address"
+                 variant = "outlined"
+                 name = "address"
+                 fullWidth
+                 required
+                  helperText = "Please enter the estate address and mark it on map"
+                 onChange = {
+                 handleChange
+                 }
+                 value = {estate.address}/ >
                  <MyMap Change={handleChange} Location={estate.addressOnMap} />
                  </EstateFormSubmitBtn>
                <EstateFormSubmitBtn>
@@ -347,6 +364,7 @@ EstateForm.defaultProps = {
       sellerId: "61a81506d4c8835ca4a20610",
         numOfRooms: "",
         numOfBathRooms: "",
+        floor:"",
         size: "",
         desc: "",
         address: "",

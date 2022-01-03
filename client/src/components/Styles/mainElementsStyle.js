@@ -44,6 +44,13 @@ height: 100%;
 object-fit: cover;
 background: #232a34;
 `
+export const ImgBg = styled.img`
+width: 100%;
+height: 100%;
+-o-object-fit: cover;
+object-fit: cover;
+background: #232a34;
+`
 export const MainContent = styled.div`
 z-index: 3;
 max-width: 120rem;

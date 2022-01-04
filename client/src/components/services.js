@@ -2,21 +2,25 @@ import React from 'react';
 import {Button , Box ,Pagination } from '@mui/material';
 import Loading from './loading';
 import {
-  ServicesContainer,
-  ServicesH1,
-  ServicesWrapper,
+  ServicesProductContainer,
+  ServicesProductH1,
+  ServicesProductWrapper,
+  ServicesBackground,
+  ServicesH1Color
 } from './Styles/servicesElementsStyle';
+
 import EstateCard from './estateCard';
 import serverFunctions from '../serverFunctions/estate'
-
-
-function Services() {
+import { Button as ButtonMain  } from './Styles/buttonElementsStyle';
+import { ArrowForward } from '@material-ui/icons';
+import {MainBtnArrowStyle } from './Styles/mainElementsStyle';
+function Services(props) {
   const [page, setPage] = React.useState(1);
   const [change, setChange] = React.useState(false);
   const [data, setData] = React.useState('');
   const [partition, setPartition] = React.useState(0);
   const [expand, setExpand] = React.useState(false);
-  const totalPages = Math.ceil(data.length / 6);
+  const totalPages = Math.ceil(data.length / 12);
   const handlePageChange = (event, value) => {
     setPage(value);
     if(totalPages - value <= 1 ){
@@ -62,28 +66,58 @@ function Services() {
 
     fetchData();
   },[partition, change])
+
+/*in case no data*/
   if (data.length === 0 ) {
-    return (<ServicesContainer  id="services" name="services" >
-      <ServicesH1>Services</ServicesH1>
+    return (<ServicesProductContainer  id="services" name="services" >
+      <ServicesProductH1>Services</ServicesProductH1>
       <Loading/>
-    </ServicesContainer>);
+    </ServicesProductContainer>);
   }
+  /*in case call from home page*/
+  if(props.from ==="Services"){
+    return(
+      <ServicesProductContainer style={ServicesBackground} id="services" name="services">
+       <ServicesProductH1 style={ServicesH1Color} >Services</ServicesProductH1>
+         <ServicesProductWrapper>
+           {
+             data.slice(0, 3).map((e) => (
+               <EstateCard updateData={updateData} key={e._id} data={e} expand={expand} handleDetailsClick={handleDetailsClick} />
+              ))
+           }
+
+         </ServicesProductWrapper>
+           <Box sx={{ m: "2%", padding: "0.5%",borderRadius: "1rem"}}>
+         <ButtonMain to="/products"
+         primary="true"
+         dark="true"
+         >
+             More Estates <ArrowForward  style={MainBtnArrowStyle} />
+         </ButtonMain>
+           </Box>
+     </ServicesProductContainer>
+    );
+  }else {  /*in case call from products page*/
   return (
-   <ServicesContainer id="services" name="services">
-    <ServicesH1>Services</ServicesH1>
-      <ServicesWrapper>
+   <ServicesProductContainer id="services" name="services">
+    <ServicesProductH1>Services</ServicesProductH1>
+      <ServicesProductWrapper>
         {
-          data.slice((Math.ceil(page) - 1) * 6, Math.ceil(page) * 6).map((e) => (
+          data.slice((Math.ceil(page) - 1) * 12, Math.ceil(page) * 12).map((e) => (
             <EstateCard updateData={updateData} key={e._id} data={e} expand={expand} handleDetailsClick={handleDetailsClick} />
            ))
         }
 
-      </ServicesWrapper>
+      </ServicesProductWrapper>
     <Box sx={{ m: "2%", padding: "0.5%",backgroundColor: 'white',borderRadius: "1rem"}}>
       <Button href="#services"><Pagination count={totalPages} page={page} color="success" onChange={handlePageChange}/></Button>
     </Box>
-  </ServicesContainer>
-);
+  </ServicesProductContainer>
+);}
 }
 
+
 export default Services
+Services.defaultProps = {
+  from:""
+}

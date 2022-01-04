@@ -1,12 +1,12 @@
 import React from 'react';
-import ProductsMain from '../components/productsMain.js';
-import ServicesProductPage from '../components/servicesProductPage';
+import Search from '../components/search.js';
+import Services from '../components/services';
 
 function Products() {
     return (
         <div>
-          <ProductsMain />
-          <ServicesProductPage />
+          <Search />
+          <Services />
 
         </div>
     )

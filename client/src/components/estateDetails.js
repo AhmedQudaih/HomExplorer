@@ -11,6 +11,8 @@ import {
   LocalHotel as LocalHotelIcon,
   Bathtub as BathtubIcon,
   FullscreenExit as FullscreenExitIcon,
+  FavoriteIcon as FavoriteIcon,
+  FavoriteBorderIcon as unFavoriteIcon,
 } from "@material-ui/icons";
 import {
   ExpandedIconDetailsCard,
@@ -19,12 +21,27 @@ import {
 import {EstateCardDiv} from './Styles/estateCardStyle';
 import serverFunctions from '../serverFunctions/estate'
 function EstateDetails(props){
+  const [favourites, setFavourites] = React.useState([]);
+  //here to add estate list 
 
   const handelDeleteBtn = async (id) => {
         const Status = await serverFunctions.deleteEstate(id);
           Status ==='error'? alert(`Somthing went wrong try again later`):props.updateData();
   }
 
+const addFavourite = (estate) => {
+  const newFavouriteList = [...favourites, estate];
+  setFavourites(newFavouriteList);
+  
+};
+
+const removeFavourite = (estate) => {
+  const newFavouriteList = favourites.filter(
+    (favourite) => favourite.date._id !== estate.data._id
+  );
+
+  setFavourites(newFavouriteList);
+};
 
   return(
     <div>
@@ -77,6 +94,21 @@ function EstateDetails(props){
       </Button>
       <EstateForm updateData={props.updateData} type={"Update"} data={props.data}/>
   </DetailsBtnCard >
+  <DetailsBtnCard>
+  <div >
+    {props.favorite ?
+      <Button onClick={removeFavourite(props.data)} color="success" variant="outlined" startIcon={<unFavoriteIcon />}>
+      remove from favorite
+      </Button>:
+       <Button onClick={addFavourite(props.data)} color="error" variant="outlined" startIcon={<FavoriteIcon />}>
+         Add to Favorite
+       </Button> 
+        
+         
+       
+     }
+   </div> 
+  </DetailsBtnCard>
 </div>
   );
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button , Collapse} from '@mui/material';
 import EstateDetails from './estateDetails';
+import StarRating from "./starRating";
 import {
   EstateCardDivCard,
   EstateIcon,
@@ -34,10 +35,13 @@ function EstateCard(props){
       <Button onClick={()=>props.handleDetailsClick(false)} color="success" >
         <CloseIcon />
       </Button>
+      
     }
+    
     <EstateIcobDiv className ={expand && "expandIcone"} >
     <EstateIcon src={'uploads/'+props.data.pic[activeStep].name}  />
 </EstateIcobDiv>
+
     {expand &&
       <div>
             <Button size="small" onClick={handleBack} disabled={activeStep === 0 }>
@@ -47,8 +51,13 @@ function EstateCard(props){
               <KeyboardArrowRight />
           </Button>
         </div>}
+        <StarRating/>
     <EstateCardH2>{props.data.price}
-      $</EstateCardH2>
+      $
+      </EstateCardH2>
+      <EstateCardH2>
+
+      </EstateCardH2>
     <EstateCardDiv>
       <p>
         {expand ? props.data.desc : (props.data.desc.substring(0, 50) + "....")}

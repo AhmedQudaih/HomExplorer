@@ -9,11 +9,11 @@ import {
     Input
   } from './Styles/estateFormStyle';
   import EstateCard from './estateCard';
-  import {Button, Dialog ,DialogContent } from '@mui/material';
+  import { Dialog ,DialogContent } from '@mui/material';
   import { Close as CloseIcon} from "@material-ui/icons";
   import serverFunctions from '../serverFunctions/estate';
 
-function favouriteEstate (props){
+function favouriteEstate (props) {
 const [estate, setEstate] = React.useState(props.data);
   const handleClose = () => setOpen(false);
   const [open, setOpen] = React.useState(false);
@@ -75,6 +75,7 @@ return(
 
 </div>
 );
+      }
+}
 
-};
-export default favouriteEstate;
+export default favouriteEstate

@@ -113,4 +113,4 @@ const removeFavourite = (estate) => {
   );
 }
 
-export default EstateDetails
+export default EstateDetails;

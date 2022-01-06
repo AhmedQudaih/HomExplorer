@@ -11,9 +11,9 @@ import {
   LocalHotel as LocalHotelIcon,
   Bathtub as BathtubIcon,
   FullscreenExit as FullscreenExitIcon,
-  FavoriteIcon as FavoriteIcon,
-  FavoriteBorderIcon as unFavoriteIcon,
-} from "@material-ui/icons";
+  FavoriteIcons as FavoriteIcons,
+  FavoriteBorderIcons as unFavoriteIcons,
+} from "@material-ui/icons/Favorite";
 import {
   ExpandedIconDetailsCard,
   DetailsBtnCard
@@ -100,7 +100,7 @@ const removeFavourite = (estate) => {
       <Button onClick={removeFavourite(props.data)} color="success" variant="outlined" startIcon={<unFavoriteIcon />}>
       remove from favorite
       </Button>:
-       <Button onClick={addFavourite(props.data)} color="error" variant="outlined" startIcon={<FavoriteIcon />}>
+       <Button onClick={addFavourite(props.data)} color="error" variant="outlined" startIcon={<FavoriteIcons />}>
          Add to Favorite
        </Button> 
         

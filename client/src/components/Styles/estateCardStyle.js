@@ -21,16 +21,7 @@ transition: all 0.2s ease-in-out;
 }
  &.expandClass{
 
-   grid-row-start: 3;
    grid-column: 1/-1;
-   @media screen and (max-width: 100rem){
-     grid-row-start: 2;
-
-   }
-   @media screen and (max-width: 76.8rem){
-     grid-row-start: auto;
-
-   }
 }
 &:hover{
     transform: scale(1.02);

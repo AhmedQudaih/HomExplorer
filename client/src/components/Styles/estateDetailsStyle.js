@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const DetailsBtnCard = styled.div`
 display: flex;
 flex-direction: row;
+width: 80%;
 justify-content: space-between;
 margin: 5% auto;
 border-radius: 1rem;

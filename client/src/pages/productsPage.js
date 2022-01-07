@@ -7,7 +7,6 @@ function Products() {
         <div>
           <Search />
           <Services />
-
         </div>
     )
 }

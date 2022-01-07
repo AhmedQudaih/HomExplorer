@@ -8,16 +8,21 @@ import {
   ServicesBackground,
   ServicesH1Color
 } from './Styles/servicesElementsStyle';
-
+import EstateDetails from './estateDetails'
 import EstateCard from './estateCard';
 import serverFunctions from '../serverFunctions/estate'
-import { Button as ButtonMain  } from './Styles/buttonElementsStyle';
+import { ButtonR as ButtonMain  } from './Styles/buttonElementsStyle';
 import { ArrowForward } from '@material-ui/icons';
 import {MainBtnArrowStyle } from './Styles/mainElementsStyle';
+import {NavLinks } from './Styles/navbarElementsStyle';
+
+
 function Services(props) {
   const [page, setPage] = React.useState(1);
   const [change, setChange] = React.useState(false);
   const [data, setData] = React.useState('');
+  const [compare, setCompare] = React.useState('');
+  const [details, setDetails] = React.useState('');
   const [partition, setPartition] = React.useState(0);
   const [expand, setExpand] = React.useState(false);
   const totalPages = Math.ceil(data.length / 12);
@@ -48,10 +53,20 @@ function Services(props) {
     })
   };
 
-  const handleDetailsClick = (id) => {
-    setExpand(id);
-  };
+  const handleDetailsClick = (data) => {
 
+    setDetails(data);
+
+  };
+console.log(details);
+
+const handleCompareClick = (data) => {
+    setCompare(data)
+    handleDetailsClick(false)
+};
+
+
+console.log(details);
 
   React.useEffect(() => {
     const fetchData = async ()=>{
@@ -88,7 +103,7 @@ function Services(props) {
 
          </ServicesProductWrapper>
            <Box sx={{ m: "2%", padding: "0.5%",borderRadius: "1rem"}}>
-         <ButtonMain to="/products"
+         <ButtonMain  to="/products"
          primary="true"
          dark="true"
          >
@@ -99,19 +114,30 @@ function Services(props) {
     );
   }else {  /*in case call from products page*/
   return (
-   <ServicesProductContainer id="services" name="services">
+   <ServicesProductContainer id="services" name="services" >
     <ServicesProductH1>Services</ServicesProductH1>
       <ServicesProductWrapper>
         {
           data.slice((Math.ceil(page) - 1) * 12, Math.ceil(page) * 12).map((e) => (
-            <EstateCard updateData={updateData} key={e._id} data={e} expand={expand} handleDetailsClick={handleDetailsClick} />
+            <EstateCard key={e._id} data={e} handleDetailsClick={handleDetailsClick} />
            ))
         }
 
       </ServicesProductWrapper>
     <Box sx={{ m: "2%", padding: "0.5%",backgroundColor: 'white',borderRadius: "1rem"}}>
-      <Button href="#services"><Pagination count={totalPages} page={page} color="success" onChange={handlePageChange}/></Button>
+        <NavLinks to="services" smooth={true} duration={500}  exact='true' offset={-80}>
+    <Pagination count={totalPages} page={page} color="success" onChange={handlePageChange}/></NavLinks>
     </Box>
+      <ServicesProductWrapper id="details" name="details" >
+        {compare &&
+          <EstateDetails updateData={updateData} compare={compare._id} compareFunc={handleCompareClick} handleDetailsClick={handleDetailsClick} data={compare} />
+        }
+    {details &&
+          <EstateDetails updateData={updateData} compare={compare._id} compareFunc={handleCompareClick} handleDetailsClick={handleDetailsClick} data={details} />
+}
+
+
+    </ServicesProductWrapper>
   </ServicesProductContainer>
 );}
 }

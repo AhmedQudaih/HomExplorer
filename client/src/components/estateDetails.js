@@ -11,13 +11,23 @@ import {
   LocalHotel as LocalHotelIcon,
   Bathtub as BathtubIcon,
   FullscreenExit as FullscreenExitIcon,
+  Close as CloseIcon,
+  KeyboardArrowRight, KeyboardArrowLeft,
+  Compare as CompareIcon
 } from "@material-ui/icons";
 import {
   ExpandedIconDetailsCard,
   DetailsBtnCard
 } from './Styles/estateDetailsStyle';
-import {EstateCardDiv} from './Styles/estateCardStyle';
+import {
+  EstateCardDiv,
+  EstateCardDivCard,
+  EstateIcon,
+  EstateCardH2,
+  EstateIcobDiv} from './Styles/estateCardStyle';
 import serverFunctions from '../serverFunctions/estate'
+
+
 function EstateDetails(props){
 
   const handelDeleteBtn = async (id) => {
@@ -26,8 +36,49 @@ function EstateDetails(props){
   }
 
 
+const [activeStep, setActiveStep] = React.useState(0);
+const handleNext = () => {
+  setActiveStep((prevActiveStep) => prevActiveStep + 1);
+};
+const handleBack = () => {
+  setActiveStep((prevActiveStep) => prevActiveStep - 1);
+};
+const handleClose = () => {
+  if(props.compare === props.data._id){
+    props.compareFunc(false);
+  }else{
+    props.handleDetailsClick(false)
+  }
+};
+
+
+
   return(
-    <div>
+      <EstateCardDivCard className ={!props.compare &&"expandClass"} >
+
+        <Button onClick={handleClose} color="success" >
+          <CloseIcon />
+        </Button>
+
+      <EstateIcobDiv className ={"expandIcone"} >
+      <EstateIcon src={'uploads/'+props.data.pic[activeStep].name}  />
+  </EstateIcobDiv>
+
+        <div>
+              <Button size="small" onClick={handleBack} disabled={activeStep === 0 }>
+                  <KeyboardArrowLeft />
+              </Button>
+            <Button size="small" onClick={handleNext} disabled={activeStep === props.data.pic.length-1}>
+                <KeyboardArrowRight />
+            </Button>
+          </div>
+      <EstateCardH2>{props.data.price}
+        $</EstateCardH2>
+      <EstateCardDiv>
+        <p>
+          {props.data.desc}
+        </p>
+      </EstateCardDiv>
     <ExpandedIconDetailsCard>
       <EstateCardDiv>
        <VillaIcone fontSize='large'/>
@@ -75,10 +126,18 @@ function EstateDetails(props){
       <Button color="error" onClick={()=>handelDeleteBtn(props.data._id)} variant="outlined" startIcon={<DeleteIcon />}>
         Delete
       </Button>
+      <Button color="primary"   onClick={()=>props.compareFunc(props.data)}  variant="outlined" startIcon={<CompareIcon  />}>
+        Compare
+      </Button>
       <EstateForm updateData={props.updateData} type={"Update"} data={props.data}/>
   </DetailsBtnCard >
-</div>
+
+</EstateCardDivCard>
+
   );
 }
 
 export default EstateDetails
+EstateDetails.defaultProps = {
+  compare:false
+}

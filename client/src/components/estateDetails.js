@@ -26,8 +26,8 @@ import {
   EstateCardH2,
   EstateIcobDiv} from './Styles/estateCardStyle';
 import serverFunctions from '../serverFunctions/estate'
-
-
+import SaveEstate from './saveEstate'
+import RateEstate from './rateEstate'
 function EstateDetails(props){
 
   const handelDeleteBtn = async (id) => {
@@ -122,15 +122,23 @@ const handleClose = () => {
 
     <MyMap Location={[props.data.addressOnMap[0],props.data.addressOnMap[1]]} />
 
-    <DetailsBtnCard>
-      <Button color="error" onClick={()=>handelDeleteBtn(props.data._id)} variant="outlined" startIcon={<DeleteIcon />}>
-        Delete
-      </Button>
-      <Button color="primary"   onClick={()=>props.compareFunc(props.data)}  variant="outlined" startIcon={<CompareIcon  />}>
-        Compare
-      </Button>
-      <EstateForm updateData={props.updateData} type={"Update"} data={props.data}/>
-  </DetailsBtnCard >
+
+  <DetailsBtnCard>
+    <Button color="primary"   onClick={()=>props.compareFunc(props.data)}  variant="outlined" startIcon={<CompareIcon  />}>
+      Compare
+    </Button>
+    <RateEstate />
+
+  <SaveEstate show={"Icon"} />
+</DetailsBtnCard >
+<DetailsBtnCard>
+  <Button color="error" onClick={()=>handelDeleteBtn(props.data._id)} variant="outlined" startIcon={<DeleteIcon />}>
+    Delete
+  </Button>
+
+  <EstateForm updateData={props.updateData} type={"Update"} data={props.data}/>
+</DetailsBtnCard >
+
 
 </EstateCardDivCard>
 

@@ -4,7 +4,6 @@ import { Map, Marker } from "pigeon-maps";
 const style = {
   height:"30rem",
   margin: "3.5rem",
-
 }
 
 function MyMap(props){

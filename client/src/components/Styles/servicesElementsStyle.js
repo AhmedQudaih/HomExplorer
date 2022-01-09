@@ -1,17 +1,17 @@
 import styled from "styled-components";
 import 'animate.css';
 
-export const ServicesContainer = styled.div`
+export const ServicesProductContainer = styled.div`
 min-height: 30%;
 padding:5%;
 display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-background: #010606;
+background: #FAF9F6;
 
 `
-export const ServicesWrapper = styled.div`
+export const ServicesProductWrapper = styled.div`
 max-width: 180rem;
 margin: 0 auto;
 display: grid;
@@ -27,12 +27,19 @@ padding: 0 5rem;
 grid-template-columns: repeat(auto-fit, minmax(25rem,1fr));
 }
 `
-export const ServicesH1 = styled.h1`
+export const ServicesProductH1 = styled.h1`
 font-size: 2.5rem;
-color: #fff;
+color: #000;
 margin-bottom: 6.4rem;
 
 @media screen and (max-width: 48rem){
     font-size: 2rem;
 }
 `
+export const ServicesBackground = {
+background: "#010606",
+}
+
+export const ServicesH1Color  = {
+color: "#fff",
+}

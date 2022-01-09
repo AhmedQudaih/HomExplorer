@@ -10,7 +10,7 @@ background: #fff;
 display: flex;
 flex-direction: column;
 justify-content: flex-start;
-align-items: center;
+text-align: center;
 border-radius: 1rem;
 padding: 3rem;
 box-shadow: 0 0.1rem 0.3rem rgba(0,0,0,0.2);
@@ -21,16 +21,7 @@ transition: all 0.2s ease-in-out;
 }
  &.expandClass{
 
-   grid-row-start: 3;
    grid-column: 1/-1;
-   @media screen and (max-width: 100rem){
-     grid-row-start: 2;
-
-   }
-   @media screen and (max-width: 76.8rem){
-     grid-row-start: auto;
-
-   }
 }
 &:hover{
     transform: scale(1.02);
@@ -41,6 +32,7 @@ transition: all 0.2s ease-in-out;
 `
 
 export const EstateIcobDiv = styled.div`
+align-self: center;
 height:20rem;
 margin-bottom: 1rem;
 &.expandIcone{

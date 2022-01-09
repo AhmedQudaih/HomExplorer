@@ -1,0 +1,48 @@
+function add_rate(req,res) 
+{
+    const filter =  {userId:req.body.Rate.userId, estateId:req.body.Rate.estateId};
+    const update = {rate:req.body.Rate.rate};
+    rateModel.findOneAndUpdate(filter,update, {
+        upsert: true, new: true, setDefaultsOnInsert: true  })
+        .then(result => {console.log("Done");
+                         res.send(JSON.stringify("ok"));  })
+        .catch(err=>{console.log(err);
+                         res.send(JSON.stringify(err)); })
+}
+
+function find_rated(req,res) {
+    rateModel.find({userId:req.body.userId})
+             .then(result=>{console.log(result);
+                            res.send(result); })
+             .catch(err=>{console.log(err);
+                            res.send(JSON.stringify(err));});
+    }
+    
+function save (req,res) {
+    const filter =  {userId:req.body.Saved.userId, estateId:req.body.Saved.estateId};
+    savedModel.find( filter, function (err, results) {
+        if (err) { console.log(err); }
+        if (!results.length) {
+            const x = new savedModel(filter);
+            x.save()
+            .then(result => {console.log("saved");
+                             res.send(JSON.stringify("ok"));})
+            .catch(err => {console.log(err);
+                             res.send(JSON.stringify(err))});
+        }
+        else{savedModel.findOneAndDelete(filter)
+            .then(result => {console.log("Deleted");
+                            res.send(JSON.stringify("ok"));})
+            .catch(err => {console.log(err);
+                            res.send(JSON.stringify(err))});
+        }
+    })
+}
+
+function find_savd(req,res){
+savedModel.find({userId:req.body.userId})
+          .then(result => {console.log(result);
+            res.send(result);})
+          .catch(err => {console.log(err);
+            res.send(JSON.stringify(err));})
+}

@@ -31,7 +31,7 @@ function picDeleteOperation(picPath){
   })
 }
 
-
+ 
 
 exports.getAllEstates = function(req, res) {
   partitionNumber =(parseInt(req.params.partition)*30);
@@ -114,6 +114,25 @@ exports.getCategoryAndType = async function(req, res) {
   categoryAndType.category = await category.categoryModel.find({}).exec();
   categoryAndType.type = await type.estateTypeModel.find({}).exec();
   res.send(categoryAndType);
+}
+
+
+function search (req,res){
+    estateModel.find({$or :[
+        {sellerId: {$ne : req.body.sellerId}},
+        {status :true },
+        {price: { $gt: req.body.price[0] -1, $lt: req.body.price[1]+1 }},
+        {size:  { $gt: req.body.size[0] -1 , $lt: req.body.size[1]+1 }},
+        {numOfRooms : req.body.numOfRooms},
+        {numOfBathRooms : req.body.numOfBathRooms},
+        {floor : req.body.floor},
+        {category : req.body.category},
+        {type: req.body.type},
+        {$text:{ $search: req.body.address.concat(' ').concat(req.body.desc)}} //Just remember to execute this on your DB. => //estateModel.createIndexes({desc: "text", address: "text"});
+    ]})
+        .then(result => {res.send(result);})
+        .catch(err => {res.send(err);})
+
 }
 
 

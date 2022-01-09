@@ -33,10 +33,11 @@ function EstateDetails(props){
   const handelDeleteBtn = async (id) => {
         const Status = await serverFunctions.deleteEstate(id);
           Status ==='error'? alert(`Somthing went wrong try again later`):props.updateData();
+          handleClose();
   }
 
-
 const [activeStep, setActiveStep] = React.useState(0);
+
 const handleNext = () => {
   setActiveStep((prevActiveStep) => prevActiveStep + 1);
 };
@@ -55,15 +56,12 @@ const handleClose = () => {
 
   return(
       <EstateCardDivCard className ={!props.compare &&"expandClass"} >
-
         <Button onClick={handleClose} color="success" >
           <CloseIcon />
         </Button>
-
       <EstateIcobDiv className ={"expandIcone"} >
       <EstateIcon src={'uploads/'+props.data.pic[activeStep].name}  />
   </EstateIcobDiv>
-
         <div>
               <Button size="small" onClick={handleBack} disabled={activeStep === 0 }>
                   <KeyboardArrowLeft />
@@ -74,6 +72,7 @@ const handleClose = () => {
           </div>
       <EstateCardH2>{props.data.price}
         $</EstateCardH2>
+
       <EstateCardDiv>
         <p>
           {props.data.desc}
@@ -98,7 +97,6 @@ const handleClose = () => {
         {props.data.category.name === "Apartment" ? "on the " + props.data.floor+" floor" : props.data.floor +" floors"}
         </p>
       </EstateCardDiv>
-
       <EstateCardDiv>
         <LocalHotelIcon fontSize='large'/>
         <p>{props.data.numOfRooms}
@@ -119,29 +117,21 @@ const handleClose = () => {
       <LocationOnSharpIcon  fontSize='large'/>
       <p>{props.data.address}</p>
     </EstateCardDiv>
-
-    <MyMap Location={[props.data.addressOnMap[0],props.data.addressOnMap[1]]} />
-
-
-  <DetailsBtnCard>
-    <Button color="primary"   onClick={()=>props.compareFunc(props.data)}  variant="outlined" startIcon={<CompareIcon  />}>
-      Compare
-    </Button>
-    <RateEstate />
-
-  <SaveEstate show={"Icon"} />
-</DetailsBtnCard >
-<DetailsBtnCard>
-  <Button color="error" onClick={()=>handelDeleteBtn(props.data._id)} variant="outlined" startIcon={<DeleteIcon />}>
-    Delete
-  </Button>
-
-  <EstateForm updateData={props.updateData} type={"Update"} data={props.data}/>
-</DetailsBtnCard >
-
-
-</EstateCardDivCard>
-
+    <MyMap Location={[...props.data.addressOnMap]} />
+        <DetailsBtnCard>
+          <Button color="primary" onClick={()=>props.compareFunc(props.data)}  variant="outlined" startIcon={<CompareIcon  />}>
+            Compare
+          </Button>
+          <RateEstate />
+        <SaveEstate show={"Icon"} />
+      </DetailsBtnCard >
+      <DetailsBtnCard>
+        <Button color="error" onClick={()=>handelDeleteBtn(props.data._id)} variant="outlined" startIcon={<DeleteIcon />}>
+          Delete
+        </Button>
+        <EstateForm updateData={props.updateData} type={"Update"} data={props.data}/>
+      </DetailsBtnCard >
+      </EstateCardDivCard>
   );
 }
 

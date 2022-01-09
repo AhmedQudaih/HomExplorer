@@ -13,7 +13,31 @@ import Loading from './loading';
 import {CameraAltOutlined , AddCircleOutline as AddCircleOutlineIcon ,Cached as CachedIcon, Save as SaveIcon , Close as CloseIcon} from "@material-ui/icons";
 import serverFunctions from '../serverFunctions/estate';
 
+function Val(validation,estate){
 
+  validation.Price = estate.price > 0 && estate.price < 200000000?"success":"error";
+  validation.Number_Of_Rooms = estate.numOfRooms > 0 && estate.numOfRooms < 30  ? "success":"error";
+  validation.Number_Of_BathRooms= estate.numOfBathRooms > 0 && estate.numOfBathRooms < 30  ? "success":"error";
+  validation.floor = estate.floor >= 0 && estate.floor < 164  ? "success":"error";
+  validation.Size= estate.size > 20 && estate.size < 10000?"success":"error" ;
+  validation.Description= estate.desc.length > 30 ?"success":"error" ;
+  validation.Address= estate.address.length > 4 ?"success":"error";
+  validation.Type= estate.type.length > 0 ?"success":"error";
+  validation.Category= estate.category.length > 0 ?"success":"error";
+  validation.Contract= estate.contract !== null ?"success":"error";
+  validation.Images= estate.pic.length > 0 ?"success":"error";
+}
+function valid(validation){
+  let msg =""
+    Object.entries(validation).forEach(([key, value]) => {
+      (value === "error") && (msg=msg+"  "+key)});
+     if(msg.length !==0){
+       alert(`Please check the (${msg} ) input`);
+       return false;
+     }
+     return true;
+
+}
 
 function EstateForm(props) {
 
@@ -48,22 +72,14 @@ function EstateForm(props) {
       fetchData();
     },[handelUpdateform])
 
+    let validation ={};
+      Val(validation , estate);
 
- function valid(){
-   let msg =""
-     Object.entries(validation).forEach(([key, value]) => {
-       (value === "error") && (msg=msg+"  "+key)});
-      if(msg.length !==0){
-        alert(`Please check the (${msg}) input`);
-        return false;
-      }
-      return true;
 
- }
     const submitEstate = async (event) =>{
       event.preventDefault();
       event.target.pic.files = fileValue();
-      if(!valid()){
+      if(!valid(validation)){
         return;
       }
         const formData = new FormData(event.target);
@@ -121,18 +137,6 @@ function fileValue(event){
   return list.files
 }
 
-  let validation ={};
-  validation.Price = estate.price > 0 && estate.price < 200000000?"success":"error";
-  validation.Number_Of_Rooms = estate.numOfRooms > 0 && estate.numOfRooms < 30  ? "success":"error";
-  validation.Number_Of_BathRooms= estate.numOfBathRooms > 0 && estate.numOfBathRooms < 30  ? "success":"error";
-  validation.floor = estate.floor >= 0 && estate.floor < 164  ? "success":"error";
-  validation.Size= estate.size > 20 && estate.size < 10000?"success":"error" ;
-  validation.Description= estate.desc.length > 30 ?"success":"error" ;
-  validation.Address= estate.address.length > 4 ?"success":"error";
-  validation.Type= estate.type.length > 0 ?"success":"error";
-  validation.Category= estate.category.length > 0 ?"success":"error";
-  validation.Contract= estate.contract !== null ?"success":"error";
-  validation.Images= estate.pic.length > 0 ?"success":"error";
 
   const handleDelete = (index ,path) => {
     let pic = estate.pic.filter((element,x) => {  return x !== index})
@@ -350,7 +354,6 @@ function fileValue(event){
                  </Button>
                </EstateFormSubmitBtn>
              </EstateMainForm>
-
              </DialogContent>
              </Dialog>
          </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { scroller } from "react-scroll";
 import {
   EstateCardDivCard,
   EstateIcon,
@@ -6,11 +7,18 @@ import {
   EstateCardDiv,EstateIcobDiv
 } from './Styles/estateCardStyle';
 
-
 function EstateCard(props){
 
+    function handleDetails(){
+      props.handleDetailsClick(props.data);
+      scroller.scrollTo("details", {
+        duration: 500,
+        delay: 0,
+        smooth: "easeInOutQuart",
+      });
+    };
   return(
-    <EstateCardDivCard onClick={() => props.handleDetailsClick(props.data)}>
+    <EstateCardDivCard onClick={handleDetails}>
 
     <EstateIcobDiv >
     <EstateIcon src={'uploads/'+props.data.pic[0].name}  />

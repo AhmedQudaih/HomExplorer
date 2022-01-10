@@ -3,6 +3,7 @@ const category = require('./Model/categoryModel');
 const type = require('./Model/estateTypeModel');
 const role = require('./Model/roleModel');
 const user = require('./Model/userModel');
+const estate = require('./Model/estateModel');
 main().catch(err => console.log(err));
 
 async function main() {

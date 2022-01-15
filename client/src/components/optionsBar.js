@@ -1,6 +1,7 @@
 import React from 'react';
 import {Drawer, List, ListItem, ListItemIcon, ListItemText} from '@mui/material';
 import EstateForm from './estateForm';
+import SaveEstate from './saveEstate';
 import {
   NavBtn,
   NavBtnLink
@@ -20,7 +21,12 @@ function OptionsBar(props){
           <ListItem button>
             <EstateForm />
           </ListItem >
+
+          <ListItem button>
+            <SaveEstate />
+          </ListItem >
         </List>
+
 
       </div>
     );

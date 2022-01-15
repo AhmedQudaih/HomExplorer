@@ -36,10 +36,11 @@ function picDeleteOperation(picPath) {
 
 
 exports.getAllEstates = function(req, res) {
-  partitionNumber = (parseInt(req.params.partition)*60);
+  partitionNumber =(parseInt(req.params.partition)*60);
   estate.estateModel.find({
     status: true
-  }).skip(partitionNumber).limit(60).populate('category').populate("type").exec(function(error, doc) {
+  }).skip(partitionNumber).limit(60).populate('category').populate("type").exec(function(error,doc) {
+
     if (error) {
       return res.status(400).send(JSON.stringify(error));
     }

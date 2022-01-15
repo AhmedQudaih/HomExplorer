@@ -20,61 +20,58 @@ z-index: 1;
     z-index: 2;
 }
 `
-
-export const MainBg = styled.div`
-position: absolute;
-top: 0;
-right: 0;
-bottom: 0;
-left: 0;
-width: 100%;
-height: 100%;
-overflow: hidden;
-`
-
-export const MainBtnArrowStyle = {
-marginLeft: "0.8rem",
-fontSize: "2rem",
-}
-
-export const VideoBg = styled.video`
-width: 100%;
-height: 100%;
--o-object-fit: cover;
-object-fit: cover;
-background: #232a34;
-`
-export const ImgBg = styled.img`
-width: 100%;
-height: 100%;
--o-object-fit: cover;
-object-fit: cover;
-background: #232a34;
-`
 export const MainContent = styled.div`
 z-index: 3;
 max-width: 120rem;
+width:80%;
+background:#FAF9F6;
+border-radius: 3rem;
 position: absolute;
-padding: 0.8rem 2.4rem;
-display: flex;
-flex-direction: column;
+padding: 4rem 2.4rem;
+margin: 0 auto;
+display: grid;
+grid-template-columns: 2fr 1fr 1fr 0.5fr ;
+grid-template-rows: 1fr 1fr ;
+grid-row:2/3
 align-items: center;
+grid-gap: 1.6rem;
 `
-export const MainH1 = styled.h1`
-color: #fff;
-font-size: 4.8rem;
+
+
+
+
+export const CollapseDiv = styled.div`
+grid-column: 1 /-1;
+display: grid;
+grid-template-columns: 2fr 1fr 1fr 0.5fr ;
+grid-template-rows: 1fr 1fr ;
+grid-gap: 1.6rem;
+animation: fadeInUp;
+animation-duration: 0.5s;
+
+
+`
+
+
+export const CollapseBtn = {
+gridColumn: "1 /-1",
+}
+
+
+
+export const ProductMainH1 = styled.h1`
+color: #000;
+grid-column: 1 /-1;
+font-size: 4rem;
 text-align: center;
 
-@media screen and (max-width: 76.8rem){
-    font-size: 4rem;
-}
 @media screen and (max-width: 48rem){
     font-size: 3.2rem;
 }
 `
-export const MainP = styled.p`
+export const ProductMainP = styled.p`
 margin-top: 2.4rem;
-color: #fff;
+color: #000;
 font-size: 2.4rem;
 text-align: center;
 max-width: 60rem;
@@ -86,10 +83,4 @@ max-width: 60rem;
 @media screen and (max-width: 48rem){
     font-size: 1.8rem;
 }
-`
-export const MainBtnWrapper = styled.div`
-margin-top: 3.2rem;
-display: flex;
-flex-direction: column;
-align-items: center;
 `

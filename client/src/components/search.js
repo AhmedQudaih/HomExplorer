@@ -4,12 +4,11 @@ import {  MainBg ,ImgBg} from './Styles/mainElementsStyle';
 import { ProductMainH1,MainContainer,CollapseDiv ,MainContent,CollapseBtn  } from './Styles/searchElementsStyle';
 import { TextField ,Slider ,Button,MenuItem,Typography} from '@mui/material';
 import {Search as SearchIcon, ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon} from '@material-ui/icons';
-import serverFunctions from '../serverFunctions/estate';
 import Loading from './loading';
+import {MyContext} from '../components/provider';
 
 
-
-function Search() {
+function Search(props) {
 
   const data = {
         numOfRooms: "",
@@ -25,15 +24,6 @@ function Search() {
 
     const [searchData, setSearchData] = useState(data);
     const [expandSearch, setExpandSearch] = useState(false);
-    const [CategoryAndType, setCategoryAndType] = React.useState([]);
-
-    React.useEffect(() => {
-      const fetchData = async ()=>{
-      const CategoryAndTypeData = await serverFunctions.getCategoryAndType();
-      setCategoryAndType(CategoryAndTypeData);
-        }
-      fetchData();
-    },[])
 
 
   const handleExpandClick = () => {
@@ -43,7 +33,6 @@ function Search() {
   }
 
   const handleChange = (event) => {
-    console.log(event.target);
     const  { name, value }  = event.target;
     setSearchData((pre)=>{
       return{
@@ -65,11 +54,12 @@ function Search() {
       }
     };
 
+return(
 
+  <MyContext.Consumer>{
+      (context) => {
 
-
-
-  if (CategoryAndType.length === 0) {
+  if (context.categoryAndType === false) {
     return (
       <Loading/>
     );
@@ -105,7 +95,7 @@ function Search() {
                >
 
                  {
-                 CategoryAndType.category.map((option) => ( <
+                 context.categoryAndType.category.map((option) => ( <
                   MenuItem key = {
                     option._id
                   }
@@ -131,7 +121,7 @@ function Search() {
                  handleChange
                  }
                 > {
-                  CategoryAndType.type.map((option) => ( <
+                  context.categoryAndType.type.map((option) => ( <
                   MenuItem key = {
                     option._id
                   }
@@ -145,7 +135,7 @@ function Search() {
                  } <
                  /TextField>
 
-              <Button  variant="contained" color = {"success"} >
+              <Button  variant="contained" color = {"success"} onClick={()=>{props.filterFunc(searchData)}} >
               <SearchIcon />
               </Button>
 
@@ -242,7 +232,8 @@ function Search() {
       </CollapseDiv>
       }
             </MainContent>
-        </MainContainer>
+        </MainContainer>)
+      }}</MyContext.Consumer>
     )
 }
 

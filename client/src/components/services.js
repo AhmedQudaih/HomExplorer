@@ -8,36 +8,37 @@ import {ButtonR as ButtonMain} from './Styles/buttonElementsStyle';
 import {ArrowForward} from '@material-ui/icons';
 import {MainBtnArrowStyle} from './Styles/mainElementsStyle';
 import {NavLinks} from './Styles/navbarElementsStyle';
-import DetailsAndCompare from './detailsAndCompare';
+import EstateDetailsSections from './estateDetailsSections';
+import {MyContext} from '../components/provider';
+
 
 function Services(props) {
   const [page, setPage] = React.useState(1);
-  const [change, setChange] = React.useState(false);
   const [data, setData] = React.useState('');
-  const [compare, setCompare] = React.useState(false);
-  const [details, setDetails] = React.useState(false);
+  const [detailsAndCompare, setDetailsAndCompare] = React.useState({details: false, compare: false});
   const [partition, setPartition] = React.useState(0);
   const totalPages = Math.ceil(data.length / 12);
-  const handlePageChange = (event, value) => {
-    setPage(value);
-    if (totalPages - value <= 1) {
-      getPartion();
-    }
-  };
 
-  const updateData = () => {
-    setData('');
-    setDetails(false);
-    setCompare(false);
-    setPage(1);
-    if (partition !== 0) {
-      setPartition(0);
-    } else {
-      setChange((pre) => {
-        return (!pre);
-      })
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const data = await serverFunctions.getEstates(partition);
+      if (props.Data) {
+        if (props.Data.length === 0) {
+          setData('');
+        } else {
+          setData(props.Data)
+        };
+      } else {
+        setData((pre) => {
+          return [
+            ...pre,
+            ...data
+          ]
+        });
+      }
     }
-  };
+    fetchData();
+  }, [partition, props.Data]);
 
   const getPartion = () => {
     setPartition((pre) => {
@@ -45,77 +46,110 @@ function Services(props) {
     })
   };
 
-  const handleDetailsClick = (data) => {
-    setDetails(data);
-  };
-
-  const handleCompareClick = (data) => {
-    setCompare(data)
-    handleDetailsClick(false)
-  };
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const data = await serverFunctions.getEstates(partition);
-      setData((pre) => {
-        return [
-          ...pre,
-          ...data
-        ]
-      });
+  const handlePageChange = (event, value) => {
+    setPage(value);
+    if (totalPages - value <= 1 && !props.Data ) {
+      getPartion();
     }
-    fetchData();
-  }, [partition,change])
+  };
+
+  const handleDetailsAndCompare = (name, data) => {
+    setDetailsAndCompare((pre) => {
+      if (name === "details" && data._id === pre.compare._id && data !== false) {
+        data = pre.details;
+      }
+      return {
+        ...pre,
+        [name]: data
+      }
+    });
+    if (name === "compare") {
+      handleDetailsAndCompare("details", false);
+    }
+  };
+
+  return (
+    <MyContext.Consumer>{(context)=>{
+      const updateData = (operation, modif) => {
+        if (operation === "delete") {
+          let update = data.filter(i => i._id !== modif);
+          return setData(update);
+        }
+        if (operation === "rate") {
+          let update = context.rateList.filter(i => i.estateId !== modif.estateId);
+          update.push({estateId: modif.estateId, rate: modif.rate})
+          return context.setRateList(update);
+        }
+        if (operation === "save") {
+          let index = context.saveList.findIndex(i => i.estateId._id === modif._id);
+          if (index === -1) {
+            context.setSaveList((pre) => {
+              return [
+                ...pre, {
+                  "estateId": modif
+                }
+              ]
+            });
+          } else {
+            let update = context.saveList;
+            update.splice(index, 1);
+            context.setSaveList(update);
+          }
+        }
+      }
+
 
   /* in case no data */
   if (data.length === 0) {
     return (<ServicesProductContainer id="services" name="services">
-      <ServicesProductH1>Services</ServicesProductH1>
+      <ServicesProductH1>{props.from}</ServicesProductH1>
       <Loading/>
     </ServicesProductContainer>);
   }
-  /* in case call from home page */
-  if (props.from === "Services") {
-    return (<ServicesProductContainer style={ServicesBackground} id="services" name="services">
-      <ServicesProductH1 style={ServicesH1Color}>Services</ServicesProductH1>
-      <ServicesProductWrapper>
-        {data.slice(0, 3).map((e) => (<EstateCard updateData={updateData} key={e._id} data={e} handleDetailsClick={handleDetailsClick}/>))}
-
-      </ServicesProductWrapper>
-      <Box sx={{
-          m: "2%",
-          padding: "0.5%",
-          borderRadius: "1rem"
-        }}>
-        <ButtonMain to="/products" primary="true" dark="true">
-          More Estates
-          <ArrowForward style={MainBtnArrowStyle}/>
-        </ButtonMain>
-      </Box>
-      <DetailsAndCompare updateData={updateData} compare={compare} compareFunc={handleCompareClick} handleDetailsClick={handleDetailsClick} details={details}/>
-
-    </ServicesProductContainer>);
-  } else {/* in case call from products page */
-    return (<ServicesProductContainer id="services" name="services">
-      <ServicesProductH1>Services</ServicesProductH1>
-      <ServicesProductWrapper>
-        {data.slice((Math.ceil(page) - 1) * 12, Math.ceil(page) * 12).map((e) => (<EstateCard key={e._id} data={e} handleDetailsClick={handleDetailsClick}/>))}
-
-      </ServicesProductWrapper>
-      <Box sx={{
-          m: "2%",
-          padding: "0.5%",
-          backgroundColor: 'white',
-          borderRadius: "1rem"
-        }}>
-        <NavLinks to="services" smooth={true} duration={500} exact='true' offset={-80}>
-          <Pagination count={totalPages} page={page} color="success" onChange={handlePageChange}/>
-        </NavLinks>
-      </Box>
-      {/*show details and Compare*/}
-      <DetailsAndCompare updateData={updateData} compare={compare} compareFunc={handleCompareClick} handleDetailsClick={handleDetailsClick} details={details}/>
-    </ServicesProductContainer>);
-  }
+  return (<ServicesProductContainer style={props.from === "Services"
+      ? ServicesBackground
+      : null} id="services" name="services">
+    <ServicesProductH1 style={props.from === "Services"
+        ? ServicesH1Color
+        : null}>{props.from}</ServicesProductH1>
+    <ServicesProductWrapper>
+      {
+        props.from === "Services"
+          ?/* in case call from Services */
+          data.slice(0, 3).map((e) => (<EstateCard updateData={updateData} key={e._id} data={e} handleDetailsClick={handleDetailsAndCompare}/>))
+          : data.length > 0 &&/* in case call from product */
+          data.slice((Math.ceil(page) - 1) * 12, Math.ceil(page) * 12).map((e) => (<EstateCard key={e._id} data={e} handleDetailsClick={handleDetailsAndCompare}/>))
+      }
+    </ServicesProductWrapper>
+    {
+      props.from === "Services"
+        ? <Box sx={{
+              m: "2%",
+              padding: "0.5%",
+              borderRadius: "1rem"
+            }}>
+            <ButtonMain to="/products" primary="true" dark="true">
+              More Estates
+              <ArrowForward style={MainBtnArrowStyle}/>
+            </ButtonMain>
+          </Box>
+        : <Box sx={{
+              m: "2%",
+              padding: "0.5%",
+              backgroundColor: 'white',
+              borderRadius: "1rem"
+            }}>
+            <NavLinks to="services" smooth={true} duration={500} exact='true' offset={-80}>
+              <Pagination count={totalPages} page={page} color="success" onChange={handlePageChange}/>
+            </NavLinks>
+          </Box>
+    }
+    <ServicesProductWrapper id="details" name="details">
+      {detailsAndCompare.compare && <EstateDetailsSections key={detailsAndCompare.compare._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.compare}/>}
+      {detailsAndCompare.details && <EstateDetailsSections key={detailsAndCompare.details._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.details}/>}
+    </ServicesProductWrapper >
+  </ServicesProductContainer>)    }}</MyContext.Consumer>
+    )
 }
 
 export default Services

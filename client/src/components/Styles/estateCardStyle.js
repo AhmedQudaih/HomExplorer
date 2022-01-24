@@ -4,8 +4,6 @@ import 'animate.css';
 
 export const EstateCardDivCard = styled.div`
 min-width:min-content;
-animation: bounceInRight;
-animation-duration: 2s;
 background: #fff;
 display: flex;
 flex-direction: column;

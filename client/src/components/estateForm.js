@@ -12,6 +12,7 @@ import {Button, MenuItem ,TextField , Dialog ,DialogContent,Chip,Stack } from '@
 import Loading from './loading';
 import {CameraAltOutlined , AddCircleOutline as AddCircleOutlineIcon ,Cached as CachedIcon, Save as SaveIcon , Close as CloseIcon} from "@material-ui/icons";
 import serverFunctions from '../serverFunctions/estate';
+import {MyContext} from '../components/provider';
 
 function Val(validation,estate){
 
@@ -46,7 +47,6 @@ function EstateForm(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [estate, setEstate] = React.useState(props.data);
-  const [CategoryAndType, setCategoryAndType] = React.useState([]);
   const [deletedPicNames, setDeletedPicNames] = React.useState([]);
 
   const handelUpdateform = React.useCallback(() => {
@@ -62,14 +62,10 @@ function EstateForm(props) {
   }, [props])
 
 
-    React.useEffect(() => {
-      const fetchData = async ()=>{
-      const data = await serverFunctions.getCategoryAndType();
-        handelUpdateform();
-      setCategoryAndType(data);
-        }
+   React.useEffect(() => {
 
-      fetchData();
+        handelUpdateform();
+
     },[handelUpdateform])
 
     let validation ={};
@@ -92,17 +88,16 @@ function EstateForm(props) {
                 formData.append('_id',estate._id);
                     formData.append('deletedPicNames',deletedPicNames);
               const Status = await serverFunctions.updateEstate(formData);
-                Status ==='error'? alert(`Somthing went wrong try again later`): props.updateData();
+              handleClose();
+              props.handleClose("compare",false)
+                Status ==='error'? alert(`Somthing went wrong try again later`): props.updateData("delete", estate._id);
             }else{
                 const Status = await serverFunctions.addEstate(formData);
                   Status ==='error'? alert(`Somthing went wrong try again later`):handleClose();
             }
     }
 
-
-
   function handleChange(event) {
-
     let name = event.target.name;
      let value=  name ==="contract"? event.target.files[0]: event.target.value
     setEstate((prevEstate) => {
@@ -149,12 +144,14 @@ function fileValue(event){
    path && setDeletedPicNames((pre)=>{return [...pre,path]})
   };
 
-  if (CategoryAndType.length === 0) {
-    return (
-      <Loading/>
-    );
-  }
   return (
+    <MyContext.Consumer>{(context)=>{
+      if (context.categoryAndType === false) {
+return(
+          <Loading/>
+)
+      }
+return(
     <div >
     {props.type !=="Add" ?
        <Button onClick={handleOpen} color="success" variant="outlined" startIcon={<CachedIcon />}>
@@ -183,7 +180,7 @@ function fileValue(event){
                handleChange
                }
                helperText = "Please select estate category" > {
-               CategoryAndType.category.map((option) => ( <
+               context.categoryAndType.category.map((option) => ( <
                 MenuItem key = {
                   option._id
                 }
@@ -208,7 +205,7 @@ function fileValue(event){
                handleChange
                }
                helperText = "Please select estate type" > {
-                CategoryAndType.type.map((option) => ( <
+                context.categoryAndType.type.map((option) => ( <
                 MenuItem key = {
                   option._id
                 }
@@ -358,7 +355,10 @@ function fileValue(event){
              </Dialog>
          </div>
       </div>
-  );
+)
+  }}</MyContext.Consumer>
+  )
+
 }
 
 export default EstateForm;

@@ -13,10 +13,13 @@ import {
   NavBtnLink
 } from './Styles/navbarElementsStyle';
 import OptionsBar from './optionsBar.js';
+import { useLocation } from "react-router-dom";
+
 const Navbar = ({toggle}) => {
   const [scrollNav, setScrollNav] = useState(false)
 
   const changeNav = () => {
+
     if (window.scrollY >= 80) {
       setScrollNav(true)
     } else {
@@ -24,16 +27,19 @@ const Navbar = ({toggle}) => {
     }
   }
 
+  const { pathname } = useLocation();
 
   useEffect(() => {
 
+    window.scrollTo(0, 0);
     window.addEventListener('scroll', changeNav)
 
-  }, [])
+  }, [pathname]);
+
   const toggleHome = () => {
     scroll.scrollToTop()
   }
-  return (<Nav scrollNav={scrollNav}>
+  return (<Nav className={window.location.pathname !== "/" && "staticNav"} scrollNav={scrollNav}>
     <NavbarContainer>
       <NavLogo to='/' onClick={toggleHome}>HomExplorer</NavLogo>
       <MobileIcon onClick={toggle}>

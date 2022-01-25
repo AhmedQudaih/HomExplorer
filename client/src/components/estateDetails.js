@@ -20,7 +20,7 @@ function EstateDetails(props){
 
   return(
         <>
-        <PicSlider pic={props.data.pic} />
+        <PicSlider from ={"details"} pic={props.data.pic} />
       <EstateCardH2>{props.data.price}
         $</EstateCardH2>
       <EstateCardDiv>

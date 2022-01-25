@@ -35,8 +35,8 @@ function Admin() {
             <Services Data={display} from="Saved Estates"/>
             <Services Data={myEstate} from="My Estates"/>
 
-          <ApproveEstateReq/>
-            
+          <ApproveEstateReq estateRequests={context.estateRequests} setEstateRequests={context.setEstateRequests} />
+
           </div>)
         }
 

@@ -20,10 +20,10 @@ function PicSlider(props){
 
 
   return(<>
-    <EstateIcobDiv className ={"expandIcone"} >
+    <EstateIcobDiv className ={props.from === "details" && "expandIcone"} >
     <EstateIcon src={'uploads/'+props.pic[activeStep].name}  />
   </EstateIcobDiv>
-  {props.pic.length > 1 &&
+  {props.from === "details" &&
       <div>
             <Button size="small" onClick={handleBack} disabled={activeStep === 0 }>
                 <KeyboardArrowLeft />
@@ -35,3 +35,6 @@ function PicSlider(props){
     </>)
 }
 export default PicSlider;
+PicSlider.defaultProps = {
+  from: ""
+}

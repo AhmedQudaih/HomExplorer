@@ -215,7 +215,12 @@ exports.saveAndUnsave = function (req, res) {
 exports.getSavedEstates = function(req, res) {
   save.savedModel.find({
       userId: req.params.userId
-    },{_id:0 ,__v:0 ,userId:0}).populate('estateId')
+    },{_id:0 ,__v:0 ,userId:0}).populate('estateId').populate({
+    path : 'estateId',
+    populate : {
+      path : 'type category'
+    }
+  })
     .then(result => {
       res.send(result);
     })
@@ -248,7 +253,7 @@ exports.search = function(req, res) {
           }
       }
 }
-estate.estateModel.find(filter)
+estate.estateModel.find(filter).populate('category').populate("type")
   .then(result => {
     res.send(result);
   })

@@ -20,16 +20,9 @@ import {ServicesProductContainer, ServicesProductH1} from './Styles/servicesElem
 import Loading from './loading';
 import {TableExpandDiv} from './Styles/tableStyle';
 
-function ApproveEstateReq() {
-  const [estateRequests, setEstateRequests] = React.useState(false)
+function ApproveEstateReq(props) {
+
   const [expand, setExpand] = React.useState(false)
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const estateReq = await serverFunctions.approveEstateRequests();
-      setEstateRequests(estateReq);
-    }
-    fetchData();
-  }, [])
 
   const handelDecisionBtn = async (id,status) => {
     const formData = new FormData();
@@ -39,8 +32,8 @@ function ApproveEstateReq() {
     Status ==='error'? alert(`Somthing went wrong try again later`):handelChange(id)
   }
   const handelChange = (id) => {
-    let update = estateRequests.filter(i => i._id !== id);
-    return setEstateRequests(update);
+    let update = props.estateRequests.filter(i => i._id !== id);
+    return props.setEstateRequests(update);
   }
 
 const expandDetails = (id) => {
@@ -48,7 +41,7 @@ const expandDetails = (id) => {
   }
 
 
-  if (estateRequests === false) {
+  if (props.estateRequests === false) {
     return (<ServicesProductContainer id="services" name="services">
       <ServicesProductH1>Services</ServicesProductH1>
       <Loading/>
@@ -72,7 +65,7 @@ const expandDetails = (id) => {
         </TableHead>
         <TableBody>
           {
-            estateRequests.map((e) => (<React.Fragment key={e._id}>
+            props.estateRequests.map((e) => (<React.Fragment key={e._id}>
           <TableRow onClick={()=>{expandDetails(e._id)}} >
             <TableCell style={{width: "5%"}}  align="center" size="small">
             <Button variant="outlined" color = {"primary"} >
@@ -140,8 +133,8 @@ const expandDetails = (id) => {
 
                 <TableBody>
                   <TableRow  >
-                    <TableCell colSpan="2" align="center"><PicSlider pic={e.pic}/></TableCell>
-                    <TableCell colSpan="2" align="center"><PicSlider pic={[e.contract]}/></TableCell>
+                    <TableCell colSpan="2" align="center"><PicSlider from ={"details"} pic={e.pic}/></TableCell>
+                    <TableCell colSpan="2" align="center"><PicSlider from ={"details"} pic={[e.contract]}/></TableCell>
                   </TableRow >
                 </TableBody>
 

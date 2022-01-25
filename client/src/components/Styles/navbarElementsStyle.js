@@ -12,11 +12,19 @@ font-size: 1.3rem;
 position: sticky;
 top: 0;
 z-index: 10;
-
+  &.staticNav{
+    background:#000;
+    margin-top: 0rem;
+    position: static;
+      transition: 0.8s all ease;
+  }
 @media screen and (max-width: 96rem){
     transition: 0.8s all ease;
 }
 `
+
+
+
 export const NavbarContainer = styled.div`
 display: flex;
 justify-content: space-between;

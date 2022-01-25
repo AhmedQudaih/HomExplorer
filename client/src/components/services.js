@@ -106,10 +106,10 @@ function Services(props) {
       <Loading/>
     </ServicesProductContainer>);
   }
-  return (<ServicesProductContainer style={props.from === "Services"
+  return (<ServicesProductContainer style={props.from === "Services" || props.from === "My Estates"
       ? ServicesBackground
       : null} id="services" name="services">
-    <ServicesProductH1 style={props.from === "Services"
+    <ServicesProductH1 style={props.from === "Services"|| props.from === "My Estates"
         ? ServicesH1Color
         : null}>{props.from}</ServicesProductH1>
     <ServicesProductWrapper>

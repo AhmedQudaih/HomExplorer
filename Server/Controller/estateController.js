@@ -38,9 +38,8 @@ function picDeleteOperation(picPath) {
 exports.getAllEstates = function(req, res) {
   partitionNumber =(parseInt(req.params.partition)*60);
   estate.estateModel.find({
-    status: true
+    status: 'approve'
   }).skip(partitionNumber).limit(60).populate('category').populate("type").exec(function(error,doc) {
-
     if (error) {
       return res.status(400).send(JSON.stringify(error));
     }
@@ -50,7 +49,6 @@ exports.getAllEstates = function(req, res) {
 }
 
 exports.deleteEstate = function(req, res) {
-
   estate.estateModel.findByIdAndRemove({ _id: req.body._id }, req.body, function(error, doc) { if (error) {return res.status(400).send(JSON.stringify(error)); }
     picDeleteOperation([doc.contract, ...doc.pic]);
     save.savedModel.deleteMany({ estateId: req.body._id }).exec();
@@ -61,7 +59,6 @@ exports.deleteEstate = function(req, res) {
 
 
 exports.addEstate = function(req, res) {
-  req.body.status = true //while testing then remove
   var newEstate = new estate.estateModel(req.body);
   picAddOperation(req.files, newEstate);
   newEstate.save(function(error) {
@@ -74,7 +71,6 @@ exports.addEstate = function(req, res) {
 }
 
 exports.updateEstate = function(req, res) {
-  console.log(req.body);
   estate.estateModel.findById({
     _id: req.body._id
   }).then((data) => {
@@ -102,7 +98,7 @@ exports.updateEstate = function(req, res) {
         }
       })
     }
-    req.body.status?null:req.body.status = false //while testing then false
+    req.body.status?null:req.body.status = "pending" ;
     estate.estateModel.updateOne({
         _id: req.body._id
       }, req.body,
@@ -124,13 +120,10 @@ exports.getCategoryAndType = async function(req, res) {
 }
 
 
-
-
 exports.getApproveEstateRequests = function(req, res) {
   estate.estateModel.find({
-    status: false
+    status: 'pending'
   }).populate('category').populate("type").exec(function(error,aproveReq) {
-
     if (error) {
       return res.status(400).send(JSON.stringify(error));
     }

@@ -11,30 +11,40 @@ import {NavLinks} from './Styles/navbarElementsStyle';
 import EstateDetailsSections from './estateDetailsSections';
 import {MyContext} from '../components/provider';
 
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+
 
 function Services(props) {
   const [page, setPage] = React.useState(1);
-  const [data, setData] = React.useState('');
+  const [data, setData] = React.useState([]);
   const [detailsAndCompare, setDetailsAndCompare] = React.useState({details: false, compare: false});
   const [partition, setPartition] = React.useState(0);
   const totalPages = Math.ceil(data.length / 12);
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const data = await serverFunctions.getEstates(partition);
       if (props.Data) {
         if (props.Data.length === 0) {
-          setData('');
+          setData(false);
         } else {
-          setData(props.Data)
+          if (data === "error"){
+            setData(false);
+          }else{
+          setData(props.Data)}
         };
       } else {
+        const data = await serverFunctions.getEstates(partition);
+        if (data === "error" || data.length === 0 ){
+          setData(false);
+        }else{
         setData((pre) => {
           return [
             ...pre,
             ...data
           ]
         });
+      }
       }
     }
     fetchData();
@@ -68,6 +78,16 @@ function Services(props) {
     }
   };
 
+  const [statusFilter, setStatusFilter] = React.useState('');
+
+   const handleStatusFilterChange = (event) => {
+     let update = props.Data.filter(i => i.status === event.target.value);
+      setData(update);
+       setStatusFilter(event.target.value);
+
+   };
+console.log(data)
+
   return (
     <MyContext.Consumer>{(context)=>{
       const updateData = (operation, modif) => {
@@ -98,9 +118,8 @@ function Services(props) {
         }
       }
 
-
   /* in case no data */
-  if (data.length === 0) {
+  if (data === false || context.saveList === 'error' || context.rateList === 'error' ) {
     return (<ServicesProductContainer id="services" name="services">
       <ServicesProductH1>{props.from}</ServicesProductH1>
       <Loading/>
@@ -112,6 +131,25 @@ function Services(props) {
     <ServicesProductH1 style={props.from === "Services"|| props.from === "My Estates"
         ? ServicesH1Color
         : null}>{props.from}</ServicesProductH1>
+      {
+      props.from === "My Estates" &&
+      <Box sx={{
+        m: "2%",
+        padding: "0.5%",
+        backgroundColor: 'white',
+        borderRadius: "1rem"
+          }}>
+      <ToggleButtonGroup
+        color="primary"
+        value={statusFilter}
+        exclusive
+        onChange={handleStatusFilterChange}>
+    <ToggleButton value="approve">My Approved Estates</ToggleButton>
+    <ToggleButton value="pending">My Pending Estates</ToggleButton>
+    <ToggleButton value="reject">My Rejected Estates</ToggleButton>
+</ToggleButtonGroup>
+</Box>
+      }
     <ServicesProductWrapper>
       {
         props.from === "Services"

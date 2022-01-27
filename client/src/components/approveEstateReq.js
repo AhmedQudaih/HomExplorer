@@ -7,8 +7,6 @@ import {
   CheckCircle as CheckCircleIcon ,
   Close as CloseIcon, ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon
 } from "@material-ui/icons";
-
-
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -41,7 +39,7 @@ const expandDetails = (id) => {
   }
 
 
-  if (props.estateRequests === false) {
+  if (props.estateRequests === false || props.estateRequests === "error" ) {
     return (<ServicesProductContainer id="services" name="services">
       <ServicesProductH1>Services</ServicesProductH1>
       <Loading/>
@@ -147,12 +145,12 @@ const expandDetails = (id) => {
                 <TableBody>
                   <TableRow >
                     <TableCell colSpan="2" align="center">
-                      <Button color="success" onClick={()=>{handelDecisionBtn(e._id, true)}} variant="outlined" startIcon={<CheckCircleIcon />}>
+                      <Button color="success" onClick={()=>{handelDecisionBtn(e._id, 'approve')}} variant="outlined" startIcon={<CheckCircleIcon />}>
                         Approve
                       </Button>
                     </TableCell>
                     <TableCell colSpan="2" align="center">
-                      <Button color="error" onClick={()=>{handelDecisionBtn(e._id, false)}} variant="outlined" startIcon={<CloseIcon />}>
+                      <Button color="error" onClick={()=>{handelDecisionBtn(e._id, "reject")}} variant="outlined" startIcon={<CloseIcon />}>
                         Reject
                       </Button>
                     </TableCell>

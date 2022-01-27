@@ -1,17 +1,10 @@
-
+const url = "http://localhost:4000/";
 exports.getEstates = function(partition) {
-    return (fetch('http://localhost:4000/getEstates/'+partition).then(response => {
-    if (response.ok) {
-      return response.json();
-    }
-    throw response;
-  }).then(data => {
-    return data
-  }).catch(error => {
-    console.error("Error fetching data: ", error);
-    return [];
-  }));
-
+  const requestOptions = {
+     method: 'get',
+     headers: { 'Content-Type': 'application/json' },
+ };
+  return callServer(url+"getEstates/"+partition, requestOptions )
 }
 
 exports.deleteEstate = function(id) {
@@ -20,31 +13,18 @@ exports.deleteEstate = function(id) {
      headers: { 'Content-Type': 'application/json' },
      body: JSON.stringify({ _id: id })
  };
-    return(  fetch("http://localhost:4000/deleteEstate",requestOptions).then(response => {
-      if (response.ok) {
-      return response.json();
-      }
-      throw response;
-      }).then(data => {
-      return data;
-      }).catch(error => {
-      console.error("Error fetching data: ", error);
-      return "error";
-      }))
+
+ return callServer(url+"deleteEstate", requestOptions );
+
   }
 
   exports.getCategoryAndType = function() {
-    return (fetch('http://localhost:4000/getCategoryAndType').then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw response;
-    }).then(data => {
-      return data;
-    }).catch(error => {
-      console.error("Error fetching data: ", error);
-      return [];
-    }))
+    const requestOptions = {
+       method: 'get',
+       headers: { 'Content-Type': 'application/json' },
+   };
+
+   return callServer(url+"getCategoryAndType", requestOptions );
 
   }
 
@@ -54,17 +34,9 @@ exports.deleteEstate = function(id) {
            method: 'POST',
            body: formData
        };
-    return(fetch("http://localhost:4000/addEstate",requestOptions).then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      }).then(data => {
-          return data;
-      }).catch(error => {
-        console.error("Error fetching data: ", error);
-          return "error";
-      }));
+
+
+          return callServer(url+"addEstate", requestOptions );
 
   }
 
@@ -74,33 +46,20 @@ exports.deleteEstate = function(id) {
            method: 'put',
            body: formData
        };
-      return(fetch("http://localhost:4000/updateEstate",requestOptions).then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw response;
-        }).then(data => {
-            return data;
-        }).catch(error => {
-          console.error("Error fetching data: ", error);
-            return "error";
-        }));
+
+      return callServer(url+"updateEstate", requestOptions );
   }
 
 
 
   exports.approveEstateRequests = function(formData) {
-      return(fetch("http://localhost:4000/getApproveEstateRequests").then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw response;
-        }).then(data => {
-            return data;
-        }).catch(error => {
-          console.error("Error fetching data: ", error);
-            return "error";
-        }));
+
+    const requestOptions = {
+       method: 'get',
+       headers: { 'Content-Type': 'application/json' },
+   };
+    return callServer(url+"getApproveEstateRequests", requestOptions )
+
   }
 
 /*----------------------Sprint 2----------------------*/
@@ -111,31 +70,19 @@ exports.rate = function(data) {
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(data)
      };
-  return(fetch("http://localhost:4000/addAndUpdateRate",requestOptions).then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw response;
-    }).then(data => {
-        return data;
-    }).catch(error => {
-      console.error("Error fetching data: ", error);
-        return "error";
-    }));
+
+     return callServer(url+"addAndUpdateRate", requestOptions );
+
 }
 
 exports.getRate = function(id) {
-  return(fetch("http://localhost:4000/getRates/"+id).then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw response;
-    }).then(data => {
-        return data;
-    }).catch(error => {
-      console.error("Error fetching data: ", error);
-        return "error";
-    }));
+
+  const requestOptions = {
+     method: 'get',
+     headers: { 'Content-Type': 'application/json' },
+ };
+  return callServer(url+"getRates/"+id, requestOptions )
+
 }
 
 exports.saveAndUnsave = function(data) {
@@ -144,61 +91,44 @@ exports.saveAndUnsave = function(data) {
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(data)
      };
-  return(fetch("http://localhost:4000/saveAndUnsave",requestOptions).then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw response;
-    }).then(data => {
-        return data;
-    }).catch(error => {
-      console.error("Error fetching data: ", error);
-        return "error";
-    }));
+
+       return callServer(url+"saveAndUnsave", requestOptions );
 
 }
 
 exports.getSaved = function(id) {
-  return(fetch("http://localhost:4000/getSavedEstates/"+id).then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw response;
-    }).then(data => {
-        return data;
-    }).catch(error => {
-      console.error("Error fetching data: ", error);
-        return "error";
-    }));
+
+  const requestOptions = {
+     method: 'get',
+     headers: { 'Content-Type': 'application/json' },
+ };
+  return callServer(url+"getSavedEstates/"+id, requestOptions )
+
 }
+
+
+
 exports.searchData = function(data) {
   const requestOptions = {
          method: 'POST',
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(data)
      };
-  return(fetch("http://localhost:4000/search",requestOptions).then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw response;
-    }).then(data => {
-        return data;
-    }).catch(error => {
-      console.error("Error fetching data: ", error);
-        return "error";
-    }));
+     return callServer(url+"search", requestOptions )
 
 }
-/*
-exports.findEstate = function(id) {
-  getData(url + "findEstate/"+id);
+
+
+function callServer(url, requestOptions ){
+  return (fetch(url,requestOptions).then(response => {
+  if (response.ok) {
+    return response.json();
+  }
+  throw response;
+}).then(data => {
+  return data
+}).catch(error => {
+  console.error("Error fetching data: ", error);
+  return 'error';
+}));
 }
-
-
-
-exports.getApproveEstateRequests = function() {
- getData(url + "approveEstate");
-}
-
-*/

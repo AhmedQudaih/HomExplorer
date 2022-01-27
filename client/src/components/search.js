@@ -59,7 +59,7 @@ return(
   <MyContext.Consumer>{
       (context) => {
 
-  if (context.categoryAndType === false) {
+  if (context.categoryAndType === false || context.categoryAndType === "error" ) {
     return (
       <Loading/>
     );

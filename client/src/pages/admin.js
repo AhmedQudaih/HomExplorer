@@ -5,6 +5,7 @@ import serverFunctions from '../serverFunctions/estate'
 import {MyContext} from '../components/provider';
 import {ServicesProductContainer, ServicesProductH1} from '../components/Styles/servicesElementsStyle';
 import Loading from '../components/loading';
+
 function Admin() {
   const [myEstate, setMyEstate] = React.useState(false);
   React.useEffect(()=>{
@@ -19,7 +20,7 @@ function Admin() {
   return (<MyContext.Consumer>{
       (context) => {
 
-        if (context.saveList === false) {
+        if (context.saveList === false || myEstate === "error" || context.saveList === "error" ) {
           return (<ServicesProductContainer id="services" name="services">
             <ServicesProductH1>Services</ServicesProductH1>
             <Loading/>
@@ -33,7 +34,8 @@ function Admin() {
           return (<div>
 
             <Services Data={display} from="Saved Estates"/>
-            <Services Data={myEstate} from="My Estates"/>
+            
+          <Services Data={myEstate} from="My Estates"/>
 
           <ApproveEstateReq estateRequests={context.estateRequests} setEstateRequests={context.setEstateRequests} />
 

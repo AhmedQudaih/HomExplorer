@@ -49,12 +49,16 @@ exports.getAllEstates = function(req, res) {
 }
 
 exports.deleteEstate = function(req, res) {
+  try{
   estate.estateModel.findByIdAndRemove({ _id: req.body._id }, req.body, function(error, doc) { if (error) {return res.status(400).send(JSON.stringify(error)); }
     picDeleteOperation([doc.contract, ...doc.pic]);
     save.savedModel.deleteMany({ estateId: req.body._id }).exec();
     rate.rateModel.deleteMany({ estateId: req.body._id }).exec();
     res.status(200).send(JSON.stringify("Ok"));
   });
+} catch (err) {
+    return res.status(400).send(JSON.stringify(error));
+}
 }
 
 
@@ -114,9 +118,13 @@ exports.updateEstate = function(req, res) {
 
 exports.getCategoryAndType = async function(req, res) {
   var categoryAndType = {};
+  try{
   categoryAndType.category = await category.categoryModel.find({}).exec();
   categoryAndType.type = await type.estateTypeModel.find({}).exec();
   res.send(categoryAndType);
+}catch(error){
+    console.log(error);
+  }
 }
 
 

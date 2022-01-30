@@ -14,7 +14,6 @@ import {
 } from './Styles/navbarElementsStyle';
 import OptionsBar from './optionsBar.js';
 import { useLocation } from "react-router-dom";
-
 const Navbar = ({toggle}) => {
   const [scrollNav, setScrollNav] = useState(false)
 
@@ -37,27 +36,27 @@ const Navbar = ({toggle}) => {
   }, [pathname]);
 
   const toggleHome = () => {
-    scroll.scrollToTop()
+     scroll.scrollToTop()
   }
   return (<Nav className={window.location.pathname !== "/" && "staticNav"} scrollNav={scrollNav}>
     <NavbarContainer>
       <NavLogo to='/' onClick={toggleHome}>HomExplorer</NavLogo>
-      <MobileIcon onClick={toggle}>
+      <MobileIcon onClick={()=>{toggle(true)}}>
         <FaBars fontSize="large"/>
       </MobileIcon>
       <NavMenu>
         <NavItem>
-          <NavLinks to="recommendations" smooth={true} duration={500} spy={true} exact='true' offset={-80}>
+          <NavLinks to="/#recommendations" smooth={true} duration={500} exact='true' offset={-80}>
             Recommendations</NavLinks>
         </NavItem>
         <NavItem>
-          <NavLinks to="auction" smooth={true} duration={500} spy={true} exact='true' offset={-80}>Auction</NavLinks>
+          <NavLinks to="/#auction" smooth={true} duration={500}  exact='true' offset={-80}>Auction</NavLinks>
         </NavItem>
         <NavItem>
-          <NavLinks to="services" smooth={true} duration={500} spy={true} exact='true' offset={-80}>Services</NavLinks>
+          <NavLinks to="/#services" smooth={true} duration={500} exact='true' offset={-80}>Services</NavLinks>
         </NavItem>
         <NavItem>
-          <NavLinks to="signup" smooth={true} duration={500} spy={true} exact='true' offset={-80}>Sign Up</NavLinks>
+          <NavLinks to="/#signup" smooth={true} duration={500}  exact='true' offset={-80}>Sign Up</NavLinks>
         </NavItem>
       </NavMenu>
       {false?
@@ -65,7 +64,9 @@ const Navbar = ({toggle}) => {
         <NavBtnLink to="/signin">
           Sign In</NavBtnLink>
       </NavBtn>:
-        <OptionsBar />}
+      <NavBtn>
+          <OptionsBar />
+      </NavBtn>}
     </NavbarContainer>
   </Nav>)
 }

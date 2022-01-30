@@ -10,7 +10,7 @@ import PicSlider from './picSlider'
 function EstateCard(props){
     function handleDetails(){
       props.handleDetailsClick("details",props.data);
-      scroller.scrollTo("details", {
+      scroller.scrollTo("details"+props.ID, {
         duration: 500,
         delay: 0,
         smooth: "easeInOutQuart",

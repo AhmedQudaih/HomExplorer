@@ -9,7 +9,7 @@ function Home() {
             <Main />
             <Info {...homeObjOne} />
             <Info {...homeObjTwo} />
-            <Services from="Services" />
+            <Services ID="services" from="Services" />
             <Info {...homeObjThree} />
         </div>
     )

@@ -21,7 +21,7 @@ function Admin() {
       (context) => {
 
         if (context.saveList === false || myEstate === "error" || context.saveList === "error" ) {
-          return (<ServicesProductContainer id="services" name="services">
+          return (<ServicesProductContainer >
             <ServicesProductH1>Services</ServicesProductH1>
             <Loading/>
           </ServicesProductContainer>);
@@ -33,9 +33,9 @@ function Admin() {
 
           return (<div>
 
-            <Services Data={display} from="Saved Estates"/>
-            
-          <Services Data={myEstate} from="My Estates"/>
+            <Services  ID="SaveList" Data={display} from="Saved Estates"/>
+
+          <Services  ID="MyEstate" Data={myEstate} from="My Estates"/>
 
           <ApproveEstateReq estateRequests={context.estateRequests} setEstateRequests={context.setEstateRequests} />
 

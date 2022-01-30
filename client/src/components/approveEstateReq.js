@@ -46,7 +46,7 @@ const expandDetails = (id) => {
     </ServicesProductContainer>);
   }
 
-  return (<ServicesProductContainer>
+  return (<ServicesProductContainer id="EstatesRequests">
       <ServicesProductH1>Estates Requests</ServicesProductH1>
     <TableContainer component={Paper}>
       <Table sx={{

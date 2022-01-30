@@ -12,7 +12,7 @@ const [data, setData] = React.useState(false);
     return (
         <div>
           <Search filterFunc={FilterData}/>
-          <Services from=" Services" Data={data}/>
+          <Services ID="services" from=" Services" Data={data}/>
         </div>
     )
 }

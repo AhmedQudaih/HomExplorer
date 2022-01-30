@@ -327,7 +327,6 @@ return(
                handleChange
                }
                value ={estate.price}
-
                / >
 
                <EstateFormSubmitBtn>

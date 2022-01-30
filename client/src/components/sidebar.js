@@ -6,22 +6,24 @@ import CloseIcon from '@material-ui/icons/Close';
 import OptionsBar from './optionsBar.js';
 const Sidebar = ({isOpen, toggle}) => {
   return (
-    <SidebarContainer isOpen={isOpen} onClick={toggle}>
-      <Icon onClick={toggle}>
+    <SidebarContainer isOpen={isOpen}>
+      <Icon onClick={()=>{toggle(false)}}>
         <CloseIcon fontSize="large" style={CloseIconStyle} />
       </Icon>
       <SidebarWrapper>
         <SidebarMenu>
-          <SidebarLink to="recommendations" onClick={toggle}>Recommendations</SidebarLink>
-          <SidebarLink to="auction" onClick={toggle}>Auction</SidebarLink>
-          <SidebarLink to="services" onClick={toggle}>Services</SidebarLink>
-          <SidebarLink to="signup" onClick={toggle}>Sign Up</SidebarLink>
+          <SidebarLink to="/#recommendations" onClick={()=>{toggle(false)}}>Recommendations</SidebarLink>
+          <SidebarLink to="/#auction" onClick={()=>{toggle(false)}}>Auction</SidebarLink>
+          <SidebarLink to="/#services" onClick={()=>{toggle(false)}}>Services</SidebarLink>
+          <SidebarLink to="/#signup" onClick={()=>{toggle(false)}}>Sign Up</SidebarLink>
         </SidebarMenu>
           {false?
         <SideBtnWrap>
-          <SidebarRoute to="/signin">Sign In</SidebarRoute>
+          <SidebarRoute onClick={()=>{toggle(false)}} to="/signin">Sign In</SidebarRoute>
         </SideBtnWrap>:
-    <OptionsBar Mobile={true}/> }
+        <SideBtnWrap  onClick={()=>{toggle(false)}}>
+    <OptionsBar Mobile={true}/>
+        </SideBtnWrap>}
       </SidebarWrapper>
     </SidebarContainer>
   );

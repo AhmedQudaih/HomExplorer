@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {BrowserRouter  as Router, Route, Routes} from 'react-router-dom';
 import Sidebar from './components/sidebar.js';
 import Navbar from './components/navbar.js';
 import Footer from './components/footer.js';
@@ -10,8 +10,8 @@ import Admin from './pages/admin.js';
 import Provider from './components/provider';
 function App() {
   const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => {
-    setIsOpen(!isOpen);
+  const toggle = (status) => {
+    setIsOpen(status);
   }
   return (<Provider>
     <Router>

@@ -28,7 +28,7 @@ function Services(props) {
         if (props.Data.length === 0) {
           setData(false);
         } else {
-          if (data === "error"){
+          if (props.Data === "error"){
             setData(false);
           }else{
           setData(props.Data)}
@@ -86,7 +86,6 @@ function Services(props) {
        setStatusFilter(event.target.value);
 
    };
-console.log(data)
 
   return (
     <MyContext.Consumer>{(context)=>{
@@ -120,14 +119,14 @@ console.log(data)
 
   /* in case no data */
   if (data === false || context.saveList === 'error' || context.rateList === 'error' ) {
-    return (<ServicesProductContainer id="services" name="services">
+    return (<ServicesProductContainer >
       <ServicesProductH1>{props.from}</ServicesProductH1>
       <Loading/>
     </ServicesProductContainer>);
   }
   return (<ServicesProductContainer style={props.from === "Services" || props.from === "My Estates"
       ? ServicesBackground
-      : null} id="services" name="services">
+      : null} id={props.ID} >
     <ServicesProductH1 style={props.from === "Services"|| props.from === "My Estates"
         ? ServicesH1Color
         : null}>{props.from}</ServicesProductH1>
@@ -154,9 +153,9 @@ console.log(data)
       {
         props.from === "Services"
           ?/* in case call from Services */
-          data.slice(0, 3).map((e) => (<EstateCard updateData={updateData} key={e._id} data={e} handleDetailsClick={handleDetailsAndCompare}/>))
+          data.slice(0, 3).map((e) => (<EstateCard updateData={updateData} ID={props.ID} key={e._id} data={e} handleDetailsClick={handleDetailsAndCompare}/>))
           : data.length > 0 &&/* in case call from product */
-          data.slice((Math.ceil(page) - 1) * 12, Math.ceil(page) * 12).map((e) => (<EstateCard key={e._id} data={e} handleDetailsClick={handleDetailsAndCompare}/>))
+          data.slice((Math.ceil(page) - 1) * 12, Math.ceil(page) * 12).map((e) => (<EstateCard key={e._id} data={e} ID={props.ID} handleDetailsClick={handleDetailsAndCompare}/>))
       }
     </ServicesProductWrapper>
     {
@@ -177,12 +176,12 @@ console.log(data)
               backgroundColor: 'white',
               borderRadius: "1rem"
             }}>
-            <NavLinks to="services" smooth={true} duration={500} exact='true' offset={-80}>
+            <NavLinks to={"#"+props.ID} smooth={true} duration={500} exact='true' offset={-80}>
               <Pagination count={totalPages} page={page} color="success" onChange={handlePageChange}/>
             </NavLinks>
           </Box>
     }
-    <ServicesProductWrapper id="details" name="details">
+    <ServicesProductWrapper id={"details"+props.ID}>
       {detailsAndCompare.compare && <EstateDetailsSections key={detailsAndCompare.compare._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.compare}/>}
       {detailsAndCompare.details && <EstateDetailsSections key={detailsAndCompare.details._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.details}/>}
     </ServicesProductWrapper >

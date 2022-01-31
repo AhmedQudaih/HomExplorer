@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
 
 export const FooterContainer = styled.div`
 background-color: #101522;
@@ -48,7 +48,7 @@ export const FooterLinkTitle = styled.h1`
 font-size: 1.4rem;
 margin-bottom: 1.6rem;
 `
-export const FooterLink = styled(Link)`
+export const FooterLink = styled(HashLink)`
 color: #fff;
 text-decoration: none;
 margin-bottom: 0.5rem;
@@ -74,7 +74,7 @@ margin: 4rem auto 0 auto;
     flex-direction: column;
 }
 `
-export const SocialLogo = styled(Link)`
+export const SocialLogo = styled(HashLink)`
 color: #fff;
 justify-self: start;
 cursor: pointer;

@@ -1,30 +1,23 @@
 import React from 'react';
 import {Button} from '@mui/material';
 import {BookmarkBorder as BookmarkBorderIcon, Bookmark as BookmarkIcon} from '@material-ui/icons';
-
-
-
-function SaveEstate(props){
-
-    if(props.show ==="Icon"){
-  return(
-        <Button color="success" variant="outlined"  startIcon={props.saved?<BookmarkIcon />:<BookmarkBorderIcon  />} >
+import serverFunctions from '../serverFunctions/estate';
+import {StatusAlert} from './appAlerts';
+function SaveEstate(props) {
+  const [save,setSave]= React.useState(props.save)
+  const handleSave = async () => {
+    let Save = {};
+    Save.userId = props.userId;
+    Save.estateId = props.estate._id;
+    const status = await serverFunctions.saveAndUnsave(Save);
+     status ==='error'? StatusAlert(`error`):props.updateData("save",Save.estateId =props.estate );
+    setSave((pre)=>{return !pre})
+  }
+    return (<Button color="success" variant="outlined" onClick={handleSave} startIcon={save
+        ? <BookmarkIcon/>
+        : <BookmarkBorderIcon/>}>
       Save Estate
-     </Button>
-  );
-}
-return (
-  <div >
-     <Button color="success" variant="outlined" startIcon={<BookmarkBorderIcon />}>
-       Saved list
-     </Button>
-  </div>
-);
-
+    </Button>);
 };
 
 export default SaveEstate;
-SaveEstate.defaultProps={
-  saved:false,
-  show:""
-}

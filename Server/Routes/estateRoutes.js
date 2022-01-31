@@ -28,7 +28,7 @@ router.get("/getCategoryAndType",function(req,res){
   estate.getCategoryAndType(req , res);
 })
 
-router.get("/approveEstate",function(req,res){
+router.get("/getApproveEstateRequests",function(req,res){
  estate.getApproveEstateRequests(req , res);
 })
 
@@ -47,11 +47,11 @@ router.post("/saveAndUnsave",function(req,res){
 router.get("/getSavedEstates/:userId",function(req,res){
  estate.getSavedEstates(req , res);
 })
-/*
+
 router.post("/search",function(req,res){
  estate.search(req , res);
 })
-*/
+
 
 
 module.exports = router;

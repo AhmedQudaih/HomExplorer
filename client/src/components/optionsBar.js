@@ -1,12 +1,11 @@
 import React from 'react';
-import {Drawer, List, ListItem, ListItemIcon, ListItemText} from '@mui/material';
+import {Badge, Button, Drawer, List, ListItem} from '@mui/material';
 import EstateForm from './estateForm';
-import SaveEstate from './saveEstate';
-import {
-  NavBtn,
-  NavBtnLink
-} from './Styles/navbarElementsStyle';
-import { SideBtnWrap, SidebarRoute } from './Styles/sidebarElementsStyle';
+import { NavBtnLink } from './Styles/navbarElementsStyle';
+import {SidebarRoute, OptionsBarLinks } from './Styles/sidebarElementsStyle';
+import {MyContext} from '../components/provider';
+import {BookmarkBorder as BookmarkBorderIcon, AssignmentOutlined as AssignmentOutlinedIcon, AssignmentLateOutlined  } from '@material-ui/icons';
+
 
 
 function OptionsBar(props){
@@ -14,6 +13,12 @@ function OptionsBar(props){
     const toggleDrawer = ( open) => (event) => {
       setState(  open );
     };
+
+
+
+    return (<MyContext.Consumer>{
+        (context) => {
+
     const list = () => (
       <div
       >
@@ -22,41 +27,54 @@ function OptionsBar(props){
             <EstateForm />
           </ListItem >
 
-          <ListItem button>
-            <SaveEstate />
-          </ListItem >
-        </List>
+          <ListItem onClick={toggleDrawer(false)} button>
+              <OptionsBarLinks to="/admin#SaveList">
+            <Button color="success" variant="outlined" startIcon={<BookmarkBorderIcon />}>
+              Saved list
+            </Button>
+             </OptionsBarLinks>
+          </ListItem>
+
+          <ListItem  onClick={toggleDrawer(false)} button>
+              <OptionsBarLinks to="/admin#MyEstate">
+            <Button color="success" variant="outlined" startIcon={<AssignmentOutlinedIcon />}>
+              My Estates
+            </Button>
+             </OptionsBarLinks>
+          </ListItem>
+
+
+        <ListItem  onClick={toggleDrawer(false)} button>
+            <OptionsBarLinks to="/admin#EstatesRequests">
+          <Badge badgeContent={context.estateRequests.length}  anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="error">
+          <Button color="success" variant="outlined" startIcon={<AssignmentLateOutlined />}>
+            Eatate Req
+          </Button>
+              </Badge>
+               </OptionsBarLinks>
+        </ListItem>
+      </List>
 
 
       </div>
     );
-    if(props.Mobile){
-    return (
-      <SideBtnWrap>
-        <SidebarRoute to="#" onClick={toggleDrawer(true)}>View Bar</SidebarRoute>
+      return (
+      <>
+      {props.Mobile?
+        <SidebarRoute to="#" onClick={toggleDrawer(true)}>View Bar</SidebarRoute>:
+          <NavBtnLink to="#" onClick={toggleDrawer(true)} >View Bar</NavBtnLink>
+      }
           <Drawer
-            anchor={"right"}
+            anchor={props.Mobile?"bottom":"right"}
             open={state}
             onClose={toggleDrawer(false)}
           >
-            {list("right")}
+            {list()}
           </Drawer>
-      </SideBtnWrap>
+      </>
     );
-    }
-    return (
-            <NavBtn>
-              <NavBtnLink to="#" onClick={toggleDrawer(true)} >
-                View Bar</NavBtnLink>
-                <Drawer
-                  anchor={"right"}
-                  open={state}
-                  onClose={toggleDrawer(false)}
-                >
-                  {list("right")}
-                </Drawer>
-            </NavBtn>
-    );
+
+}}</MyContext.Consumer>)
 }
 
 export default OptionsBar;

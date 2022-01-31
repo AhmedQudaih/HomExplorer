@@ -1,6 +1,5 @@
 import styled from 'styled-components'
-import {Link as LinkS} from 'react-scroll'
-import {Link as LinkR} from 'react-router-dom'
+import { HashLink } from 'react-router-hash-link';
 
 
 export const SidebarContainer = styled.aside`
@@ -42,7 +41,7 @@ text-align: center;
   grid-template-rows: repeat(6, 6rem);
 }
 `
-export const SidebarLink = styled(LinkS)`
+export const SidebarLink = styled(HashLink)`
 display: flex;
 align-items: center;
 justify-content: center;
@@ -63,7 +62,7 @@ export const SideBtnWrap = styled.div`
 display: flex;
 justify-content: center;
 `
-export const SidebarRoute = styled(LinkR)`
+export const SidebarRoute = styled(HashLink)`
 border-radius: 5rem;
 background: #01bf71;
 white-space: nowrap;
@@ -81,4 +80,10 @@ text-decoration: none;
   background: #fff;
   color: #010606;
 }
+`
+
+export const OptionsBarLinks = styled(HashLink)`
+align-items: center;
+text-decoration: none;
+
 `

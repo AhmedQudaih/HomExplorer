@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { Link as LinkR} from 'react-router-dom';
-import { Link as LinkS } from 'react-scroll';
+import { HashLink } from 'react-router-hash-link';
+
 export const Nav = styled.nav`
 background: ${({scrollNav}) => (scrollNav ? '#000' : 'transparent')};
 height: 8rem;
@@ -12,11 +12,19 @@ font-size: 1.3rem;
 position: sticky;
 top: 0;
 z-index: 10;
-
+  &.staticNav{
+    background:#000;
+    margin-top: 0rem;
+    position: static;
+      transition: 0.8s all ease;
+  }
 @media screen and (max-width: 96rem){
     transition: 0.8s all ease;
 }
 `
+
+
+
 export const NavbarContainer = styled.div`
 display: flex;
 justify-content: space-between;
@@ -27,7 +35,7 @@ padding: 0 2.4rem;
 max-width: 110rem;
 `
 
-export const NavLogo = styled(LinkR)`
+export const NavLogo = styled(HashLink)`
 color: #fff;
 justify-self: flex-start;
 cursor: pointer;
@@ -64,7 +72,7 @@ margin-right: -2.2rem;
 export const NavItem = styled.li`
 height: 8rem;
 `
-export const NavLinks = styled(LinkS)`
+export const NavLinks = styled(HashLink)`
 color: #fff;
 display: flex;
 align-items: center;
@@ -87,7 +95,7 @@ align-items: center;
 }
 `
 
-export const NavBtnLink = styled(LinkR)`
+export const NavBtnLink = styled(HashLink)`
   border-radius: 5rem;
   background: #01bf71;
   white-space: nowrap;

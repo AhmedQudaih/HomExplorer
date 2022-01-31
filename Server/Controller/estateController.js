@@ -38,9 +38,8 @@ function picDeleteOperation(picPath) {
 exports.getAllEstates = function(req, res) {
   partitionNumber =(parseInt(req.params.partition)*60);
   estate.estateModel.find({
-    status: true
+    status: 'approve'
   }).skip(partitionNumber).limit(60).populate('category').populate("type").exec(function(error,doc) {
-
     if (error) {
       return res.status(400).send(JSON.stringify(error));
     }
@@ -50,21 +49,20 @@ exports.getAllEstates = function(req, res) {
 }
 
 exports.deleteEstate = function(req, res) {
-
-  estate.estateModel.findByIdAndRemove({
-    _id: req.body._id
-  }, req.body, function(error, doc) {
-    if (error) {
-      return res.status(400).send(JSON.stringify(error));
-    }
+  try{
+  estate.estateModel.findByIdAndRemove({ _id: req.body._id }, req.body, function(error, doc) { if (error) {return res.status(400).send(JSON.stringify(error)); }
     picDeleteOperation([doc.contract, ...doc.pic]);
+    save.savedModel.deleteMany({ estateId: req.body._id }).exec();
+    rate.rateModel.deleteMany({ estateId: req.body._id }).exec();
     res.status(200).send(JSON.stringify("Ok"));
   });
+} catch (err) {
+    return res.status(400).send(JSON.stringify(error));
+}
 }
 
 
 exports.addEstate = function(req, res) {
-  req.body.status = true //while testing then remove
   var newEstate = new estate.estateModel(req.body);
   picAddOperation(req.files, newEstate);
   newEstate.save(function(error) {
@@ -77,11 +75,11 @@ exports.addEstate = function(req, res) {
 }
 
 exports.updateEstate = function(req, res) {
-  req.body.deletedPicNames = req.body.deletedPicNames.split(",");
   estate.estateModel.findById({
     _id: req.body._id
   }).then((data) => {
     if (req.body.deletedPicNames || req.files.contract) {
+      req.body.deletedPicNames = req.body.deletedPicNames.split(",");
       req.body.pic = [];
       req.body.pic = data.pic.filter(e => {
         if (!req.body.deletedPicNames.includes(e.path)) {
@@ -104,7 +102,7 @@ exports.updateEstate = function(req, res) {
         }
       })
     }
-    req.body.status = true; //while testing then false
+    req.body.status?null:req.body.status = "pending" ;
     estate.estateModel.updateOne({
         _id: req.body._id
       }, req.body,
@@ -120,10 +118,28 @@ exports.updateEstate = function(req, res) {
 
 exports.getCategoryAndType = async function(req, res) {
   var categoryAndType = {};
+  try{
   categoryAndType.category = await category.categoryModel.find({}).exec();
   categoryAndType.type = await type.estateTypeModel.find({}).exec();
   res.send(categoryAndType);
+}catch(error){
+    console.log(error);
+  }
 }
+
+
+exports.getApproveEstateRequests = function(req, res) {
+  estate.estateModel.find({
+    status: 'pending'
+  }).populate('category').populate("type").exec(function(error,aproveReq) {
+    if (error) {
+      return res.status(400).send(JSON.stringify(error));
+    }
+    res.send(aproveReq);
+  });
+
+}
+
 
 /*----------------------------Sprint 2----------------------------*/
 
@@ -153,7 +169,7 @@ exports.addAndUpdateRate = function(req, res) {
 exports.getRates = function(req, res) {
   rate.rateModel.find({
       userId: req.params.userId
-    })
+    },{_id:0 ,__v:0 ,userId:0})
     .then(result => {
       res.send(result);
     })
@@ -164,7 +180,6 @@ exports.getRates = function(req, res) {
 }
 
 exports.saveAndUnsave = function (req, res) {
-  console.log(req.body);
   const filter = {
     userId: req.body.userId,
     estateId: req.body.estateId
@@ -201,9 +216,13 @@ exports.saveAndUnsave = function (req, res) {
 exports.getSavedEstates = function(req, res) {
   save.savedModel.find({
       userId: req.params.userId
-    })
+    },{_id:0 ,__v:0 ,userId:0}).populate('estateId').populate({
+    path : 'estateId',
+    populate : {
+      path : 'type category'
+    }
+  })
     .then(result => {
-      console.log(result);
       res.send(result);
     })
     .catch(err => {
@@ -211,80 +230,28 @@ exports.getSavedEstates = function(req, res) {
       res.send(JSON.stringify(err));
     })
 }
-/*
+
+
 exports.search = function(req, res) {
-  console.log(req.body);
-  estate.estateModel.find({
+  let filter = req.body;
 
-        sellerId: {
-          $ne: req.body.sellerId
-        },
-        status: true,
-      $or: [
-        {
-          price: {
-            $gt: req.body.price[0] - 1,
-            $lt: req.body.price[1] + 1
-          }
-        },
-        {
-          size: {
-            $gt: req.body.size[0] - 1,
-            $lt: req.body.size[1] + 1
-          }
-        },
-        {
-          numOfRooms: req.body.numOfRooms
-        },
-        {
-          numOfBathRooms: req.body.numOfBathRooms
-        },
-        {
-          floor: req.body.floor
-        },
-        {
-          category: req.body.category
-        },
-        {
-          type: req.body.type
-        },
-        {
-          $text: {
-            $search: req.body.address.concat(' ').concat(req.body.desc)
-          }
-        }
-      ]
-    })
-    .then(result => {
-      res.send(result);
-    })
-    .catch(err => {
-      res.send(err);
-    })
-
+  if(req.body.text){
+      filter.$text = {
+        $search:`"\" ${req.body.text}"\"`
+      }
+      delete filter.text;
+  }
+   if(req.body.price){
+       filter.price = { $gt: req.body.price[0] -1, $lt: req.body.price[1]+1 };
+  }if(req.body.size){
+    filter.size = { $gt: req.body.size[0] -1, $lt: req.body.size[1]+1 };
+  }
+  console.log(filter);
+estate.estateModel.find(filter).populate('category').populate("type")
+  .then(result => {
+    res.send(result);
+  })
+  .catch(err => {
+    res.send(err);
+  })
 }
-*/
-/*comment*/
-/*
-exports.getApproveEstateRequests = function(req, res) {
-  estate.estateModel.find({
-    status: false
-  }, function(error, aproveReq) {
-    if (error) {
-    return  res.status(400).send(JSON.stringify(error));
-    }
-    res.send(aproveReq);
-  });
-}
-
-exports.findEstate = function(req, res) {
-  estate.estateModel.findById({
-    _id: req.params.estateId
-  }, function(error,doc) {
-    if (error) {
-     return res.status(400).send(JSON.stringify(error));
-    }
-    res.send(doc);
-  });
-}
-*/

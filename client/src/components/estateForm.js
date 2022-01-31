@@ -13,32 +13,8 @@ import Loading from './loading';
 import {CameraAltOutlined , AddCircleOutline as AddCircleOutlineIcon ,Cached as CachedIcon, Save as SaveIcon , Close as CloseIcon} from "@material-ui/icons";
 import serverFunctions from '../serverFunctions/estate';
 import {MyContext} from '../components/provider';
-
-function Val(validation,estate){
-
-  validation.Price = estate.price > 0 && estate.price < 200000000?"success":"error";
-  validation.Number_Of_Rooms = estate.numOfRooms > 0 && estate.numOfRooms < 30  ? "success":"error";
-  validation.Number_Of_BathRooms= estate.numOfBathRooms > 0 && estate.numOfBathRooms < 30  ? "success":"error";
-  validation.floor = estate.floor >= 0 && estate.floor < 164  ? "success":"error";
-  validation.Size= estate.size > 20 && estate.size < 10000?"success":"error" ;
-  validation.Description= estate.desc.length > 30 ?"success":"error" ;
-  validation.Address= estate.address.length > 4 ?"success":"error";
-  validation.Type= estate.type.length > 0 ?"success":"error";
-  validation.Category= estate.category.length > 0 ?"success":"error";
-  validation.Contract= estate.contract !== null ?"success":"error";
-  validation.Images= estate.pic.length > 0 ?"success":"error";
-}
-function valid(validation){
-  let msg =""
-    Object.entries(validation).forEach(([key, value]) => {
-      (value === "error") && (msg=msg+"  "+key)});
-     if(msg.length !==0){
-       alert(`Please check the (${msg} ) input`);
-       return false;
-     }
-     return true;
-
-}
+import {EstateFormVali, CheckData, FormValid, EstateFormValiMsg} from './checkData';
+import {StatusAlert, ValidationMsg} from './appAlerts';
 
 function EstateForm(props) {
 
@@ -69,31 +45,42 @@ function EstateForm(props) {
     },[handelUpdateform])
 
     let validation ={};
-      Val(validation , estate);
+    let msg ={};
+      EstateFormVali(validation , estate);
+      EstateFormValiMsg(msg)
 
 
     const submitEstate = async (event) =>{
       event.preventDefault();
       event.target.pic.files = fileValue();
-      if(!valid(validation)){
+      let subVali = FormValid(validation,msg);
+      if(subVali.length > 0){
+        ValidationMsg(subVali);
         return;
       }
-        const formData = new FormData(event.target);
-          formData.append('sellerId',estate.sellerId);
-          estate.addressOnMap.forEach(element =>{
-              formData.append('addressOnMap',element);
-            });
-
-            if(props.type !== 'Add'){
+      const formData = new FormData(event.target);
+        formData.append('sellerId',estate.sellerId);
+        estate.addressOnMap.forEach(element =>{formData.append('addressOnMap',element);});
+          if(props.type !== 'Add'){
                 formData.append('_id',estate._id);
-                    formData.append('deletedPicNames',deletedPicNames);
-              const Status = await serverFunctions.updateEstate(formData);
-              handleClose();
-              props.handleClose("compare",false)
-                Status ==='error'? alert(`Somthing went wrong try again later`): props.updateData("delete", estate._id);
-            }else{
+                formData.append('deletedPicNames',deletedPicNames);
+            const Status = await serverFunctions.updateEstate(formData);
+              if(Status ==='error'){
+                 StatusAlert("error");
+               }else{
+                 handleClose();
+                 props.handleClose("compare",false)
+                 props.updateData("delete", estate._id);
+                 StatusAlert('Updated');
+               }
+              }else{
                 const Status = await serverFunctions.addEstate(formData);
-                  Status ==='error'? alert(`Somthing went wrong try again later`):handleClose();
+                if(Status ==='error'){
+                   StatusAlert("error");
+                 }else{
+                   handleClose();
+                   StatusAlert('Added');
+                 }
             }
     }
 
@@ -146,11 +133,10 @@ function fileValue(event){
 
   return (
     <MyContext.Consumer>{(context)=>{
-      if (context.categoryAndType === false || context.categoryAndType === "error") {
-return(
-          <Loading/>
-)
-      }
+            const check = CheckData([context.categoryAndType ==="error"?context.categoryAndType:context.categoryAndType.length]);
+            if(check){
+              return <Loading mood={check}/>
+            }
 return(
     <div >
     {props.type !=="Add" ?

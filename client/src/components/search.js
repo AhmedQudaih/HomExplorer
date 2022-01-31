@@ -6,7 +6,7 @@ import { TextField ,Slider ,Button,MenuItem,Typography} from '@mui/material';
 import {Search as SearchIcon, ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon} from '@material-ui/icons';
 import Loading from './loading';
 import {MyContext} from '../components/provider';
-
+import {CheckData} from './checkData';
 
 function Search(props) {
 
@@ -58,20 +58,16 @@ return(
 
   <MyContext.Consumer>{
       (context) => {
+        const validation = CheckData([context.categoryAndType ==="error"?context.categoryAndType:context.categoryAndType.length]);
 
-  if (context.categoryAndType === false || context.categoryAndType === "error" ) {
-    return (
-      <Loading/>
-    );
-  }
     return (
         <MainContainer>
             <MainBg>
                 <ImgBg src={Img}/>
             </MainBg>
-            <MainContent>
-
-                <ProductMainH1>Home Explorer</ProductMainH1>
+             <MainContent>
+               <ProductMainH1>Home Explorer</ProductMainH1>
+               {validation ?  <ProductMainH1><Loading mood={validation} /></ProductMainH1>:<>
 
                 <
                 TextField color = {"success"}
@@ -83,7 +79,6 @@ return(
                 }
                 value = {searchData.address}
                  />
-
                  < TextField name="category" color = {"success"}
                  select label = "Select"
                  value = {
@@ -231,7 +226,8 @@ return(
             </Typography>
       </CollapseDiv>
       }
-            </MainContent>
+      </>}
+    </MainContent>
         </MainContainer>)
       }}</MyContext.Consumer>
     )

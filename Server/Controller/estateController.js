@@ -233,27 +233,20 @@ exports.getSavedEstates = function(req, res) {
 
 
 exports.search = function(req, res) {
-  let filter = {};
+  let filter = req.body;
 
-  if((req.body.desc && req.body.desc.length > 0)  || (req.body.address && req.body.address.length > 0) ){
-        let test = `"\" ${req.body.address.concat(' ').concat(req.body.desc)}"\"`;
-        filter.$text = {
-          $search:test
-        }
-    }
-  for (const [key, value] of Object.entries(req.body)) {
-
-      if(value.length != 0){
-          if(key === "price" || key === "size"){
-            if(value[1]==0){continue;}
-            filter[key] = { $gt: req.body[key][0] -1, $lt: req.body[key][1]+1 };
-          }else if(key === "desc" || key ==="address"){
-            continue;
-          }else{
-            filter[key]= value;
-          }
+  if(req.body.text){
+      filter.$text = {
+        $search:`"\" ${req.body.text}"\"`
       }
-}
+      delete filter.text;
+  }
+   if(req.body.price){
+       filter.price = { $gt: req.body.price[0] -1, $lt: req.body.price[1]+1 };
+  }if(req.body.size){
+    filter.size = { $gt: req.body.size[0] -1, $lt: req.body.size[1]+1 };
+  }
+  console.log(filter);
 estate.estateModel.find(filter).populate('category').populate("type")
   .then(result => {
     res.send(result);

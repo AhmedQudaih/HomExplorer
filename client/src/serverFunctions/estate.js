@@ -126,7 +126,9 @@ function callServer(url, requestOptions ){
   }
   throw response;
 }).then(data => {
-  return data
+  return data.length === 0 ? []: data;
+
+
 }).catch(error => {
   console.error("Error fetching data: ", error);
   return 'error';

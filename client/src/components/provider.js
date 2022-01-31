@@ -3,11 +3,11 @@ import serverFunctions from '../serverFunctions/estate'
 export const MyContext = React.createContext();
 const Provider = (props) =>{
 
-  const [saveList, setSaveList] = React.useState(false);
-  const [rateList, setRateList] = React.useState(false);
-  const [estateRequests, setEstateRequests] = React.useState(false)
-  const [categoryAndType, setCategoryAndType] = React.useState(false);
-  
+  const [saveList, setSaveList] = React.useState([]);
+  const [rateList, setRateList] = React.useState([]);
+  const [estateRequests, setEstateRequests] = React.useState([])
+  const [categoryAndType, setCategoryAndType] = React.useState([]);
+
   React.useEffect(() => {
     const fetchData = async () => {
       const save = await serverFunctions.getSaved("61a81506d4c8835ca4a20610");

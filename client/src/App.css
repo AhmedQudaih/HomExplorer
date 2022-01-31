@@ -6,6 +6,15 @@
 }
 
 html{
-  font-size: 50%;
+  font-size: 60%;
   background: #FAF9F6;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}
+
+.swal2-container.swal2-backdrop-show, .swal2-container.swal2-noanimation {
+
+z-index: 11000;
 }

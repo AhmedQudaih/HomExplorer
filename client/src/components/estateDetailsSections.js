@@ -14,7 +14,7 @@ import EstateDetails from './estateDetails';
 import SaveEstate from './saveEstate'
 import RateEstate from './rateEstate'
 import EstateForm from './estateForm';
-
+import {StatusAlert, CheckOperation} from './appAlerts';
 
 function EstateDetailsSections(props){
   const getSave=(estateId)=>{
@@ -33,10 +33,18 @@ function EstateDetailsSections(props){
     }
   };
   const handelDeleteBtn = async (id) => {
-    handleClose();
-   const Status = await serverFunctions.deleteEstate(id);
-    Status ==='error'? alert(`Somthing went wrong try again later`):props.updateData("delete", id);
+    const confirm = await CheckOperation()
+    if(confirm.isConfirmed === true){
+      handleClose();
+     const Status = await serverFunctions.deleteEstate(id);
+      if(Status ==='error'){
+         StatusAlert("error");
+       }else{
+         props.updateData("delete", id);
+         StatusAlert('Deleted');
+       }
 
+    }
   }
 
 return(

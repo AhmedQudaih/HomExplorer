@@ -10,7 +10,7 @@ import {MainBtnArrowStyle} from './Styles/mainElementsStyle';
 import {NavLinks} from './Styles/navbarElementsStyle';
 import EstateDetailsSections from './estateDetailsSections';
 import {MyContext} from '../components/provider';
-
+import {CheckData} from './checkData';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
@@ -25,19 +25,12 @@ function Services(props) {
   React.useEffect(() => {
     const fetchData = async () => {
       if (props.Data) {
-        if (props.Data.length === 0) {
-          setData(false);
-        } else {
-          if (props.Data === "error"){
-            setData(false);
-          }else{
-          setData(props.Data)}
-        };
+          setData(props.Data)
       } else {
         const data = await serverFunctions.getEstates(partition);
-        if (data === "error" || data.length === 0 ){
-          setData(false);
-        }else{
+        if(data === "error"){
+          return setData(data);
+        }
         setData((pre) => {
           return [
             ...pre,
@@ -45,11 +38,9 @@ function Services(props) {
           ]
         });
       }
-      }
     }
     fetchData();
   }, [partition, props.Data]);
-
   const getPartion = () => {
     setPartition((pre) => {
       return (pre + 1);
@@ -116,20 +107,15 @@ function Services(props) {
           }
         }
       }
+    const validation = CheckData([data==="error"?data:data.length, context.saveList, context.rateList]);
 
-  /* in case no data */
-  if (data === false || context.saveList === 'error' || context.rateList === 'error' ) {
-    return (<ServicesProductContainer >
-      <ServicesProductH1>{props.from}</ServicesProductH1>
-      <Loading/>
-    </ServicesProductContainer>);
-  }
   return (<ServicesProductContainer style={props.from === "Services" || props.from === "My Estates"
       ? ServicesBackground
       : null} id={props.ID} >
     <ServicesProductH1 style={props.from === "Services"|| props.from === "My Estates"
         ? ServicesH1Color
         : null}>{props.from}</ServicesProductH1>
+
       {
       props.from === "My Estates" &&
       <Box sx={{
@@ -149,6 +135,8 @@ function Services(props) {
 </ToggleButtonGroup>
 </Box>
       }
+      { validation?
+        <Loading mood={validation} />:<>
     <ServicesProductWrapper>
       {
         props.from === "Services"
@@ -185,6 +173,7 @@ function Services(props) {
       {detailsAndCompare.compare && <EstateDetailsSections key={detailsAndCompare.compare._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.compare}/>}
       {detailsAndCompare.details && <EstateDetailsSections key={detailsAndCompare.details._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.details}/>}
     </ServicesProductWrapper >
+    </>}
   </ServicesProductContainer>)    }}</MyContext.Consumer>
     )
 }

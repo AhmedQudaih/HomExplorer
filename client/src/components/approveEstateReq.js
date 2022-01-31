@@ -17,6 +17,8 @@ import Paper from '@mui/material/Paper';
 import {ServicesProductContainer, ServicesProductH1} from './Styles/servicesElementsStyle';
 import Loading from './loading';
 import {TableExpandDiv} from './Styles/tableStyle';
+import {CheckData} from './checkData';
+import {StatusAlert, CheckOperation} from './appAlerts';
 
 function ApproveEstateReq(props) {
 
@@ -26,9 +28,20 @@ function ApproveEstateReq(props) {
     const formData = new FormData();
       formData.append('_id', id);
       formData.append('status', status);
-    const Status = await serverFunctions.updateEstate(formData);
-    Status ==='error'? alert(`Somthing went wrong try again later`):handelChange(id)
+
+    const confirm = await CheckOperation()
+    if(confirm.isConfirmed === true){
+     const Status = await serverFunctions.updateEstate(formData);
+      if(Status ==='error'){
+         StatusAlert("error");
+       }else{
+         handelChange(id)
+         StatusAlert('Operation done');
+       }
+
+    }
   }
+
   const handelChange = (id) => {
     let update = props.estateRequests.filter(i => i._id !== id);
     return props.setEstateRequests(update);
@@ -38,16 +51,11 @@ const expandDetails = (id) => {
   expand === id ? setExpand(false):setExpand(id);
   }
 
-
-  if (props.estateRequests === false || props.estateRequests === "error" ) {
-    return (<ServicesProductContainer id="services" name="services">
-      <ServicesProductH1>Services</ServicesProductH1>
-      <Loading/>
-    </ServicesProductContainer>);
-  }
+  const validation = CheckData([props.estateRequests === "error"?props.estateRequests:props.estateRequests.length]);
 
   return (<ServicesProductContainer id="EstatesRequests">
       <ServicesProductH1>Estates Requests</ServicesProductH1>
+    {validation? <Loading mood={validation}/>:
     <TableContainer component={Paper}>
       <Table sx={{
           width: "80%",  mx: "auto"
@@ -165,7 +173,7 @@ const expandDetails = (id) => {
           }
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer>}
 </ServicesProductContainer>
   )
 }

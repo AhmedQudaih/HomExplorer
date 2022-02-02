@@ -1,6 +1,7 @@
 import React from 'react';
 import Services from '../components/services';
 import ApproveEstateReq from '../components/approveEstateReq';
+import ApproveVisitReq from '../components/approveVisitReq';
 import serverFunctions from '../serverFunctions/estate'
 import {MyContext} from '../components/provider';
 
@@ -25,6 +26,7 @@ function Admin() {
               <Services  ID="SaveList" Data={approveEstateReqSec()} from="Saved Estates"/>
               <Services  ID="MyEstate" Data={myEstate} from="My Estates"/>
               <ApproveEstateReq estateRequests={context.estateRequests} setEstateRequests={context.setEstateRequests} />
+                <ApproveVisitReq visitRequests={context.visitRequests} myVisits={context.myVisits} setVisitRequests={context.setVisitRequests} />
             </div>)
         }
 

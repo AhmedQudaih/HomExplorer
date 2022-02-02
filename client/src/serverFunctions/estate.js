@@ -4,7 +4,7 @@ exports.getEstates = function(partition) {
      method: 'get',
      headers: { 'Content-Type': 'application/json' },
  };
-  return callServer(url+"getEstates/"+partition, requestOptions )
+  return callServer(url+"getEstates/"+partition, requestOptions );
 }
 
 exports.deleteEstate = function(id) {
@@ -13,9 +13,7 @@ exports.deleteEstate = function(id) {
      headers: { 'Content-Type': 'application/json' },
      body: JSON.stringify({ _id: id })
  };
-
  return callServer(url+"deleteEstate", requestOptions );
-
   }
 
   exports.getCategoryAndType = function() {
@@ -23,9 +21,7 @@ exports.deleteEstate = function(id) {
        method: 'get',
        headers: { 'Content-Type': 'application/json' },
    };
-
    return callServer(url+"getCategoryAndType", requestOptions );
-
   }
 
 
@@ -34,10 +30,7 @@ exports.deleteEstate = function(id) {
            method: 'POST',
            body: formData
        };
-
-
           return callServer(url+"addEstate", requestOptions );
-
   }
 
 
@@ -58,8 +51,7 @@ exports.deleteEstate = function(id) {
        method: 'get',
        headers: { 'Content-Type': 'application/json' },
    };
-    return callServer(url+"getApproveEstateRequests", requestOptions )
-
+    return callServer(url+"getApproveEstateRequests", requestOptions );
   }
 
 /*----------------------Sprint 2----------------------*/
@@ -70,9 +62,7 @@ exports.rate = function(data) {
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(data)
      };
-
      return callServer(url+"addAndUpdateRate", requestOptions );
-
 }
 
 exports.getRate = function(id) {
@@ -81,8 +71,7 @@ exports.getRate = function(id) {
      method: 'get',
      headers: { 'Content-Type': 'application/json' },
  };
-  return callServer(url+"getRates/"+id, requestOptions )
-
+  return callServer(url+"getRates/"+id, requestOptions );
 }
 
 exports.saveAndUnsave = function(data) {
@@ -91,9 +80,7 @@ exports.saveAndUnsave = function(data) {
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(data)
      };
-
        return callServer(url+"saveAndUnsave", requestOptions );
-
 }
 
 exports.getSaved = function(id) {
@@ -102,8 +89,7 @@ exports.getSaved = function(id) {
      method: 'get',
      headers: { 'Content-Type': 'application/json' },
  };
-  return callServer(url+"getSavedEstates/"+id, requestOptions )
-
+  return callServer(url+"getSavedEstates/"+id, requestOptions );
 }
 
 
@@ -114,9 +100,41 @@ exports.searchData = function(data) {
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(data)
      };
-     return callServer(url+"search", requestOptions )
-
+     return callServer(url+"search", requestOptions );
 }
+
+
+
+/*----------------------Sprint 3----------------------*/
+
+exports.scheduleVisit = function(data){
+  const requestOptions = {
+    method:'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  };
+  return callServer(url+"scheduleVisit",requestOptions);
+}
+
+exports.getVisits = function(id){
+  const requestOptions = {
+     method: 'get',
+     headers: { 'Content-Type': 'application/json' },
+ };
+  return callServer(url+"getVisitsDates/"+id, requestOptions );
+}
+
+exports.updateVisit = function(data) {
+  const requestOptions = {
+         method: 'PATCH',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify(data)
+     };
+    return callServer(url+"updateVisit", requestOptions );
+}
+
+
+
 
 
 function callServer(url, requestOptions ){

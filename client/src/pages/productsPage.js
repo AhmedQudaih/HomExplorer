@@ -5,8 +5,6 @@ import serverFunctions from '../serverFunctions/estate'
 function Products() {
   const [data, setData] = React.useState(false);
   const FilterData = async (formData) => {
-    console.log(formData)
-
     let data = {};
     if (formData.desc.length > 0 || formData.address.length > 0) {
       data.text = formData.address.concat(' ').concat(formData.desc);

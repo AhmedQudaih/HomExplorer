@@ -36,7 +36,17 @@ exports.EstateFormValiMsg = (msg) => {
   msg.Category="Choose estate Category";
   msg.Contract="Upload your estate contract";
   msg.Images="Upload your estate images";
+}
 
+exports.ScheduleInputeVal = (validation, value) => {
+  validation.msg = "Date can't be at the past"
+  var date1 = new Date(value);
+  var date2 = new Date();
+  if(date1 > date2){
+    return "primary";
+  }else{
+    return "error";
+  }
 }
 
 exports.FormValid = (validation, msg) => {

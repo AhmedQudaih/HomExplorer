@@ -52,6 +52,18 @@ router.post("/search",function(req,res){
  estate.search(req , res);
 })
 
+/*----------Sprint 2----------*/
 
+router.get("/getVisitsDates/:filter",function(req,res){
+ estate.getVisitsDates(req , res);
+})
+
+router.post("/scheduleVisit",function(req,res){
+ estate.scheduleVisit(req , res);
+})
+
+router.patch("/updateVisit",function(req,res){
+  estate.updateVisit(req,res);
+})
 
 module.exports = router;

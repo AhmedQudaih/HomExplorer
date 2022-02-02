@@ -4,6 +4,7 @@ const type = require("../Model/estateTypeModel");
 const estate = require("../Model/estateModel");
 const rate = require("../Model/rateModel");
 const save = require("../Model/savedModel");
+const visit = require("../Model/visitModel");
 const fs = require('fs')
 
 
@@ -246,7 +247,6 @@ exports.search = function(req, res) {
   }if(req.body.size){
     filter.size = { $gt: req.body.size[0] -1, $lt: req.body.size[1]+1 };
   }
-  console.log(filter);
 estate.estateModel.find(filter).populate('category').populate("type")
   .then(result => {
     res.send(result);
@@ -254,4 +254,57 @@ estate.estateModel.find(filter).populate('category').populate("type")
   .catch(err => {
     res.send(err);
   })
+}
+
+/*---------------------------- Sprint 3 ----------------------*/
+
+
+exports.scheduleVisit = function(req,res){
+  var newVisit = new visit.visitModel(req.body);
+  newVisit.save(function(error){
+    if(error){
+      return res.status(400).send(JSON.stringify(error));
+    }
+    res.status(200).send(JSON.stringify("Ok"));
+  })
+}
+
+exports.getVisitsDates = function(req,res){
+  req = JSON.parse(req.params.filter)
+
+  visit.visitModel.find(req).populate('estateId').populate('visitorId',"name email phoneNumber").then(result => {
+    if(req.sellerId){
+      let data = {};
+      data.approve=[];data.reject=[];data.pending=[];
+      result.forEach((item) => {
+        if(item.estateId.sellerId == req.sellerId){
+          if(item.status === 'approve'){
+            data.approve.push(item);
+          }else if (item.status === 'reject') {
+            data.reject.push(item);
+          }else if (item.status === 'pending') {
+            data.pending.push(item);
+          }
+        };
+      });
+        res.send(data);
+    }else{
+      res.send(result);
+    }
+  }).catch(err => {
+    console.log(err)
+    res.send(err);
+  })
+}
+
+
+exports.updateVisit = function(req,res){
+  let id = req.body._id;
+  delete req.body._id;
+  visit.visitModel.findByIdAndUpdate({_id:id},req.body).then(result =>{
+    res.status(200).send(JSON.stringify("Ok"));
+  }).catch(err =>{
+    console.log(err);
+    res.status(400).send(JSON.stringify(err));
+  });
 }

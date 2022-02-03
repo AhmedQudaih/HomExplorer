@@ -12,7 +12,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {ServicesProductContainer, ServicesProductH1} from './Styles/servicesElementsStyle';
+import {ServicesProductContainer, ServicesProductH1, ServicesH1Color, ServicesBackground} from './Styles/servicesElementsStyle';
 import Loading from './loading';
 import {TableExpandDiv} from './Styles/tableStyle';
 import {CheckData} from './checkData';
@@ -21,13 +21,25 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import {Box} from '@mui/material';
 import ScheduleVisit from './scheduleVisit';
-
+import TableFooter from '@mui/material/TableFooter';
+import TablePagination from '@mui/material/TablePagination';
 
 
 function ApproveEstateReq(props) {
   const [expand, setExpand] = React.useState(false);
   const [statusFilter, setStatusFilter] = React.useState('myVisit');
   const validation = CheckData([ props.visitRequests[statusFilter] === "error"?  props.visitRequests[statusFilter]: props.visitRequests[statusFilter].length]);
+  const [page, setPage] = React.useState(0);
+   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+   const handleChangePage = (event, newPage) => {
+     setPage(newPage);
+   };
+
+   const handleChangeRowsPerPage = (event) => {
+     setRowsPerPage(parseInt(event.target.value, 10));
+     setPage(0);
+   };
 
   const handelDecisionBtn = async (data,status) => {
     const formData = {
@@ -74,13 +86,15 @@ const expandDetails = (id) => {
   }
 
    const handleStatusFilterChange =(value) => {
+     setPage(0);
      setExpand(false);
      setStatusFilter(value);
    }
 
 
-  return (<ServicesProductContainer id="VisitRequests">
-      <ServicesProductH1>Visit Requests</ServicesProductH1>
+
+  return (<ServicesProductContainer style={ServicesBackground}id="VisitRequests">
+      <ServicesProductH1 style={ServicesH1Color}>Visit Requests</ServicesProductH1>
               <Box sx={{
                 m: "2%",
                 padding: "0.5%",
@@ -119,8 +133,9 @@ const expandDetails = (id) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {
-            props.visitRequests[statusFilter].map((e) => (<React.Fragment key={e._id}>
+          {(rowsPerPage > 0
+            ? props.visitRequests[statusFilter].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : props.visitRequests[statusFilter]).map((e) => (<React.Fragment key={e._id}>
           <TableRow >
             <TableCell onClick={()=>{expandDetails(e._id)}}  style={{width: "5%"}}  align="center" size="small">
             <Button variant="outlined" color = {"primary"} >
@@ -187,6 +202,26 @@ const expandDetails = (id) => {
                   </React.Fragment>))
           }
         </TableBody>
+        <TableFooter>
+                 <TableRow>
+                   <TablePagination
+                     rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                     colSpan={statusFilter !== "pending" ? 5 : 6}
+                     count={props.visitRequests[statusFilter].length}
+                     rowsPerPage={rowsPerPage}
+                     page={page}
+                     SelectProps={{
+                       inputProps: {
+                         'aria-label': 'rows per page',
+                       },
+                       native: true,
+                     }}
+                     onPageChange={handleChangePage}
+                     onRowsPerPageChange={handleChangeRowsPerPage}
+
+                   />
+                 </TableRow>
+               </TableFooter>
       </Table>
     </TableContainer>}
 </ServicesProductContainer>

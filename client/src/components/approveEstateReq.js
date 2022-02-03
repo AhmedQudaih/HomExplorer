@@ -19,10 +19,24 @@ import Loading from './loading';
 import {TableExpandDiv} from './Styles/tableStyle';
 import {CheckData} from './checkData';
 import {StatusAlert, CheckOperation} from './appAlerts';
+import TableFooter from '@mui/material/TableFooter';
+import TablePagination from '@mui/material/TablePagination';
 
 function ApproveEstateReq(props) {
 
-  const [expand, setExpand] = React.useState(false)
+  const [expand, setExpand] = React.useState(false);
+  const [page, setPage] = React.useState(0);
+   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+   const handleChangePage = (event, newPage) => {
+     setPage(newPage);
+   };
+
+   const handleChangeRowsPerPage = (event) => {
+     setRowsPerPage(parseInt(event.target.value, 10));
+     setPage(0);
+   };
+
 
   const handelDecisionBtn = async (id,status) => {
     const formData = new FormData();
@@ -70,8 +84,9 @@ const expandDetails = (id) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {
-            props.estateRequests.map((e) => (<React.Fragment key={e._id}>
+          {(rowsPerPage > 0
+            ? props.estateRequests.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : props.estateRequests).map((e) => (<React.Fragment key={e._id}>
           <TableRow onClick={()=>{expandDetails(e._id)}} >
             <TableCell style={{width: "5%"}}  align="center" size="small">
             <Button variant="outlined" color = {"primary"} >
@@ -172,6 +187,26 @@ const expandDetails = (id) => {
         </React.Fragment>))
           }
         </TableBody>
+        <TableFooter>
+                 <TableRow>
+                   <TablePagination
+                     rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                     colSpan={5}
+                     count={props.estateRequests.length}
+                     rowsPerPage={rowsPerPage}
+                     page={page}
+                     SelectProps={{
+                       inputProps: {
+                         'aria-label': 'rows per page',
+                       },
+                       native: true,
+                     }}
+                     onPageChange={handleChangePage}
+                     onRowsPerPageChange={handleChangeRowsPerPage}
+
+                   />
+                 </TableRow>
+               </TableFooter>
       </Table>
     </TableContainer>}
 </ServicesProductContainer>

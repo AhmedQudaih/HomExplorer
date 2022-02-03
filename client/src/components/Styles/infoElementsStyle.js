@@ -58,10 +58,6 @@ font-size: 4.8rem;
 line-height: 1.1;
 font-weight: 600;
 color: ${({lightText}) => (lightText ? '#f7f8fa' : '#010606')};
-
-@media screen and (max-width: 48rem){
-    font-size: 0.32rem;
-}
 `
 export const Subtitle = styled.p`
 max-width: 44rem;

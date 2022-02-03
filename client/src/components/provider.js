@@ -21,7 +21,7 @@ const Provider = (props) =>{
       setEstateRequests(estateReq);
       setSaveList(save);
       setRateList(rate);
-      setVisitRequests({...visitReq ,"myVisit": myVisitsReq});
+      setVisitRequests({"approve": visitReq.approve, "reject": visitReq.reject, "pending": visitReq.pending ,"myVisit": myVisitsReq});
       }
     fetchData();
   }, []);

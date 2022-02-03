@@ -19,7 +19,10 @@ function Admin() {
   return (<MyContext.Consumer>{
       (context) => {
           const approveEstateReqSec = () =>{
+              if(context.saveList !== "error"){
                 return context.saveList.map(item => {return item.estateId;});
+              }
+              return "error";
           }
           return (
             <div>

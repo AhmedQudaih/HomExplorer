@@ -55,6 +55,7 @@ exports.deleteEstate = function(req, res) {
     picDeleteOperation([doc.contract, ...doc.pic]);
     save.savedModel.deleteMany({ estateId: req.body._id }).exec();
     rate.rateModel.deleteMany({ estateId: req.body._id }).exec();
+    visit.visitModel.deleteMany({ estateId: req.body._id }).exec();
     res.status(200).send(JSON.stringify("Ok"));
   });
 } catch (err) {

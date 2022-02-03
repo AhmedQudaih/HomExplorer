@@ -42,10 +42,9 @@ function OptionsBar(props){
              </OptionsBarLinks>
           </ListItem>
 
-
         <ListItem  onClick={toggleDrawer(false)} button>
             <OptionsBarLinks to="/admin#EstatesRequests">
-          <Badge badgeContent={context.estateRequests.length}  anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="error">
+          <Badge badgeContent={context.estateRequests === "error"? 0 :context.estateRequests.length}  anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="error">
           <Button color="success" variant="outlined" startIcon={<AssignmentLateOutlined />}>
             Eatate Req
           </Button>
@@ -55,9 +54,9 @@ function OptionsBar(props){
 
         <ListItem  onClick={toggleDrawer(false)} button>
             <OptionsBarLinks to="/admin#VisitRequests">
-          <Badge badgeContent={context.visitRequests["pending"].length}  anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="error">
+          <Badge badgeContent={context.visitRequests.pending? context.visitRequests.pending.length: 0 }  anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="error">
           <Button color="success" variant="outlined" startIcon={<DateRangeOutlinedIcon />}>
-            estate visits 
+            estate visits
           </Button>
               </Badge>
                </OptionsBarLinks>

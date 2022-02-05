@@ -1,19 +1,12 @@
 import React from 'react'
 import serverFunctions from '../serverFunctions/estate'
 import MyMap from './map';
-import PicSlider from './picSlider'
-import {Button} from '@mui/material';
+import PicSlider from './picSlider';
 import {
   CheckCircle as CheckCircleIcon ,
   Close as CloseIcon, ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon
 } from "@material-ui/icons";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import {Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableFooter, TablePagination} from '@mui/material';
 import {ServicesProductContainer, ServicesProductH1} from './Styles/servicesElementsStyle';
 import Loading from './loading';
 import {TableExpandDiv} from './Styles/tableStyle';
@@ -22,7 +15,19 @@ import {StatusAlert, CheckOperation} from './appAlerts';
 
 function ApproveEstateReq(props) {
 
-  const [expand, setExpand] = React.useState(false)
+  const [expand, setExpand] = React.useState(false);
+  const [page, setPage] = React.useState(0);
+   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+   const handleChangePage = (event, newPage) => {
+     setPage(newPage);
+   };
+
+   const handleChangeRowsPerPage = (event) => {
+     setRowsPerPage(parseInt(event.target.value, 10));
+     setPage(0);
+   };
+
 
   const handelDecisionBtn = async (id,status) => {
     const formData = new FormData();
@@ -70,8 +75,9 @@ const expandDetails = (id) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {
-            props.estateRequests.map((e) => (<React.Fragment key={e._id}>
+          {(rowsPerPage > 0
+            ? props.estateRequests.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : props.estateRequests).map((e) => (<React.Fragment key={e._id}>
           <TableRow onClick={()=>{expandDetails(e._id)}} >
             <TableCell style={{width: "5%"}}  align="center" size="small">
             <Button variant="outlined" color = {"primary"} >
@@ -172,6 +178,26 @@ const expandDetails = (id) => {
         </React.Fragment>))
           }
         </TableBody>
+        <TableFooter>
+                 <TableRow>
+                   <TablePagination
+                     rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                     colSpan={5}
+                     count={props.estateRequests.length}
+                     rowsPerPage={rowsPerPage}
+                     page={page}
+                     SelectProps={{
+                       inputProps: {
+                         'aria-label': 'rows per page',
+                       },
+                       native: true,
+                     }}
+                     onPageChange={handleChangePage}
+                     onRowsPerPageChange={handleChangeRowsPerPage}
+
+                   />
+                 </TableRow>
+               </TableFooter>
       </Table>
     </TableContainer>}
 </ServicesProductContainer>

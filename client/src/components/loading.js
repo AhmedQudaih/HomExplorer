@@ -1,6 +1,8 @@
 import React from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
-import {LoadingContainer} from './Styles/loadingStyle';
+import {LoadingContainer,Heading, IconNoDataWrap, IconNoData , NoDataContainer} from './Styles/loadingStyle';
+import img from '../images/sad.svg';
+
 function Loading(props){
   if(props.mood === "error"){
   return(
@@ -10,10 +12,12 @@ function Loading(props){
   );
 }else {
   return(
-      <LoadingContainer>
-      <CircularProgress color="success" />
-      <CircularProgress color="success" />
-        </LoadingContainer>
+      <NoDataContainer>
+        <IconNoDataWrap>
+            <IconNoData src={img} alt={"alt"} />
+        </IconNoDataWrap>
+        <Heading>[No Data]</Heading>
+        </NoDataContainer>
   );
 }
 }

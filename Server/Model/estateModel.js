@@ -17,8 +17,8 @@ const estateSchema = new Schema ({
       type: {  type:  Schema.Types.ObjectId, ref: 'estateType', required: true },
       category: {  type:  Schema.Types.ObjectId, ref: 'category', required: true },
       addressOnMap:{type: [Number] , required:true},
-          contract: {type: {path:String , name:String}},
-       pic:  {type: [{path:String , name:String}] }
+          contract: {type: {path:String , name:String} , required:true},
+       pic:  {type: [{path:String , name:String}], required:true }
 });
 estateSchema.index({ address: "text", desc:"text" });
 const estateModel = mongoose.model('estate', estateSchema)

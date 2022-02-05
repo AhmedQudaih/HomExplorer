@@ -8,9 +8,9 @@ const Schema = mongoose.Schema;
 const auctionSchema = new Schema ({
         estateId: { type:  Schema.Types.ObjectId, ref: 'estate' , required: true },
         startDate:{type:Date , required:true},
-        endDate:{type:Date},
+        endDate:{type:Date, required:true},
         startingPrice:{ type: Number , required:true},
-        highestPrice:{type:bid.bidSchema}
+        highestPrice:{type:bid.bidSchema, required:true}
 });
 
 const auctionModel = mongoose.model('auction', auctionSchema)

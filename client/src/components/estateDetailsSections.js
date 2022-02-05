@@ -15,6 +15,7 @@ import SaveEstate from './saveEstate'
 import RateEstate from './rateEstate'
 import EstateForm from './estateForm';
 import {StatusAlert, CheckOperation} from './appAlerts';
+import ScheduleVisit from './scheduleVisit';
 
 function EstateDetailsSections(props){
   const getSave=(estateId)=>{
@@ -53,6 +54,7 @@ return(
         <CloseIcon />
       </Button>
         <EstateDetails data={props.data} />
+        <ScheduleVisit userId={"61a81506d4c8835ca4a20610"} estateId={props.data._id} />
           <DetailsBtnCard>
             <Button color="primary" onClick={()=>props.handleDetailsAndCompare("compare",props.data)}  variant="outlined" startIcon={<CompareIcon  />}>
               Compare

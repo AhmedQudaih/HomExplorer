@@ -4,8 +4,7 @@ import EstateForm from './estateForm';
 import { NavBtnLink } from './Styles/navbarElementsStyle';
 import {SidebarRoute, OptionsBarLinks } from './Styles/sidebarElementsStyle';
 import {MyContext} from '../components/provider';
-import {BookmarkBorder as BookmarkBorderIcon, AssignmentOutlined as AssignmentOutlinedIcon, AssignmentLateOutlined  } from '@material-ui/icons';
-
+import {DateRangeOutlined as DateRangeOutlinedIcon, BookmarkBorder as BookmarkBorderIcon, AssignmentOutlined as AssignmentOutlinedIcon, AssignmentLateOutlined  } from '@material-ui/icons';
 
 
 function OptionsBar(props){
@@ -43,12 +42,21 @@ function OptionsBar(props){
              </OptionsBarLinks>
           </ListItem>
 
-
         <ListItem  onClick={toggleDrawer(false)} button>
             <OptionsBarLinks to="/admin#EstatesRequests">
-          <Badge badgeContent={context.estateRequests.length}  anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="error">
+          <Badge badgeContent={context.estateRequests === "error"? 0 :context.estateRequests.length}  anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="error">
           <Button color="success" variant="outlined" startIcon={<AssignmentLateOutlined />}>
             Eatate Req
+          </Button>
+              </Badge>
+               </OptionsBarLinks>
+        </ListItem>
+
+        <ListItem  onClick={toggleDrawer(false)} button>
+            <OptionsBarLinks to="/admin#VisitRequests">
+          <Badge badgeContent={context.visitRequests.pending? context.visitRequests.pending.length: 0 }  anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="error">
+          <Button color="success" variant="outlined" startIcon={<DateRangeOutlinedIcon />}>
+            estate visits
           </Button>
               </Badge>
                </OptionsBarLinks>

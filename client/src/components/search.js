@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import Img from '../images/productMainImg.jpg';
 import {  MainBg ,ImgBg} from './Styles/mainElementsStyle';
 import { ProductMainH1,MainContainer,CollapseDiv ,MainContent,CollapseBtn  } from './Styles/searchElementsStyle';
-import { TextField ,Slider ,Button,MenuItem,Typography} from '@mui/material';
+import { Slider ,Button,Typography} from '@mui/material';
 import {Search as SearchIcon, ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon} from '@material-ui/icons';
 import Loading from './loading';
 import {MyContext} from '../components/provider';
 import {CheckData} from './checkData';
+import {DropDownLists, FormInputs} from './formInputs'
 
 function Search(props) {
 
@@ -68,67 +69,11 @@ return(
              <MainContent>
                <ProductMainH1>Home Explorer</ProductMainH1>
                {validation ?  <ProductMainH1><Loading mood={validation} /></ProductMainH1>:<>
-
-                <
-                TextField color = {"success"}
-                label = "Address"
-                variant = "outlined"
-                name = "address"
-                onChange = {
-                handleChange
-                }
-                value = {searchData.address}
-                 />
-                 < TextField name="category" color = {"success"}
-                 select label = "Select"
-                 value = {
-                  searchData.category
-                 }
-                 onChange = {
-                 handleChange
-                 }
-               >
-
-                 {
-                 context.categoryAndType.category.map((option) => ( <
-                  MenuItem key = {
-                    option._id
-                  }
-                  value = {
-                    option._id
-                  } > {
-                    option.name
-                  } <
-                  /MenuItem>
-                 ))
-                 }
+               <FormInputs validation={"success"} type={"text"}  helperText={""} label = {"Address"} name = {"address"}  handleChange = { handleChange } value = {searchData.address} />
+                 <DropDownLists name={"category"} handleChange={handleChange} helperText={""} validation={"success"} value={searchData.category} options={context.categoryAndType.category}/>
+                 <DropDownLists name={"type"} handleChange={handleChange} helperText={""} validation={"success"} value={searchData.type} options={context.categoryAndType.type}/>
 
 
-                 <
-                 /TextField>
-                  <
-                 TextField name="type" color = {"success"}
-                 select label = "Select"
-                 value = {
-                  searchData.type
-                 }
-                 onChange = {
-                 handleChange
-                 }
-                > {
-                  context.categoryAndType.type.map((option) => ( <
-                  MenuItem key = {
-                    option._id
-                  }
-                  value = {
-                    option._id
-                  } > {
-                    option.name
-                  } <
-                  /MenuItem>
-                 ))
-                 } <
-                 /TextField>
 
               <Button  variant="contained" color = {"success"} onClick={()=>{props.filterFunc(searchData)}} >
               <SearchIcon />
@@ -140,54 +85,10 @@ return(
     </Button>
     {expandSearch &&
                 <CollapseDiv >
-                  <
-                  TextField color = {"success"}
-                  label = "Search with Key Words"
-                  variant = "outlined"
-                  name = "desc"
-                  onChange = {
-                  handleChange
-                  }
-                  value = {searchData.desc}
-                  />
-              <
-              TextField
-              color = {"success"}
-              type = "number"
-              name="numOfRooms"
-              label = "Number Of Rooms"
-              variant = "outlined"
-              onChange = {
-              handleChange
-              }
-              value = {searchData.numOfRooms}
-              / >
-              <
-              TextField
-              color = {"success"}
-              type = "number"
-              name="numOfBathRooms"
-              label = "Number Of Bathrooms"
-              variant = "outlined"
-              onChange = {
-              handleChange
-              }
-              value = {searchData.numOfBathRooms}
-              / >
-              <
-              TextField
-              color = {"success"}
-              type = "number"
-              name="floor"
-              label = "floor"
-              variant = "outlined"
-              helperText = "Please enter in which floor or number of floors if villa"
-              onChange = {
-              handleChange
-              }
-              value = {searchData.floor}
-              / >
-
+                  <FormInputs validation={"success"} type={"text"}  helperText={""} label = {"Search with Key Words"} name = {"desc"}  handleChange = { handleChange } value = {searchData.desc} />
+                    <FormInputs validation={"success"} type={"number"} helperText={""} label = {"Number Of Rooms"} name = {"numOfRooms"}  handleChange = { handleChange } value = {searchData.numOfRooms} />
+                      <FormInputs validation={"success"} type={"number"} helperText={""} label = {"Number Of Bathrooms"} name = {"numOfBathRooms"}  handleChange = { handleChange } value = {searchData.numOfBathRooms} />
+                        <FormInputs validation={"success"} type={"number"} helperText={"Please enter in which floor or number of floors if villa"} label = {"Floor"} name = {"floor"}  handleChange = { handleChange } value = {searchData.floor} />
 
       <Typography variant="h5" style={CollapseBtn} gutterBottom>
     Price range :{searchData.price[0]} to {searchData.price[1]}

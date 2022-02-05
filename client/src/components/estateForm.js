@@ -8,13 +8,14 @@ import {
   Input
 } from './Styles/estateFormStyle';
 import MyMap from './map';
-import {Button, MenuItem ,TextField , Dialog ,DialogContent,Chip,Stack } from '@mui/material';
+import {Button , Dialog ,DialogContent,Chip,Stack } from '@mui/material';
 import Loading from './loading';
 import {CameraAltOutlined , AddCircleOutline as AddCircleOutlineIcon ,Cached as CachedIcon, Save as SaveIcon , Close as CloseIcon} from "@material-ui/icons";
 import serverFunctions from '../serverFunctions/estate';
 import {MyContext} from '../components/provider';
 import {EstateFormVali, CheckData, FormValid, EstateFormValiMsg} from './checkData';
 import {StatusAlert, ValidationMsg} from './appAlerts';
+import {DropDownLists, FormFullWidthInput, FormInputs, FormMultiLineInput} from './formInputs';
 
 function EstateForm(props) {
 
@@ -156,106 +157,13 @@ return(
              <EstateFormTitle>  Estate Form </EstateFormTitle>
             <DialogContent dividers >
                <EstateMainForm onSubmit={submitEstate} >
-               < TextField name="category" color = {validation.Category}
-               select label = "Select"
-               required
-               value = {
-                estate.category
-               }
-               onChange = {
-               handleChange
-               }
-               helperText = "Please select estate category" > {
-               context.categoryAndType.category.map((option) => ( <
-                MenuItem key = {
-                  option._id
-                }
-                value = {
-                  option._id
-                } > {
-                  option.name
-                } <
-                /MenuItem>
-               ))
-               } <
-               /TextField>
-                <
-               TextField name="type" color = {validation.Type}
-               select label = "Select"
-               required
-               value = {
-                estate.type
+                 <DropDownLists name={"category"} handleChange={handleChange} helperText={"Please select estate category"} validation={validation.Category} value={estate.category} options={context.categoryAndType.category}/>
+                 <DropDownLists name={"type"} handleChange={handleChange} helperText={"Please select estate type"} validation={validation.Type} value={estate.type} options={context.categoryAndType.type}/>
+                 <FormInputs validation={validation.Size} type={"number"} name={"size"} label={"Size"} helperText={"Please enter size in meter square (&#13217;)"} handleChange={handleChange} value={estate.size}/>
+                 <FormInputs validation={validation.floor} type={"number"} name={"floor"} label={"Floor"} helperText={"Please enter in which floor or number of floors if villa"} handleChange={handleChange} value={estate.floor}/>
+                 <FormInputs validation={validation.Number_Of_Rooms} type={"number"} name={"numOfRooms"} label={"Number of Rooms"} helperText={""} handleChange={handleChange} value={estate.numOfRooms}/>
+                 <FormInputs validation={validation.Number_Of_BathRooms} type={"number"} name={"numOfBathRooms"} label={"Number of Bathrooms"} helperText={""} handleChange={handleChange} value={estate.numOfBathRooms}/>
 
-               }
-               onChange = {
-               handleChange
-               }
-               helperText = "Please select estate type" > {
-                context.categoryAndType.type.map((option) => ( <
-                MenuItem key = {
-                  option._id
-                }
-                value = {
-                  option._id
-                } > {
-                  option.name
-                } <
-                /MenuItem>
-               ))
-               } <
-               /TextField>
-               <
-               TextField  color = {validation.Size}
-               type = "number"
-               label = "Size"
-               variant = "outlined"
-               name="size"
-               helperText = "Please enter size in meter square (&#13217;)"
-               required
-               onChange = {
-               handleChange
-               }
-               value = {estate.size}
-               / >
-               <
-               TextField
-               color = {validation.floor}
-               type = "number"
-               name="floor"
-               label = "floor"
-               variant = "outlined"
-               required
-               helperText = "Please enter in which floor or number of floors if villa"
-               onChange = {
-               handleChange
-               }
-               value ={estate.floor}
-
-               / >
-               <
-               TextField  color={validation.Number_Of_Rooms}
-               type = "number"
-               label = "Number of Rooms"
-               variant = "outlined"
-               name="numOfRooms"
-               required
-               onChange = {
-               handleChange
-               }
-               value = {estate.numOfRooms}
-               / >
-               <
-               TextField color = {validation.Number_Of_BathRooms}
-               type = "number"
-               label = "Number of Bathrooms"
-               variant = "outlined"
-               name = "numOfBathRooms"
-               required
-               onChange = {
-               handleChange
-               }
-               value = {estate.numOfBathRooms}
-               / >
                <div>
                <label>
                  <Input name = "pic"  onChange = {
@@ -286,48 +194,12 @@ return(
               </Stack>
              </div>
 
-               <
-               TextField color = {validation.Description}
-               label = "Description"
-               name = "desc"
-               required
-                 helperText = "Please describe the estate, neighborhood and any constraints"
-               onChange = {
-               handleChange
-               }
-               value = {estate.desc}
-               multiline maxRows = {
-               4
-               }
-               variant = "outlined" / >
-               <
-               TextField
-               color = {validation.Price}
-               type = "number"
-               name="price"
-               label = "Price"
-               variant = "outlined"
-               required
-               helperText = "Please enter price in dollar"
-               onChange = {
-               handleChange
-               }
-               value ={estate.price}
-               / >
+             <FormMultiLineInput validation={validation.Description} label={"Description"} name={"desc"} helperText={"Please describe the estate, neighborhood and any constraints"} handleChange={handleChange} multiline={4} value={estate.desc}/>
+             <FormInputs validation={validation.Price} type={"number"} name={"price"} label={"Price"} helperText={"Please enter price in dollar"} handleChange={handleChange} value={estate.price}/>
 
                <EstateFormSubmitBtn>
-                 <
-                 TextField color = {validation.Address}
-                 label = "Address"
-                 variant = "outlined"
-                 name = "address"
-                 fullWidth
-                 required
-                  helperText = "Please enter the estate address and mark it on map"
-                 onChange = {
-                 handleChange
-                 }
-                 value = {estate.address}/ >
+                 <FormFullWidthInput validation={validation.Address} label={"Address"} name={"address"} helperText={"Please enter the estate address and mark it on map"} handleChange={handleChange} value={estate.address}/>
+
                  <MyMap Change={handleChange} Location={estate.addressOnMap} />
                  </EstateFormSubmitBtn>
                <EstateFormSubmitBtn>

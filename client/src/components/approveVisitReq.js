@@ -1,28 +1,16 @@
 import React from 'react'
 import serverFunctions from '../serverFunctions/estate'
-import {Button} from '@mui/material';
 import {
   CheckCircle as CheckCircleIcon ,
   Close as CloseIcon, ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon
 } from "@material-ui/icons";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import {Box,ToggleButtonGroup, ToggleButton, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableFooter, TablePagination} from '@mui/material';
 import {ServicesProductContainer, ServicesProductH1, ServicesH1Color, ServicesBackground} from './Styles/servicesElementsStyle';
 import Loading from './loading';
 import {TableExpandDiv} from './Styles/tableStyle';
 import {CheckData} from './checkData';
 import {StatusAlert, CheckOperation} from './appAlerts';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import {Box} from '@mui/material';
 import ScheduleVisit from './scheduleVisit';
-import TableFooter from '@mui/material/TableFooter';
-import TablePagination from '@mui/material/TablePagination';
 
 
 function ApproveEstateReq(props) {

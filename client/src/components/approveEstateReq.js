@@ -1,26 +1,17 @@
 import React from 'react'
 import serverFunctions from '../serverFunctions/estate'
 import MyMap from './map';
-import PicSlider from './picSlider'
-import {Button} from '@mui/material';
+import PicSlider from './picSlider';
 import {
   CheckCircle as CheckCircleIcon ,
   Close as CloseIcon, ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon
 } from "@material-ui/icons";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import {Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableFooter, TablePagination} from '@mui/material';
 import {ServicesProductContainer, ServicesProductH1} from './Styles/servicesElementsStyle';
 import Loading from './loading';
 import {TableExpandDiv} from './Styles/tableStyle';
 import {CheckData} from './checkData';
 import {StatusAlert, CheckOperation} from './appAlerts';
-import TableFooter from '@mui/material/TableFooter';
-import TablePagination from '@mui/material/TablePagination';
 
 function ApproveEstateReq(props) {
 

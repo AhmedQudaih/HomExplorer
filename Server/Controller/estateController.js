@@ -260,14 +260,28 @@ estate.estateModel.find(filter).populate('category').populate("type")
 /*---------------------------- Sprint 3 ----------------------*/
 
 
-exports.scheduleVisit = function(req,res){
-  var newVisit = new visit.visitModel(req.body);
-  newVisit.save(function(error){
-    if(error){
-      return res.status(400).send(JSON.stringify(error));
-    }
-    res.status(200).send(JSON.stringify("Ok"));
-  })
+exports.scheduleAndUpdateVisit = function(req, res) {
+  const filter = {
+    visitorId: req.body.visitorId,
+    estateId: req.body.estateId
+  };
+  const update = {
+    date: req.body.date,
+    status:req.body.status?req.body.status:"pending"
+  };
+  visit.visitModel.findOneAndUpdate(filter, update, {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true
+    })
+    .then(result => {
+      console.log("Done");
+      res.send(JSON.stringify("ok"));
+    })
+    .catch(err => {
+      console.log(err);
+      res.send(JSON.stringify(err));
+    })
 }
 
 exports.getVisitsDates = function(req,res){
@@ -296,16 +310,4 @@ exports.getVisitsDates = function(req,res){
     console.log(err)
     res.send(err);
   })
-}
-
-
-exports.updateVisit = function(req,res){
-  let id = req.body._id;
-  delete req.body._id;
-  visit.visitModel.findByIdAndUpdate({_id:id},req.body).then(result =>{
-    res.status(200).send(JSON.stringify("Ok"));
-  }).catch(err =>{
-    console.log(err);
-    res.status(400).send(JSON.stringify(err));
-  });
 }

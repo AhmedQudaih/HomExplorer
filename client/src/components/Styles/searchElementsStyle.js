@@ -1,11 +1,11 @@
 import styled from "styled-components";
-export const MainContainer = styled.div`
+export const SearchMainContainer = styled.div`
 background: #0c0c0c;
 display: flex;
 justify-content: center;
 align-items: center;
 padding: 0 3rem;
-height: 80rem;
+height: 100rem;
 position: relative;
 z-index: 1;
 :before {
@@ -20,7 +20,7 @@ z-index: 1;
     z-index: 2;
 }
 `
-export const MainContent = styled.div`
+export const SearchMainContent = styled.div`
 z-index: 3;
 max-width: 120rem;
 width:80%;
@@ -35,6 +35,10 @@ grid-template-rows: 1fr 1fr ;
 grid-row:2/3
 align-items: center;
 grid-gap: 1.6rem;
+@media screen and (max-width: 48rem){
+  grid-template-columns: 1fr ;
+  grid-template-rows: 1fr ;
+}
 `
 
 
@@ -48,7 +52,9 @@ grid-template-rows: 1fr 1fr ;
 grid-gap: 1.6rem;
 animation: fadeInUp;
 animation-duration: 0.5s;
-
+@media screen and (max-width: 48rem){
+  grid-template-columns: 1fr ;
+}
 
 `
 

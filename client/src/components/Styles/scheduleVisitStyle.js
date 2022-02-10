@@ -9,6 +9,9 @@ display: grid;
 grid-template-columns: 1fr 0.5fr ;
 grid-gap: 4rem;
 transition: all 0.2s ease-in-out;
+@media screen and (max-width: 48rem){
+    grid-template-columns: 1fr ;
+}
 `
 
 export const ScheduleCardHeader = styled.h1`

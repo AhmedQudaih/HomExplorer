@@ -31,12 +31,13 @@ function ApproveEstateReq(props) {
 
   const handelDecisionBtn = async (data,status) => {
     const formData = {
-      '_id': data._id,
+      'visitorId':data.visitorId,
+      'estateId':data.estateId,
       'status':status
     }
     const confirm = await CheckOperation()
     if(confirm.isConfirmed === true){
-     const Status = await serverFunctions.updateVisit(formData);
+     const Status = await serverFunctions.scheduleVisit(formData);
       if(Status ==='error'){
          StatusAlert("error");
        }else{
@@ -179,8 +180,8 @@ const expandDetails = (id) => {
                 <TableBody>
                   <TableRow >
                       <TableCell colSpan="2"  align="center">
-                  <ScheduleVisit userId={"61a81506d4c8835ca4a20610"} update={{"id":e._id, "updateFunc":handelChange}} estateId={e} />
-                  </TableCell >
+                        <ScheduleVisit userId={"61a81506d4c8835ca4a20610"} updateFunc={handelChange} estateId={e} />
+                </TableCell >
                   </TableRow >
                 </TableBody>
               }

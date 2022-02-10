@@ -12,22 +12,16 @@ const ScheduleVisit = (props) => {
 
   const handleScheduleSubmite = async () => {
     if(validation.value === "primary"){
-      let data={}
-      if(props.update){
-        data.status = "pending"
-        data._id = props.update.id
-        data.date = value
-      }else{
-      data.visitorId = props.userId
-      data.estateId = props.estateId
-      data.date = value
-    }
-    const status =props.update? await serverFunctions.updateVisit(data): await serverFunctions.scheduleVisit(data);
+    const status = await serverFunctions.scheduleVisit({
+      "visitorId" : props.userId,
+      "estateId" : props.estateId.estateId._id,
+      "date" : value
+      });
     if(status==="error"){
       StatusAlert("error");
     }else{
-      if(props.update){
-        props.update.updateFunc(props.estateId,"pending")
+      if(props.updateFunc){
+        props.updateFunc(props.estateId,"pending");
       }
       StatusAlert("Visit booked at "+value);
     }

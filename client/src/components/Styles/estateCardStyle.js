@@ -37,10 +37,10 @@ margin-bottom: 1rem;
   height: 30rem;
   width: 50rem;
 }
-@media screen and (max-width: 76.8rem){
+@media screen and (max-width: 42rem){
 &.expandIcone{
   height: 20rem;
-  width: 30rem;
+  width: 100%;
 }
 `
 

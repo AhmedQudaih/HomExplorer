@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Img from '../images/productMainImg.jpg';
 import {  MainBg ,ImgBg} from './Styles/mainElementsStyle';
-import { ProductMainH1,MainContainer,CollapseDiv ,MainContent,CollapseBtn  } from './Styles/searchElementsStyle';
+import { ProductMainH1,SearchMainContainer,CollapseDiv ,SearchMainContent,CollapseBtn  } from './Styles/searchElementsStyle';
 import { Slider ,Button,Typography} from '@mui/material';
 import {Search as SearchIcon, ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon} from '@material-ui/icons';
 import Loading from './loading';
@@ -62,11 +62,11 @@ return(
         const validation = CheckData([context.categoryAndType ==="error"?context.categoryAndType:context.categoryAndType.length]);
 
     return (
-        <MainContainer>
+        <SearchMainContainer>
             <MainBg>
                 <ImgBg src={Img}/>
             </MainBg>
-             <MainContent>
+             <SearchMainContent>
                <ProductMainH1>Home Explorer</ProductMainH1>
                {validation ?  <ProductMainH1><Loading mood={validation} /></ProductMainH1>:<>
                <FormInputs validation={"success"} type={"text"}  helperText={""} label = {"Address"} name = {"address"}  handleChange = { handleChange } value = {searchData.address} />
@@ -128,8 +128,8 @@ return(
       </CollapseDiv>
       }
       </>}
-    </MainContent>
-        </MainContainer>)
+    </SearchMainContent>
+        </SearchMainContainer>)
       }}</MyContext.Consumer>
     )
 }

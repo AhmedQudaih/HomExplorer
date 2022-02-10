@@ -283,17 +283,7 @@ exports.scheduleAndUpdateVisit = function(req, res) {
       res.send(JSON.stringify(err));
     })
 }
-/*
-exports.scheduleVisit = function(req,res){
-  var newVisit = new visit.visitModel(req.body);
-  newVisit.save(function(error){
-    if(error){
-      return res.status(400).send(JSON.stringify(error));
-    }
-    res.status(200).send(JSON.stringify("Ok"));
-  })
-}
-*/
+
 exports.getVisitsDates = function(req,res){
   req = JSON.parse(req.params.filter)
 
@@ -321,17 +311,3 @@ exports.getVisitsDates = function(req,res){
     res.send(err);
   })
 }
-
-/*
-
-exports.updateVisit = function(req,res){
-  let id = req.body._id;
-  delete req.body._id;
-  visit.visitModel.findByIdAndUpdate({_id:id},req.body).then(result =>{
-    res.status(200).send(JSON.stringify("Ok"));
-  }).catch(err =>{
-    console.log(err);
-    res.status(400).send(JSON.stringify(err));
-  });
-}
-*/

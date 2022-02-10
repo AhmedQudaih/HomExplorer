@@ -260,6 +260,30 @@ estate.estateModel.find(filter).populate('category').populate("type")
 /*---------------------------- Sprint 3 ----------------------*/
 
 
+exports.scheduleAndUpdateVisit = function(req, res) {
+  const filter = {
+    visitorId: req.body.visitorId,
+    estateId: req.body.estateId
+  };
+  const update = {
+    date: req.body.date,
+    status:req.body.status?req.body.status:"pending"
+  };
+  visit.visitModel.findOneAndUpdate(filter, update, {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true
+    })
+    .then(result => {
+      console.log("Done");
+      res.send(JSON.stringify("ok"));
+    })
+    .catch(err => {
+      console.log(err);
+      res.send(JSON.stringify(err));
+    })
+}
+/*
 exports.scheduleVisit = function(req,res){
   var newVisit = new visit.visitModel(req.body);
   newVisit.save(function(error){
@@ -269,7 +293,7 @@ exports.scheduleVisit = function(req,res){
     res.status(200).send(JSON.stringify("Ok"));
   })
 }
-
+*/
 exports.getVisitsDates = function(req,res){
   req = JSON.parse(req.params.filter)
 
@@ -298,6 +322,7 @@ exports.getVisitsDates = function(req,res){
   })
 }
 
+/*
 
 exports.updateVisit = function(req,res){
   let id = req.body._id;
@@ -309,3 +334,4 @@ exports.updateVisit = function(req,res){
     res.status(400).send(JSON.stringify(err));
   });
 }
+*/

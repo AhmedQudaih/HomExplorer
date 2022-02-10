@@ -107,15 +107,6 @@ exports.searchData = function(data) {
 
 /*----------------------Sprint 3----------------------*/
 
-exports.scheduleVisit = function(data){
-  const requestOptions = {
-    method:'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  };
-  return callServer(url+"scheduleVisit",requestOptions);
-}
-
 exports.getVisits = function(id){
   const requestOptions = {
      method: 'get',
@@ -124,16 +115,14 @@ exports.getVisits = function(id){
   return callServer(url+"getVisitsDates/"+id, requestOptions );
 }
 
-exports.updateVisit = function(data) {
+exports.scheduleVisit = function(data){
   const requestOptions = {
-         method: 'PATCH',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify(data)
-     };
-    return callServer(url+"updateVisit", requestOptions );
+    method:'POST',
+    headers:{'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  };
+  return callServer(url+"scheduleVisit",requestOptions);
 }
-
-
 
 
 

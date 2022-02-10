@@ -5,7 +5,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 padding: 0 3rem;
-height: 80rem;
+height: 100rem;
 position: relative;
 z-index: 1;
 :before {

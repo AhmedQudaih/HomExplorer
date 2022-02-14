@@ -1,11 +1,11 @@
 exports.CheckData = (props) => {
-/*
+
   if (props.includes("error")) {
     return ("error");
   }
   if (props.includes(0)) {
     return ("No_data");
-  }*/
+  }
   return false;
 }
 

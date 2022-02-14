@@ -19,10 +19,10 @@ function App() {
       <Sidebar isOpen={isOpen} toggle={toggle}/>
       <Navbar toggle={toggle}/>
       <Routes >
-        <Route path="/" element={<Home />}/>
-        <Route path="/products" element={<Products />}/>
-        <Route path="/admin" element={<Admin />}/>
-        <Route path='*' element={<NotFound404Component />} />
+        <Route exact path="/" element={<Home />}/>
+        <Route exact path="/products" element={<Products />}/>
+        <Route exact path="/admin" element={<Admin />}/>
+        <Route exact path='*' element={<NotFound404Component />} />
       </Routes >
       <Footer/>
     </Router>

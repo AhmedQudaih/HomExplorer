@@ -1,6 +1,6 @@
 const multer = require('multer');
 const storage = multer.diskStorage({
-	destination:  '../client/public/uploads/',
+	destination:  './uploads/',
 	filename: (req, file, cb) => {
 		const ext = file.mimetype.split("/")[1];
 		cb(null, file.fieldname + '-' + Date.now()+'.'+ext)

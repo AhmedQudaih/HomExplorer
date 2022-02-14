@@ -1,4 +1,4 @@
-const url = "http://localhost:4000/";
+const url = "https://homeexplorerapi.herokuapp.com/";
 exports.getEstates = function(partition) {
   const requestOptions = {
      method: 'get',

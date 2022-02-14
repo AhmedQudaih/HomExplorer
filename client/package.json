@@ -2,6 +2,10 @@
   "name": "react-website-smooth-scroll-yt",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "16.13.x",
+    "npm": "8.1.x"
+  },
   "dependencies": {
     "@material-ui/icons": "^4.11.2",
     "@mui/material": "^5.2.4",

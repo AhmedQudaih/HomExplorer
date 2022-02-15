@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import './App.css';
 import {BrowserRouter  as Router, Route, Routes} from 'react-router-dom';
-import Sidebar from './components/sidebar.js';
+/*import Sidebar from './components/sidebar.js';
 import Navbar from './components/navbar.js';
-/*import Footer from './components/footer.js';
+import Footer from './components/footer.js';
 import Home from './pages/homePage.js';
 import Products from './pages/productsPage.js';
 import Admin from './pages/admin.js';
@@ -14,7 +14,17 @@ import NotFound404Component from './components/notFound404Component';
   const toggle = (status) => {
     setIsOpen(status);
   }
-  return (<h1>hereeeeeeeeee</h1>);
+  return (
+
+      <Router basename="/">
+        <Routes >
+          <Route exact path="" element={<h1>home</h1>}/>
+          <Route exact path="products" element={<h1>Products</h1>}/>
+        </Routes >
+
+      </Router>
+
+  );
 }
 
 export default App;
@@ -34,5 +44,6 @@ export default App;
     <Footer/>
   </Router>
 </Provider>
+
 
 */

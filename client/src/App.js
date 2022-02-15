@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-/*import './App.css';
-import {BrowserRouter  as Router, Route, Routes} from 'react-router-dom';
+import './App.css';
+/*import {BrowserRouter  as Router, Route, Routes} from 'react-router-dom';
 import Sidebar from './components/sidebar.js';
 import Navbar from './components/navbar.js';
 import Footer from './components/footer.js';
@@ -10,11 +10,11 @@ import Admin from './pages/admin.js';
 import Provider from './components/provider';
 import NotFound404Component from './components/notFound404Component';
 */function App() {
-/*  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const toggle = (status) => {
     setIsOpen(status);
-  }*/
-  return (<h1>hereeeeeeeeeee</h1>);
+  }
+  return (<h1>hereeeeeeeeee</h1>);
 }
 
 export default App;
@@ -33,4 +33,6 @@ export default App;
     </Routes >
     <Footer/>
   </Router>
-</Provider>*/
+</Provider>
+
+*/

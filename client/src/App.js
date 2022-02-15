@@ -14,7 +14,9 @@ function App() {
   const toggle = (status) => {
     setIsOpen(status);
   }
-  return (<Provider>
+  return (
+<Home />{/*
+    <Provider>
     <Router basename="/">
       <Sidebar isOpen={isOpen} toggle={toggle}/>
       <Navbar toggle={toggle}/>
@@ -26,7 +28,7 @@ function App() {
       </Routes >
       <Footer/>
     </Router>
-  </Provider>);
+  </Provider>*/});
 }
 
 export default App;

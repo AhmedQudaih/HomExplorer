@@ -14,19 +14,23 @@ function App() {
   const toggle = (status) => {
     setIsOpen(status);
   }
-  return (<Provider>
-    <Router basename="/">
-      <Sidebar isOpen={isOpen} toggle={toggle}/>
-      <Navbar toggle={toggle}/>
-      <Routes >
-        <Route exact path="" element={<Home />}/>
-        <Route exact path="products" element={<Products />}/>
-        <Route exact path="admin" element={<Admin />}/>
-        <Route exact path='*' element={<NotFound404Component />} />
-      </Routes >
-      <Footer/>
-    </Router>
-  </Provider>);
+  return (<h1>hereeeeeeeeeee</h1>);
 }
 
 export default App;
+
+
+/*
+<Provider>
+  <Router basename="/">
+    <Sidebar isOpen={isOpen} toggle={toggle}/>
+    <Navbar toggle={toggle}/>
+    <Routes >
+      <Route exact path="" element={<Home />}/>
+      <Route exact path="products" element={<Products />}/>
+      <Route exact path="admin" element={<Admin />}/>
+      <Route exact path='*' element={<NotFound404Component />} />
+    </Routes >
+    <Footer/>
+  </Router>
+</Provider>*/

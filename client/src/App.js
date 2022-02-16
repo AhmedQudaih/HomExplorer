@@ -14,16 +14,15 @@ import NotFound404Component from './components/notFound404Component';
   const toggle = (status) => {
     setIsOpen(status);
   }
-  return (<Provider>
+  return (
     <Router basename="/">
-      <Sidebar isOpen={isOpen} toggle={toggle}/>
       <Navbar toggle={toggle}/>
       <Routes >
         <Route exact path="" element={<h1>hereee</h1>}/>
         </Routes >
-      <Footer/>
+
     </Router>
-  </Provider>);
+);
 }
 
 export default App;

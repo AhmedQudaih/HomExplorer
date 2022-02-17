@@ -10,6 +10,7 @@ const port = process.env.PORT || 4000;
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use('/uploads', express.static('uploads'));
 app.use("/" , require(path.join(__dirname +"/Routes/estateRoutes")));
 
 

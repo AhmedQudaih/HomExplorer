@@ -5,7 +5,7 @@ const estate = require("../Model/estateModel");
 const rate = require("../Model/rateModel");
 const save = require("../Model/savedModel");
 const visit = require("../Model/visitModel");
-const fs = require('fs')
+const fs = require('fs');
 
 
 function picAddOperation(files, estate) {

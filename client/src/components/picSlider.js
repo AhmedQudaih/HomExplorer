@@ -21,7 +21,7 @@ function PicSlider(props){
 
   return(<>
     <EstateIcobDiv className ={props.from === "details" && "expandIcone"} >
-    <EstateIcon src={'uploads/'+props.pic[activeStep].name}  />
+    <EstateIcon src={'https://homeexplorerapi.herokuapp.com/uploads/'+props.pic[activeStep].name}  />
   </EstateIcobDiv>
   {props.from === "details" &&
       <div>

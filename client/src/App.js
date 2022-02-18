@@ -15,6 +15,7 @@ function App() {
     setIsOpen(status);
   }
   return (<Provider>
+    <div id="loading"></div>
     <Router basename="/">
       <Sidebar isOpen={isOpen} toggle={toggle}/>
       <Navbar toggle={toggle}/>

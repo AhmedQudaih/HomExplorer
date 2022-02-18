@@ -3,8 +3,11 @@ export const CheckData = (props) => {
   if (props.includes("error")) {
     return ("error");
   }
+  if (props.includes("NoData")) {
+    return ("NoData");
+  }
   if (props.includes(0)) {
-    return ("No_data");
+    return ("Loading");
   }
   return false;
 }
@@ -24,6 +27,7 @@ export const EstateFormVali = (validation,estate) => {
   validation.Images= estate.pic.length > 0 ?"success":"error";
 
 }
+
 export const EstateFormValiMsg = (msg) => {
   msg.Price="Price should be between 0 and 200000000";
   msg.Number_Of_Rooms="Number of Rooms should be between 0 and 30";

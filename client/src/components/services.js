@@ -31,7 +31,13 @@ function Services(props) {
         if(data === "error"){
           return setData(data);
         }
+        if(data.length === 0){
+          return setData("NoData");
+        }
         setData((pre) => {
+          if(pre === "NoData"){
+            pre = []
+          }
           return [
             ...pre,
             ...data
@@ -107,7 +113,7 @@ function Services(props) {
           }
         }
       }
-    const validation = CheckData([data==="error"?data:data.length, context.saveList, context.rateList]);
+    const validation = CheckData([data==="error" || data==="NoData" ?data:data.length, context.saveList, context.rateList]);
 
   return (<ServicesProductContainer style={props.from === "Services" || props.from === "My Estates"
       ? ServicesBackground

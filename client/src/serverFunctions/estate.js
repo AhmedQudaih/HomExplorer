@@ -1,3 +1,4 @@
+const Waiting = require("../components/waiting");
 const url = "https://homeexplorerapi.herokuapp.com/";
 exports.getEstates = function(partition) {
   const requestOptions = {
@@ -13,6 +14,7 @@ exports.deleteEstate = function(id) {
      headers: { 'Content-Type': 'application/json' },
      body: JSON.stringify({ _id: id })
  };
+ Waiting.Waiting(true);
  return callServer(url+"deleteEstate", requestOptions );
   }
 
@@ -30,6 +32,7 @@ exports.deleteEstate = function(id) {
            method: 'POST',
            body: formData
        };
+       Waiting.Waiting(true);
           return callServer(url+"addEstate", requestOptions );
   }
 
@@ -39,7 +42,7 @@ exports.deleteEstate = function(id) {
            method: 'put',
            body: formData
        };
-
+       Waiting.Waiting(true);
       return callServer(url+"updateEstate", requestOptions );
   }
 
@@ -62,6 +65,7 @@ exports.rate = function(data) {
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(data)
      };
+     Waiting.Waiting(true);
      return callServer(url+"addAndUpdateRate", requestOptions );
 }
 
@@ -80,6 +84,7 @@ exports.saveAndUnsave = function(data) {
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(data)
      };
+     Waiting.Waiting(true);
        return callServer(url+"saveAndUnsave", requestOptions );
 }
 
@@ -121,10 +126,9 @@ exports.scheduleVisit = function(data){
     headers:{'Content-Type': 'application/json'},
     body: JSON.stringify(data)
   };
+  Waiting.Waiting(true);
   return callServer(url+"scheduleVisit",requestOptions);
 }
-
-
 
 function callServer(url, requestOptions ){
   return (fetch(url,requestOptions).then(response => {
@@ -133,11 +137,13 @@ function callServer(url, requestOptions ){
   }
   throw response;
 }).then(data => {
+  Waiting.Waiting(false);
   return data.length === 0 ? []: data;
 
 
 }).catch(error => {
   console.error("Error fetching data: ", error);
+  Waiting.Waiting(false);
   return 'error';
 }));
 }

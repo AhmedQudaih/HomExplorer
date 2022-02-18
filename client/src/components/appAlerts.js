@@ -22,6 +22,18 @@ let message;
   })
 }
 
+exports.CompareMood = (on)=> {
+  Swal.fire({
+    toast: on,
+    position: 'top',
+    icon: "info",
+    title: on === true? "Compare Mood On" : "Compare Mood Off" ,
+    showConfirmButton: false,
+    width: "80%"
+  })
+}
+
+
 exports.CheckOperation = (props) =>{
   return (Swal.fire({
     title: 'Are you sure?',

@@ -11,16 +11,17 @@ const Provider = (props) =>{
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const save = await serverFunctions.getSaved("61a81506d4c8835ca4a20610");
-      const rate = await serverFunctions.getRate("61a81506d4c8835ca4a20610");
+      const save = await serverFunctions.getSaved("620a7b01d691986bf34fcbde");
+      const rate = await serverFunctions.getRate("620a7b01d691986bf34fcbde");
       const estateReq = await serverFunctions.approveEstateRequests();
       const categoryAndType = await serverFunctions.getCategoryAndType();
-      const visitReq = await serverFunctions.getVisits(JSON.stringify({"sellerId":"61a81506d4c8835ca4a20610"}));
-      const myVisitsReq = await serverFunctions.getVisits(JSON.stringify({"visitorId":"61a81506d4c8835ca4a20610"}));
+      const visitReq = await serverFunctions.getVisits(JSON.stringify({"sellerId":"620a7b01d691986bf34fcbde"}));
+      const myVisitsReq = await serverFunctions.getVisits(JSON.stringify({"visitorId":"620a7b01d691986bf34fcbde"}));
       setCategoryAndType(categoryAndType);
       setEstateRequests(estateReq);
       setSaveList(save);
       setRateList(rate);
+      console.log(myVisitsReq)
       setVisitRequests({"approve": visitReq.approve, "reject": visitReq.reject, "pending": visitReq.pending ,"myVisit": myVisitsReq});
       }
     fetchData();

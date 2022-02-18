@@ -13,7 +13,7 @@ import {MyContext} from '../components/provider';
 import {CheckData} from './checkData';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-
+import {CompareMood} from './appAlerts'
 
 function Services(props) {
   const [page, setPage] = React.useState(1);
@@ -72,6 +72,7 @@ function Services(props) {
     });
     if (name === "compare") {
       handleDetailsAndCompare("details", false);
+      CompareMood(false)
     }
   };
 
@@ -176,7 +177,7 @@ function Services(props) {
           </Box>
     }
     <ServicesProductWrapper id={"details"+props.ID}>
-      {detailsAndCompare.compare && <EstateDetailsSections key={detailsAndCompare.compare._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.compare}/>}
+      {detailsAndCompare.compare &&<> {CompareMood(true)} <EstateDetailsSections key={detailsAndCompare.compare._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.compare}/></>}
       {detailsAndCompare.details && <EstateDetailsSections key={detailsAndCompare.details._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.details}/>}
     </ServicesProductWrapper >
     </>}

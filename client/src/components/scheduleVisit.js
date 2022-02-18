@@ -9,12 +9,11 @@ const ScheduleVisit = (props) => {
   const [value, setValue] = React.useState('');
   const validation={};
    validation.value = ScheduleInputeVal(validation, value);
-
   const handleScheduleSubmite = async () => {
     if(validation.value === "primary"){
     const status = await serverFunctions.scheduleVisit({
       "visitorId" : props.userId,
-      "estateId" : props.estateId.estateId._id,
+      "estateId" : props.estateId._id,
       "date" : value
       });
     if(status==="error"){

@@ -21,7 +21,6 @@ const Provider = (props) =>{
       setEstateRequests(estateReq);
       setSaveList(save);
       setRateList(rate);
-      console.log(myVisitsReq)
       setVisitRequests({"approve": visitReq.approve, "reject": visitReq.reject, "pending": visitReq.pending ,"myVisit": myVisitsReq});
       }
     fetchData();

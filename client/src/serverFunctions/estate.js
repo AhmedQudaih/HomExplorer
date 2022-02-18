@@ -5,7 +5,7 @@ exports.getEstates = function(partition) {
      method: 'get',
      headers: { 'Content-Type': 'application/json' },
  };
-  return callServer(url+"getEstates/"+partition, requestOptions );
+  return callServer(url+"getEstates/"+partition, requestOptions, true );
 }
 
 exports.deleteEstate = function(id) {
@@ -54,7 +54,7 @@ exports.deleteEstate = function(id) {
        method: 'get',
        headers: { 'Content-Type': 'application/json' },
    };
-    return callServer(url+"getApproveEstateRequests", requestOptions );
+    return callServer(url+"getApproveEstateRequests", requestOptions, true );
   }
 
 /*----------------------Sprint 2----------------------*/
@@ -105,7 +105,7 @@ exports.searchData = function(data) {
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify(data)
      };
-     return callServer(url+"search", requestOptions );
+     return callServer(url+"search", requestOptions, true );
 }
 
 
@@ -117,7 +117,7 @@ exports.getVisits = function(id){
      method: 'get',
      headers: { 'Content-Type': 'application/json' },
  };
-  return callServer(url+"getVisitsDates/"+id, requestOptions );
+  return callServer(url+"getVisitsDates/"+id, requestOptions, true );
 }
 
 exports.scheduleVisit = function(data){
@@ -130,7 +130,7 @@ exports.scheduleVisit = function(data){
   return callServer(url+"scheduleVisit",requestOptions);
 }
 
-function callServer(url, requestOptions ){
+function callServer(url, requestOptions, noDataReply ){
   return (fetch(url,requestOptions).then(response => {
   if (response.ok) {
     return response.json();
@@ -138,7 +138,7 @@ function callServer(url, requestOptions ){
   throw response;
 }).then(data => {
   Waiting.Waiting(false);
-  return data.length === 0 ? []: data;
+  return data.length !== 0 ? data: noDataReply?'NoData':[] ;
 
 
 }).catch(error => {

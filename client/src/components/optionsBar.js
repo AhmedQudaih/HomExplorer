@@ -44,7 +44,7 @@ function OptionsBar(props){
 
         <ListItem  onClick={toggleDrawer(false)} button>
             <OptionsBarLinks to="/admin#EstatesRequests">
-          <Badge badgeContent={context.estateRequests === "error"? 0 :context.estateRequests.length}  anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="error">
+          <Badge badgeContent={context.estateRequests === "error" || context.estateRequests === "NoData"? 0 :context.estateRequests.length}  anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="error">
           <Button color="success" variant="outlined" startIcon={<AssignmentLateOutlined />}>
             Eatate Req
           </Button>

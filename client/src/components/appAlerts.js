@@ -27,7 +27,7 @@ exports.CompareMood = (on)=> {
     toast: on,
     position: 'top',
     icon: "info",
-    title: on === true? "Compare Mood On" : "Compare Mood Off" ,
+    title: on === true? "Compare Mood On: Choose another estate to compare with " : "Compare Mood Off" ,
     showConfirmButton: false,
     width: "80%"
   })

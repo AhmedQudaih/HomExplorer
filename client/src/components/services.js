@@ -28,11 +28,8 @@ function Services(props) {
           setData(props.Data)
       } else {
         const data = await serverFunctions.getEstates(partition);
-        if(data === "error"){
+        if(data === "error" || data === "NoData"){
           return setData(data);
-        }
-        if(data.length === 0){
-          return setData("NoData");
         }
         setData((pre) => {
           if(pre === "NoData"){
@@ -79,9 +76,11 @@ function Services(props) {
   const [statusFilter, setStatusFilter] = React.useState('');
 
    const handleStatusFilterChange = (event) => {
-     let update = props.Data.filter(i => i.status === event.target.value);
-      setData(update);
-       setStatusFilter(event.target.value);
+     if(props.Data !== "NoData"){
+       let update = props.Data.filter(i => i.status === event.target.value);
+        setData(update);
+     }
+        setStatusFilter(event.target.value);
 
    };
 
@@ -114,7 +113,7 @@ function Services(props) {
           }
         }
       }
-    const validation = CheckData([data==="error" || data==="NoData" ?data:data.length, context.saveList, context.rateList]);
+    const validation = CheckData([data==="error" || data === "NoData" ?data:data.length, context.saveList, context.rateList]);
 
   return (<ServicesProductContainer style={props.from === "Services" || props.from === "My Estates"
       ? ServicesBackground

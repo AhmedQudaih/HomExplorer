@@ -16,7 +16,7 @@ import ScheduleVisit from './scheduleVisit';
 function ApproveEstateReq(props) {
   const [expand, setExpand] = React.useState(false);
   const [statusFilter, setStatusFilter] = React.useState('myVisit');
-  const validation = CheckData([ props.visitRequests[statusFilter] === "error"?  props.visitRequests[statusFilter]: props.visitRequests[statusFilter].length]);
+  const validation = CheckData([ props.visitRequests[statusFilter] === "error" || props.visitRequests[statusFilter] === "NoData"?  props.visitRequests[statusFilter]: props.visitRequests[statusFilter].length ===0? "NoData" : false ]);
   const [page, setPage] = React.useState(0);
    const [rowsPerPage, setRowsPerPage] = React.useState(5);
    const handleChangePage = (event, newPage) => {
@@ -81,7 +81,7 @@ const expandDetails = (id) => {
 
 
 
-  return (<ServicesProductContainer style={ServicesBackground}id="VisitRequests">
+  return (<ServicesProductContainer style={ServicesBackground} id="VisitRequests">
       <ServicesProductH1 style={ServicesH1Color}>Visit Requests</ServicesProductH1>
               <Box sx={{
                 m: "2%",

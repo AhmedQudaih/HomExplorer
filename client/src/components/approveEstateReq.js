@@ -56,7 +56,7 @@ const expandDetails = (id) => {
   expand === id ? setExpand(false):setExpand(id);
   }
 
-  const validation = CheckData([props.estateRequests === "error"?props.estateRequests:props.estateRequests.length]);
+  const validation = CheckData([props.estateRequests === "error" || props.estateRequests === "NoData"?props.estateRequests:props.estateRequests.length]);
 
   return (<ServicesProductContainer id="EstatesRequests">
       <ServicesProductH1>Estates Requests</ServicesProductH1>

@@ -1,15 +1,18 @@
-exports.CheckData = (props) => {
+export const CheckData = (props) => {
 
   if (props.includes("error")) {
     return ("error");
   }
+  if (props.includes("NoData")) {
+    return ("NoData");
+  }
   if (props.includes(0)) {
-    return ("No_data");
+    return ("Loading");
   }
   return false;
 }
 
-exports.EstateFormVali = (validation,estate) => {
+export const EstateFormVali = (validation,estate) => {
 
   validation.Price = estate.price > 0 && estate.price < 200000000?"success":"error";
   validation.Number_Of_Rooms = estate.numOfRooms > 0 && estate.numOfRooms < 30  ? "success":"error";
@@ -24,7 +27,8 @@ exports.EstateFormVali = (validation,estate) => {
   validation.Images= estate.pic.length > 0 ?"success":"error";
 
 }
-exports.EstateFormValiMsg = (msg) => {
+
+export const EstateFormValiMsg = (msg) => {
   msg.Price="Price should be between 0 and 200000000";
   msg.Number_Of_Rooms="Number of Rooms should be between 0 and 30";
   msg.Number_Of_BathRooms="Number of Bathrooms should be between 0 and 30";
@@ -38,7 +42,7 @@ exports.EstateFormValiMsg = (msg) => {
   msg.Images="Upload your estate images";
 }
 
-exports.ScheduleInputeVal = (validation, value) => {
+export const ScheduleInputeVal = (validation, value) => {
   validation.msg = "Date can't be at the past"
   var date1 = new Date(value);
   var date2 = new Date();
@@ -49,7 +53,7 @@ exports.ScheduleInputeVal = (validation, value) => {
   }
 }
 
-exports.FormValid = (validation, msg) => {
+export const FormValid = (validation, msg) => {
     let alertMsg =""
     Object.entries(validation).forEach(([key, value]) => {
       (value === "error") && (alertMsg=alertMsg+"\n *"+msg[key])});

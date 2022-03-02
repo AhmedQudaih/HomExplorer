@@ -16,10 +16,9 @@ import ScheduleVisit from './scheduleVisit';
 function ApproveEstateReq(props) {
   const [expand, setExpand] = React.useState(false);
   const [statusFilter, setStatusFilter] = React.useState('myVisit');
-  const validation = CheckData([ props.visitRequests[statusFilter] === "error"?  props.visitRequests[statusFilter]: props.visitRequests[statusFilter].length]);
+  const validation = CheckData([ props.visitRequests[statusFilter] === "error" || props.visitRequests[statusFilter] === "NoData"?  props.visitRequests[statusFilter]: props.visitRequests[statusFilter].length ===0? "NoData" : false ]);
   const [page, setPage] = React.useState(0);
    const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
    const handleChangePage = (event, newPage) => {
      setPage(newPage);
    };
@@ -82,7 +81,7 @@ const expandDetails = (id) => {
 
 
 
-  return (<ServicesProductContainer style={ServicesBackground}id="VisitRequests">
+  return (<ServicesProductContainer style={ServicesBackground} id="VisitRequests">
       <ServicesProductH1 style={ServicesH1Color}>Visit Requests</ServicesProductH1>
               <Box sx={{
                 m: "2%",
@@ -115,7 +114,7 @@ const expandDetails = (id) => {
             <TableCell align="center">Time</TableCell>
               { statusFilter === "pending" ? <>
             <TableCell align="center">Accept</TableCell>
-            <TableCell align="center">Reject</TableCell>
+              <TableCell align="center">Reject</TableCell>
             </>:
             <TableCell align="center">Status</TableCell>
           }
@@ -140,6 +139,7 @@ const expandDetails = (id) => {
                   Approve
                 </Button>
               </TableCell>
+
               <TableCell align="center">
                 <Button color="error" onClick={()=>{handelDecisionBtn(e, "reject")}} variant="outlined" startIcon={<CloseIcon />}>
                   Reject
@@ -176,11 +176,11 @@ const expandDetails = (id) => {
                     <TableCell colSpan="2"  align="center">{e.estateId.desc}</TableCell >
                   </TableRow >
                 </TableBody>
-                {statusFilter !== "pending" &&
+                {statusFilter === "myVisit" &&
                 <TableBody>
                   <TableRow >
                       <TableCell colSpan="2"  align="center">
-                        <ScheduleVisit userId={"61a81506d4c8835ca4a20610"} updateFunc={handelChange} estateId={e} />
+                        <ScheduleVisit userId={"620a7b01d691986bf34fcbde"} updateFunc={handelChange} estateId={e.estateId} />
                 </TableCell >
                   </TableRow >
                 </TableBody>

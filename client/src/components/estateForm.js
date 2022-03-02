@@ -221,7 +221,7 @@ return(
 export default EstateForm;
 EstateForm.defaultProps = {
     data :  {
-      sellerId: "61a81506d4c8835ca4a20610",
+      sellerId: "620a7b01d691986bf34fcbde",
         numOfRooms: "",
         numOfBathRooms: "",
         floor:"",

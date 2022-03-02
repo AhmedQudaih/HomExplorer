@@ -7,6 +7,9 @@ import {
   KeyboardArrowRight, KeyboardArrowLeft,
 } from "@material-ui/icons";
 
+const url = "https://homeexplorerapi.herokuapp.com/uploads/"; // on Server
+//const url = "http://localhost:4000/uploads/"; // on Local
+
 function PicSlider(props){
 
   const [activeStep, setActiveStep] = React.useState(0);
@@ -21,7 +24,7 @@ function PicSlider(props){
 
   return(<>
     <EstateIcobDiv className ={props.from === "details" && "expandIcone"} >
-    <EstateIcon src={'uploads/'+props.pic[activeStep].name}  />
+    <EstateIcon src={url+props.pic[activeStep].name}  />
   </EstateIcobDiv>
   {props.from === "details" &&
       <div>

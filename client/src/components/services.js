@@ -13,7 +13,7 @@ import {MyContext} from '../components/provider';
 import {CheckData} from './checkData';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-
+import {CompareMood} from './appAlerts'
 
 function Services(props) {
   const [page, setPage] = React.useState(1);
@@ -28,10 +28,13 @@ function Services(props) {
           setData(props.Data)
       } else {
         const data = await serverFunctions.getEstates(partition);
-        if(data === "error"){
+        if(data === "error" || data === "NoData"){
           return setData(data);
         }
         setData((pre) => {
+          if(pre === "NoData"){
+            pre = []
+          }
           return [
             ...pre,
             ...data
@@ -66,15 +69,18 @@ function Services(props) {
     });
     if (name === "compare") {
       handleDetailsAndCompare("details", false);
+      CompareMood(false)
     }
   };
 
   const [statusFilter, setStatusFilter] = React.useState('');
 
    const handleStatusFilterChange = (event) => {
-     let update = props.Data.filter(i => i.status === event.target.value);
-      setData(update);
-       setStatusFilter(event.target.value);
+     if(props.Data !== "NoData"){
+       let update = props.Data.filter(i => i.status === event.target.value);
+        setData(update);
+     }
+        setStatusFilter(event.target.value);
 
    };
 
@@ -107,7 +113,7 @@ function Services(props) {
           }
         }
       }
-    const validation = CheckData([data==="error"?data:data.length, context.saveList, context.rateList]);
+    const validation = CheckData([data==="error" || data === "NoData" ?data:data.length, context.saveList, context.rateList]);
 
   return (<ServicesProductContainer style={props.from === "Services" || props.from === "My Estates"
       ? ServicesBackground
@@ -170,7 +176,7 @@ function Services(props) {
           </Box>
     }
     <ServicesProductWrapper id={"details"+props.ID}>
-      {detailsAndCompare.compare && <EstateDetailsSections key={detailsAndCompare.compare._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.compare}/>}
+      {detailsAndCompare.compare &&<> {CompareMood(true)} <EstateDetailsSections key={detailsAndCompare.compare._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.compare}/></>}
       {detailsAndCompare.details && <EstateDetailsSections key={detailsAndCompare.details._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.details}/>}
     </ServicesProductWrapper >
     </>}

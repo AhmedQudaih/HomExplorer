@@ -9,7 +9,7 @@ function Admin() {
   const [myEstate, setMyEstate] = React.useState(false);
   React.useEffect(()=>{
     const getMyEstate = async () => {
-          let res = await serverFunctions.searchData({"sellerId":"61a81506d4c8835ca4a20610"});
+          let res = await serverFunctions.searchData({"sellerId":"620a7b01d691986bf34fcbde"});
           setMyEstate(res);
     }
     getMyEstate();
@@ -19,15 +19,18 @@ function Admin() {
   return (<MyContext.Consumer>{
       (context) => {
           const approveEstateReqSec = () =>{
-              if(context.saveList !== "error"){
-                return context.saveList.map(item => {return item.estateId;});
+              if(context.saveList === "error"){
+                return "error";
               }
-              return "error";
+              if(context.saveList.length === 0){
+                return "NoData";
+              }
+              return context.saveList.map(item => {return item.estateId;});
           }
           return (
             <div>
               <Services  ID="SaveList" Data={approveEstateReqSec()} from="Saved Estates"/>
-              <Services  ID="MyEstate" Data={myEstate} from="My Estates"/>
+              <Services  ID="MyEstate" Data={myEstate?myEstate:"NoData"} from="My Estates"/>
               <ApproveEstateReq estateRequests={context.estateRequests} setEstateRequests={context.setEstateRequests} />
                 <ApproveVisitReq visitRequests={context.visitRequests} myVisits={context.myVisits} setVisitRequests={context.setVisitRequests} />
             </div>)

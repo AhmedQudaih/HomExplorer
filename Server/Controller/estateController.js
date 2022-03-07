@@ -311,3 +311,37 @@ exports.getVisitsDates = function(req,res){
     res.send(err);
   })
 }
+
+/*---------------------------- Sprint 4 ----------------------*/
+
+
+function findauctionandhighestprice(req,res){
+    var auctionID;
+    var price= 0;
+auctionModel.find({estateId:req.body.estateId}).sort({startDate:-1}).limit(1)
+ .then(result=> { auctionID= (JSON.stringify(result[0]._id).replace('"','').replace('"',''))
+ bidModel.find({auctionId:auctionID}).sort({startDate:-1}).limit(1)
+ .then(result => 
+    { if (result.length == 0){
+        res.send ({auctionId: auctionID, price: 'no bids yet'})
+    }
+    else{
+        res.send({auctionId: auctionID, price = result[0].price })
+    }
+    }
+ )   
+ .catch(err=> console.log(err))
+
+})
+ .catch(err=> console.log(err))
+}
+
+function placabid(req,res){
+    const bid1 = new bidModel( {
+        userId: req.body.userId,
+        auctionId: req.body.auctionId,
+        date:Date.now(),
+        price:req.body.price
+    });
+    bid1.save();
+}

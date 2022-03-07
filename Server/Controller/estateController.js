@@ -6,6 +6,7 @@ const rate = require("../Model/rateModel");
 const save = require("../Model/savedModel");
 const visit = require("../Model/visitModel");
 const fs = require('fs');
+const { response } = require("express");
 
 
 function picAddOperation(files, estate) {
@@ -310,4 +311,19 @@ exports.getVisitsDates = function(req,res){
     console.log(err)
     res.send(err);
   })
+}
+/*---------------------------- Sprint 4 ----------------------*/
+
+function top3Bids (req,res)
+{
+  bidModel.find({auctionId:req.body.auctionID}).sort({startDate:-1}).limit(3)
+  .then(result => 
+    { if (result.length == 0){
+        return {auctionId: auctionID, price: 'Your auction ended without bids'}
+    }
+    else{
+       res.send({"highest bid":result[0].price," 2nd highest bid":result[1].price,"3rd highest bid":result[2].price})
+    }}
+ )   
+ .catch(err=> console.log(err))
 }

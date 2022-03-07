@@ -1,6 +1,6 @@
 const Waiting = require("../components/waiting");
-const url = "https://homeexplorerapi.herokuapp.com/";
-//const url = "http://localhost:4000/";
+//const url = "https://homeexplorerapi.herokuapp.com/";
+const url = "http://localhost:4000/";
 
 exports.getEstates = function(partition) {
   const requestOptions = {

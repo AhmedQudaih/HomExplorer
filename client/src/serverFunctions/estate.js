@@ -132,6 +132,24 @@ exports.scheduleVisit = function(data){
   return callServer(url+"scheduleVisit",requestOptions);
 }
 
+
+
+/*----------------------Sprint 4----------------------*/
+exports.placeBid = function(data){
+  const requestOptions = {
+    method:'POST',
+    headers:{'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  };
+  Waiting.Waiting(true);
+//  return callServer(url+"scheduleVisit",requestOptions);
+}
+
+
+
+
+
+
 function callServer(url, requestOptions, noDataReply ){
   return (fetch(url,requestOptions).then(response => {
   if (response.ok) {

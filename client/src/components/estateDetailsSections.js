@@ -57,7 +57,7 @@ return(
       </Button>
         <EstateDetails data={props.data} />
         <ScheduleVisit userId={"620a7b01d691986bf34fcbde"} estateId={props.data} />
-        <EndAuction />
+        <EndAuction estateId={props.data._id}/>
           <DetailsBtnCard>
             <Button color="primary" onClick={()=>props.handleDetailsAndCompare("compare",props.data)}  variant="outlined" startIcon={<CompareIcon  />}>
               Compare

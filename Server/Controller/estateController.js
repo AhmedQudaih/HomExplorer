@@ -65,15 +65,21 @@ exports.deleteEstate = function(req, res) {
 
 
 exports.addEstate = function(req, res) {
+
   var newEstate = new estate.estateModel(req.body);
+  if(req.body.duration){
+    newEstate.auctionData.duration = req.body.duration;
+  }
   picAddOperation(req.files, newEstate);
-  newEstate.save(function(error) {
-    if (error) {
-      picDeleteOperation([newEstate.contract, ...newEstate.pic]);
-      return res.status(400).send(JSON.stringify(error));
+  newEstate.save(function(error, estate) {
+    if (error){
+         picDeleteOperation([newEstate.contract, ...newEstate.pic]);
+          return res.status(400).send(JSON.stringify(error));
     }
     res.status(200).send(JSON.stringify("Ok"));
+
   });
+
 }
 
 exports.updateEstate = function(req, res) {
@@ -141,7 +147,6 @@ exports.getApproveEstateRequests = function(req, res) {
   });
 
 }
-
 
 /*----------------------------Sprint 2----------------------------*/
 
@@ -311,3 +316,6 @@ exports.getVisitsDates = function(req,res){
     res.send(err);
   })
 }
+
+
+/*----------------------------------- Sprint 4 -----------------------------------------*/

@@ -11,12 +11,12 @@ const Provider = (props) =>{
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const save = await serverFunctions.getSaved("620a7b01d691986bf34fcbde");
-      const rate = await serverFunctions.getRate("620a7b01d691986bf34fcbde");
+      const save = await serverFunctions.getSaved("61fa26aae91bd24b703d989d");
+      const rate = await serverFunctions.getRate("61fa26aae91bd24b703d989d");
       const estateReq = await serverFunctions.approveEstateRequests();
       const categoryAndType = await serverFunctions.getCategoryAndType();
-      const visitReq = await serverFunctions.getVisits(JSON.stringify({"sellerId":"620a7b01d691986bf34fcbde"}));
-      const myVisitsReq = await serverFunctions.getVisits(JSON.stringify({"visitorId":"620a7b01d691986bf34fcbde"}));
+      const visitReq = await serverFunctions.getVisits(JSON.stringify({"sellerId":"61fa26aae91bd24b703d989d"}));
+      const myVisitsReq = await serverFunctions.getVisits(JSON.stringify({"visitorId":"61fa26aae91bd24b703d989d"}));
       setCategoryAndType(categoryAndType);
       setEstateRequests(estateReq);
       setSaveList(save);

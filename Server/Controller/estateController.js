@@ -315,33 +315,26 @@ exports.getVisitsDates = function(req,res){
 /*---------------------------- Sprint 4 ----------------------*/
 
 
-function findauctionandhighestprice(req,res){
-    var auctionID;
-    var price= 0;
-auctionModel.find({estateId:req.body.estateId}).sort({startDate:-1}).limit(1)
- .then(result=> { auctionID= (JSON.stringify(result[0]._id).replace('"','').replace('"',''))
- bidModel.find({auctionId:auctionID}).sort({startDate:-1}).limit(1)
- .then(result => 
-    { if (result.length == 0){
-        res.send ({auctionId: auctionID, price: 'no bids yet'})
-    }
-    else{
-        res.send({auctionId: auctionID, price = result[0].price })
-    }
-    }
- )   
- .catch(err=> console.log(err))
 
-})
- .catch(err=> console.log(err))
+exports.getAuctionHighestPrice = function(req,res){
+
+    bidModel.findOne({estateId:req.params.estateId}).sort("-price").then(result => {
+      res.send(result);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(400).send(JSON.stringify(error));
+    })
+
 }
 
-function placabid(req,res){
-    const bid1 = new bidModel( {
-        userId: req.body.userId,
-        auctionId: req.body.auctionId,
-        date:Date.now(),
-        price:req.body.price
+
+exports.placeBid = function (req,res){
+    const newBid = new bidModel(req.body);
+    newBid.save(function(error) {
+      if (error) {
+        return res.status(400).send(JSON.stringify(error));
+      }
+      res.status(200).send(JSON.stringify("Ok"));
     });
-    bid1.save();
 }

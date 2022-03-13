@@ -134,6 +134,15 @@ exports.scheduleVisit = function(data){
 
 
 /*----------------------Sprint 4----------------------*/
+exports.placeBid = function(data){
+  const requestOptions = {
+    method:'POST',
+    headers:{'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  };
+  Waiting.Waiting(true);
+//  return callServer(url+"scheduleVisit",requestOptions);
+}
 
 
 exports.endAuction = function(id){
@@ -143,6 +152,7 @@ exports.endAuction = function(id){
  };
   return callServer(url+"auctionResult/"+id, requestOptions, true );
 }
+
 
 
 

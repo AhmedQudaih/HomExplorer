@@ -62,6 +62,11 @@ export const ScheduleInputeVal = (validation, value) => {
   }
 }
 
+export const PlaceBidVal = (validation, value) => {
+  validation.placeBid= value > 500 ?"primary":"error";
+}
+
+
 export const FormValid = (validation, msg) => {
     let alertMsg =""
     Object.entries(validation).forEach(([key, value]) => {

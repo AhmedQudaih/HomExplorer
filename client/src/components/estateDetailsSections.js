@@ -16,6 +16,7 @@ import RateEstate from './rateEstate'
 import EstateForm from './estateForm';
 import {StatusAlert, CheckOperation} from './appAlerts';
 import ScheduleVisit from './scheduleVisit';
+import PlaceBid from './PlaceBid';
 import EndAuction from './endAuction';
 
 
@@ -57,6 +58,7 @@ return(
       </Button>
         <EstateDetails data={props.data} />
         <ScheduleVisit userId={"620a7b01d691986bf34fcbde"} estateId={props.data} />
+        <PlaceBid userId={"620a7b01d691986bf34fcbde"} estateId={props.data}/>
         <EndAuction estateId={props.data._id}/>
           <DetailsBtnCard>
             <Button color="primary" onClick={()=>props.handleDetailsAndCompare("compare",props.data)}  variant="outlined" startIcon={<CompareIcon  />}>

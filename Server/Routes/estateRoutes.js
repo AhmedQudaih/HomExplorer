@@ -61,6 +61,17 @@ router.get("/getVisitsDates/:filter",function(req,res){
 router.post("/scheduleVisit",function(req,res){
   estate.scheduleAndUpdateVisit(req,res);
 })
+/*----------Sprint 4----------*/
+
+router.get("/highestAuctionPrice/:estateId",function(req,res){
+ estate.getAuctionHighestPrice(req , res);
+})
+
+router.post("/placaBid",function(req,res){
+  estate.placeBid(req,res);
+})
+
+
 
 /*----------Sprint 4----------*/
 

@@ -317,6 +317,31 @@ exports.getVisitsDates = function(req,res){
 
 /*---------------------------- Sprint 4 ----------------------*/
 
+
+
+exports.getAuctionHighestPrice = function(req,res){
+
+    bidModel.findOne({estateId:req.params.estateId}).sort("-price").then(result => {
+      res.send(result);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(400).send(JSON.stringify(error));
+    })
+
+}
+
+
+exports.placeBid = function (req,res){
+    const newBid = new bidModel(req.body);
+    newBid.save(function(error) {
+      if (error) {
+        return res.status(400).send(JSON.stringify(error));
+      }
+      res.status(200).send(JSON.stringify("Ok"));
+    });
+}
+
 exports.auctionResult= function (req,res){
     bidModel.find({estateId:req.params.estateId}).sort('-price').limit(3).populate('userId').then(result =>{
       res.send(result);
@@ -325,3 +350,4 @@ exports.auctionResult= function (req,res){
        res.status(400).send(JSON.stringify(error));
       })
   }
+

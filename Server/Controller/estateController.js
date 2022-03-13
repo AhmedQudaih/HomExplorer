@@ -315,5 +315,13 @@ exports.getVisitsDates = function(req,res){
   })
 }
 
+/*---------------------------- Sprint 4 ----------------------*/
 
-/*----------------------------------- Sprint 4 -----------------------------------------*/
+exports.auctionResult= function (req,res){
+    bidModel.find({estateId:req.params.estateId}).sort('-price').limit(3).populate('userId').then(result =>{
+      res.send(result);
+    }).catch(err=> {
+      console.log(err);
+       res.status(400).send(JSON.stringify(error));
+      })
+  }

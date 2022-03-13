@@ -51,15 +51,26 @@ function EstateDetailsSections(props){
     }
   }
 
+  function checkDate(){
+    var date1 = new Date(props.data.auctionData.startDate);
+    var date2 = new Date();
+    date1.setDate(date1.getDate() + props.data.auctionData.duration)
+    if(date1.getDate() > date2.getDate()){
+    return( <PlaceBid userId={"61fa26aae91bd24b703d989d"} estateId={props.data._id}/>);
+    }
+      return (<EndAuction estateId={props.data._id}/>);
+  }
+
 return(
     <EstateCardDivCard className ={!props.compareMode &&"expandClass"} >
       <Button onClick={handleClose} color="success" >
         <CloseIcon />
       </Button>
         <EstateDetails data={props.data} />
-        <ScheduleVisit userId={"620a7b01d691986bf34fcbde"} estateId={props.data} />
-        <PlaceBid userId={"620a7b01d691986bf34fcbde"} estateId={props.data}/>
-        <EndAuction estateId={props.data._id}/>
+        <ScheduleVisit userId={"61fa26aae91bd24b703d989d"} estateId={props.data} />
+        { props.data.type.name === "Auction" && checkDate()
+
+        }
           <DetailsBtnCard>
             <Button color="primary" onClick={()=>props.handleDetailsAndCompare("compare",props.data)}  variant="outlined" startIcon={<CompareIcon  />}>
               Compare
@@ -68,6 +79,7 @@ return(
           <SaveEstate updateData={props.updateData} save={getSave(props.data._id)} userId={"61fa26aae91bd24b703d989d"} estate={props.data} />
         </DetailsBtnCard >
         <DetailsBtnCard>
+
           <Button color="error" onClick={()=>handelDeleteBtn(props.data._id)} variant="outlined" startIcon={<DeleteIcon />}>
             Delete
           </Button>

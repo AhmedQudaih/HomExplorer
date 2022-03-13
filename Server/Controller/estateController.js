@@ -5,6 +5,7 @@ const estate = require("../Model/estateModel");
 const rate = require("../Model/rateModel");
 const save = require("../Model/savedModel");
 const visit = require("../Model/visitModel");
+const bid = require("../Model/bidEstateModel");
 const fs = require('fs');
 
 
@@ -56,6 +57,7 @@ exports.deleteEstate = function(req, res) {
     save.savedModel.deleteMany({ estateId: req.body._id }).exec();
     rate.rateModel.deleteMany({ estateId: req.body._id }).exec();
     visit.visitModel.deleteMany({ estateId: req.body._id }).exec();
+    bid.bidModel.deleteMany({ estateId: req.body._id }).exec();
     res.status(200).send(JSON.stringify("Ok"));
   });
 } catch (err) {
@@ -320,20 +322,19 @@ exports.getVisitsDates = function(req,res){
 
 
 exports.getAuctionHighestPrice = function(req,res){
-
-    bidModel.findOne({estateId:req.params.estateId}).sort("-price").then(result => {
-      res.send(result);
+    bid.bidModel.findOne({estateId:req.params.estateId}).sort("-price").select({price: 1, _id: false}).then(result => {
+       res.send(result || {price:0});
     })
     .catch(err => {
       console.log(err);
-      res.status(400).send(JSON.stringify(error));
+      res.status(400).send(JSON.stringify(err));
     })
 
 }
 
 
 exports.placeBid = function (req,res){
-    const newBid = new bidModel(req.body);
+    const newBid = new bid.bidModel(req.body);
     newBid.save(function(error) {
       if (error) {
         return res.status(400).send(JSON.stringify(error));
@@ -343,11 +344,10 @@ exports.placeBid = function (req,res){
 }
 
 exports.auctionResult= function (req,res){
-    bidModel.find({estateId:req.params.estateId}).sort('-price').limit(3).populate('userId').then(result =>{
+    bid.bidModel.find({estateId:req.params.estateId}).sort('-price').limit(3).populate('userId').then(result =>{
       res.send(result);
     }).catch(err=> {
       console.log(err);
        res.status(400).send(JSON.stringify(error));
       })
   }
-

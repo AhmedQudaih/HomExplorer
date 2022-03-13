@@ -4,17 +4,29 @@ import serverFunctions from '../serverFunctions/estate';
 import {StatusAlert,ValidationMsg, CheckOperation} from './appAlerts';
 import {PlaceBidVal} from './checkData';
 import { EstateCardH2} from './Styles/estateCardStyle';
-import { DetailsBtnCard} from './Styles/estateDetailsStyle';
 import {ScheduleCard, ScheduleCardHeader} from './Styles/scheduleVisitStyle';
 
 const PlaceBid = (props) => {
 
-  const [value, setValue] = React.useState('');
+  const [value, setValue] = React.useState("");
+  const [currentBid, setCurrentBid] = React.useState(0);
+  var total = currentBid + value;
+
+    React.useEffect(() => {
+      const fetchData = async () => {
+        const currBid = await serverFunctions.getHighestPrice(props.estateId);
+        setCurrentBid(parseInt(currBid.price))
+
+
+      }
+      fetchData();
+    }, [props.estateId]);
+
+
 
   const validation={};
   PlaceBidVal(validation, value);
 
-   const currentBid=50; // This Will change from DataBase !!
 
   const handlPlaceBidSubmite = async () => {
 
@@ -25,13 +37,15 @@ const PlaceBid = (props) => {
       if(confirm.isConfirmed === true){
         const status = await serverFunctions.placeBid({
           "userId" : props.userId,
-          "estateId" : props.estateId._id,
-          "price" : value
+          "estateId" : props.estateId,
+          "price" : total
           });
         if(status==="error"){
           StatusAlert("error");
         }else{
-          StatusAlert("Bid submited with amount: "+value);
+          StatusAlert("Bid submited with amount: "+total);
+          setCurrentBid(total);
+          setValue("");
         }
       }
   }
@@ -43,7 +57,7 @@ const PlaceBid = (props) => {
             Current Highest Bid : {currentBid}
         </EstateCardH2>
         <EstateCardH2>
-            Your Total Bid Amount: {value}
+            Your Total Bid Amount: {total}
         </EstateCardH2>
         <TextField
             color = {validation.placeBid}
@@ -51,7 +65,7 @@ const PlaceBid = (props) => {
             type = "number"
             name="PlaceBidInpute"
             required
-            onChange={(event)=>{setValue(event.target.value)}}
+            onChange={(event)=>{setValue(parseInt(event.target.value))}}
             value = {value}
             / >
         <Button color="error" onClick={handlPlaceBidSubmite} variant="outlined" >

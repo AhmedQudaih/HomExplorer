@@ -37,6 +37,8 @@ const FormInputs = (props) =>{
     variant = "outlined"
     name={props.name}
     helperText = {props.helperText}
+    fullWidth={props.fullWidth||false}
+      multiline = {props.multiline|| false}
     required
     onChange = {props.handleChange}
     value = {props.value}
@@ -44,37 +46,8 @@ const FormInputs = (props) =>{
   );
 }
 
-const FormFullWidthInput = (props) =>{
-  return(
-    <
-    TextField color = {props.validation}
-    label = {props.label}
-    variant = "outlined"
-    name = {props.name}
-    fullWidth
-    required
-      helperText = {props.helperText}
-     onChange = {props.handleChange}
-     value = {props.value}/ >
-  )
-}
-
-const FormMultiLineInput = (props) =>{
-  return(
-    <
-    TextField color = {props.validation}
-    label = {props.label}
-    variant = "outlined"
-    name = {props.name}
-    multiline maxRows = {props.multiline}
-    required
-      helperText = {props.helperText}
-     onChange = {props.handleChange}
-     value = {props.value}/ >
-  )
-}
 
 
 
 
-export { DropDownLists, FormInputs, FormFullWidthInput, FormMultiLineInput }
+export { DropDownLists, FormInputs }

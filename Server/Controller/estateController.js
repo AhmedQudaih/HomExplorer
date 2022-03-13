@@ -110,7 +110,6 @@ exports.updateEstate = function(req, res) {
       })
     }
     req.body.status?null:req.body.status = "pending" ;
-    console.log(req.body);
     estate.estateModel.updateOne({
         _id: req.body._id
       }, req.body,

@@ -12,12 +12,13 @@ import Loading from './loading';
 import {TableExpandDiv} from './Styles/tableStyle';
 import {CheckData} from './checkData';
 import {StatusAlert, CheckOperation} from './appAlerts';
-
+import FilterBox from './filterBox';
 function ApproveEstateReq(props) {
 
   const [expand, setExpand] = React.useState(false);
   const [page, setPage] = React.useState(0);
    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [data, setData] = React.useState(props.estateRequests);
 
    const handleChangePage = (event, newPage) => {
      setPage(newPage);
@@ -48,18 +49,46 @@ function ApproveEstateReq(props) {
   }
 
   const handelChange = (id) => {
-    let update = props.estateRequests.filter(i => i._id !== id);
+    let update = data.filter(i => i._id !== id);
     return props.setEstateRequests(update);
   }
+
+  React.useEffect(() => {
+    setData(props.estateRequests);
+
+   },[props.estateRequests])
+
+
 
 const expandDetails = (id) => {
   expand === id ? setExpand(false):setExpand(id);
   }
 
-  const validation = CheckData([props.estateRequests === "error" || props.estateRequests === "NoData"?props.estateRequests:props.estateRequests.length]);
+  const [statusFilter, setStatusFilter] = React.useState();
+
+   const handleStatusFilterChange = (event) => {
+     if(props.estateRequests !== "NoData"){
+       let update = props.estateRequests.filter(i => typeof i.auctionData === event.target.value);
+        setData(update);
+     }
+
+        setStatusFilter(event.target.value);
+
+   };
+
+
+
+  const validation = CheckData([data === "error" || data === "NoData"?data:data.length]);
 
   return (<ServicesProductContainer id="EstatesRequests">
       <ServicesProductH1>Estates Requests</ServicesProductH1>
+
+        <FilterBox value={statusFilter} onChange={handleStatusFilterChange}
+          options={[{value:"object",title: "Auction Requests"},{value:"undefined",title: "Estates Requests"}]} />
+
+
+
+
     {validation? <Loading mood={validation}/>:
     <TableContainer component={Paper}>
       <Table sx={{
@@ -76,8 +105,8 @@ const expandDetails = (id) => {
         </TableHead>
         <TableBody>
           {(rowsPerPage > 0
-            ? props.estateRequests.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : props.estateRequests).map((e) => (<React.Fragment key={e._id}>
+            ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : data).map((e) => (<React.Fragment key={e._id}>
           <TableRow onClick={()=>{expandDetails(e._id)}} >
             <TableCell style={{width: "5%"}}  align="center" size="small">
             <Button variant="outlined" color = {"primary"} >
@@ -109,6 +138,15 @@ const expandDetails = (id) => {
                     <TableCell align="center">{e.numOfBathRooms}</TableCell>
                   </TableRow >
                 </TableBody>
+                {e.type.name=== "Auction"&&
+                    <TableBody>
+                    <TableRow>
+                          <TableCell colSpan="4" align="center">
+                      Auction Duration : {e.auctionData.duration} Days
+                       </TableCell>
+                  </TableRow >
+                    </TableBody>
+              }
 
                 <TableHead>
                   <TableRow>
@@ -182,7 +220,7 @@ const expandDetails = (id) => {
                    <TablePagination
                      rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                      colSpan={5}
-                     count={props.estateRequests.length}
+                     count={data.length}
                      rowsPerPage={rowsPerPage}
                      page={page}
                      SelectProps={{

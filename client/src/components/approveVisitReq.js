@@ -4,13 +4,14 @@ import {
   CheckCircle as CheckCircleIcon ,
   Close as CloseIcon, ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon
 } from "@material-ui/icons";
-import {Box,ToggleButtonGroup, ToggleButton, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableFooter, TablePagination} from '@mui/material';
+import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableFooter, TablePagination} from '@mui/material';
 import {ServicesProductContainer, ServicesProductH1, ServicesH1Color, ServicesBackground} from './Styles/servicesElementsStyle';
 import Loading from './loading';
 import {TableExpandDiv} from './Styles/tableStyle';
 import {CheckData} from './checkData';
 import {StatusAlert, CheckOperation} from './appAlerts';
 import ScheduleVisit from './scheduleVisit';
+import FilterBox from './filterBox'
 
 
 function ApproveEstateReq(props) {
@@ -83,24 +84,11 @@ const expandDetails = (id) => {
 
   return (<ServicesProductContainer style={ServicesBackground} id="VisitRequests">
       <ServicesProductH1 style={ServicesH1Color}>Visit Requests</ServicesProductH1>
-              <Box sx={{
-                m: "2%",
-                padding: "0.5%",
-                backgroundColor: 'white',
-                 alignItems: 'center',
-                borderRadius: "1rem"
-                  }}>
-              <ToggleButtonGroup
-                color="primary"
-                value={statusFilter}
-                exclusive
-                onChange={(event)=>{handleStatusFilterChange(event.target.value)}}>
-            <ToggleButton value="myVisit">My Visits</ToggleButton>
-            <ToggleButton value="approve">Approved Visits</ToggleButton>
-            <ToggleButton value="pending">Pending Visits</ToggleButton>
-            <ToggleButton value="reject">Rejected Visits</ToggleButton>
-        </ToggleButtonGroup>
-        </Box>
+
+        <FilterBox value={statusFilter} onChange={(event)=>{handleStatusFilterChange(event.target.value)}}
+          options={[{ value:"myVisit",title: "myVisit"},{value:"approve",title: "Approved Visits"},{value:"pending",title: "Pending Visits"},{value:"reject",title: "Rejected Visits"}]}      />
+
+
     {validation? <Loading mood={validation}/>:
     <TableContainer component={Paper}>
       <Table sx={{
@@ -180,7 +168,7 @@ const expandDetails = (id) => {
                 <TableBody>
                   <TableRow >
                       <TableCell colSpan="2"  align="center">
-                        <ScheduleVisit userId={"620a7b01d691986bf34fcbde"} updateFunc={handelChange} estateId={e.estateId} />
+                        <ScheduleVisit userId={"61fa26aae91bd24b703d989d"} updateFunc={handelChange} estateId={e.estateId} />
                 </TableCell >
                   </TableRow >
                 </TableBody>

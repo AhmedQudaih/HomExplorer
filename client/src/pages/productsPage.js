@@ -2,8 +2,28 @@ import React from 'react';
 import Search from '../components/search.js';
 import Services from '../components/services';
 import serverFunctions from '../serverFunctions/estate'
-function Products() {
+import { useLocation} from "react-router-dom";
+function Products(props) {
+
   const [data, setData] = React.useState(false);
+
+  const location = useLocation();
+
+  React.useEffect(()=>{
+
+    const fetchData = async () => {
+
+      delete location.state;
+     let res = await serverFunctions.searchData({type:"61a81506d4c8835ca4a2060d"});
+      setData(res);
+    }
+      if(location.state === "Auction"){
+    fetchData();
+  }
+
+  },[location.state])
+
+
   const FilterData = async (formData) => {
     let data = {};
     if (formData.desc.length > 0 || formData.address.length > 0) {
@@ -24,14 +44,17 @@ function Products() {
     }
 
     if(Object.values(data).length === 0){
-    return setData(false);}
+    return setData([]);}
 
     let res = await serverFunctions.searchData(data);
     setData(res);
   }
 
+
+
+
   return (<div>
-    <Search filterFunc={FilterData}/>
+    <Search filterFunc={FilterData} />
     <Services ID="services" from=" Services" Data={data}/>
   </div>)
 }

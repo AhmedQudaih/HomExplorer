@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { HashLink } from 'react-router-hash-link';
+import { Link} from "react-router-dom";
 
 export const ButtonS = styled(HashLink)`
 border-radius: 10rem;
@@ -22,7 +23,7 @@ transition: all 0.2s ease-in-out;
     background: ${({primary}) => (primary ? '#fff' : '#01B71')};
 }
 `
-export const ButtonR = styled(HashLink)`
+export const ButtonR = styled(Link)`
  text-decoration: none;
 border-radius: 10rem;
 background: ${({primary}) => (primary ? '#01BF71' : '#010606')};

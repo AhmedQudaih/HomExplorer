@@ -9,7 +9,7 @@ function Admin() {
   const [myEstate, setMyEstate] = React.useState(false);
   React.useEffect(()=>{
     const getMyEstate = async () => {
-          let res = await serverFunctions.searchData({"sellerId":"620a7b01d691986bf34fcbde"});
+          let res = await serverFunctions.searchData({"sellerId":"61fa26aae91bd24b703d989d"});
           setMyEstate(res);
     }
     getMyEstate();

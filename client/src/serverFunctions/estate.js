@@ -132,21 +132,6 @@ exports.scheduleVisit = function(data){
   return callServer(url+"scheduleVisit",requestOptions);
 }
 
-
-/*----------------------Sprint 4----------------------*/
-
-
-exports.endAuction = function(id){
-  const requestOptions = {
-     method: 'get',
-     headers: { 'Content-Type': 'application/json' },
- };
-  return callServer(url+"auctionResult/"+id, requestOptions, true );
-}
-
-
-
-
 function callServer(url, requestOptions, noDataReply ){
   return (fetch(url,requestOptions).then(response => {
   if (response.ok) {

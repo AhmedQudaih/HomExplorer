@@ -62,11 +62,4 @@ router.post("/scheduleVisit",function(req,res){
   estate.scheduleAndUpdateVisit(req,res);
 })
 
-/*----------Sprint 4----------*/
-
-router.get("/auctionResult/:estateId",function(req,res){
- estate.auctionResult(req , res);
-})
-
-
 module.exports = router;

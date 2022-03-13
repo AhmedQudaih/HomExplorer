@@ -122,6 +122,7 @@ const expandDetails = (id) => {
           <TableRow >
             <TableCell colSpan="5">
               <TableExpandDiv>
+
                 <TableHead>
                   <TableRow>
                     <TableCell align="center">Size</TableCell>
@@ -132,7 +133,7 @@ const expandDetails = (id) => {
                 </TableHead>
                 <TableBody>
                   <TableRow >
-                    <TableCell align="center">{e.size}</TableCell>
+                    <TableCell align="center">{e.size}</TableCell >
                     <TableCell align="center">{e.floor}</TableCell>
                     <TableCell align="center">{e.numOfRooms}</TableCell>
                     <TableCell align="center">{e.numOfBathRooms}</TableCell>

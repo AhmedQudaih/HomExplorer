@@ -19,10 +19,11 @@ const EndAuction = (props) => {
       React.useEffect(() => {
         const fetchData = async () => {
           const data = await serverFunctions.endAuction(props.estateId);
-          setData(data);
+            setData(data);
         }
-
+        fetchData();
       },[props.estateId]);
+
 
       const validation = CheckData([data === "error" || data === "NoData"?data:data.length]);
 
@@ -41,7 +42,7 @@ const EndAuction = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data && props.estateRequests.map((e) => (
+              {data && data.map((e) => (
                 <React.Fragment key={e._id}>
               <TableRow onClick={()=>{expandDetails(e._id)}} >
                 <TableCell align="center">{e.userId.name}</TableCell>

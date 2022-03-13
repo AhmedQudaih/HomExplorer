@@ -141,9 +141,17 @@ exports.placeBid = function(data){
     body: JSON.stringify(data)
   };
   Waiting.Waiting(true);
-//  return callServer(url+"scheduleVisit",requestOptions);
+  return callServer(url+"placaBid",requestOptions);
 }
 
+
+exports.getHighestPrice = function(id){
+  const requestOptions = {
+     method: 'get',
+     headers: { 'Content-Type': 'application/json' },
+ };
+  return callServer(url+"highestAuctionPrice/"+id, requestOptions, true );
+}
 
 exports.endAuction = function(id){
   const requestOptions = {

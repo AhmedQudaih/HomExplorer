@@ -45,7 +45,6 @@ function EstateForm(props) {
   React.useEffect(() => {
 
        handelUpdateform();
-       console.log("hereee");
    },[handelUpdateform])
 
 
@@ -145,9 +144,8 @@ function fileValue(){
               return <Loading mood={check}/>
             }
 
-  console.log(estate);
           function auctionData() {
-            console.log(estate.type);
+
             if (typeof estate.type !=="object"){
             if (estate.type && context.categoryAndType.type.find(e => e._id === estate.type).name ==="Auction"){
               EstateAuctionVali(validation, estate);

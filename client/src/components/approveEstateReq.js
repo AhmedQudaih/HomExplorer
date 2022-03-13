@@ -30,10 +30,13 @@ function ApproveEstateReq(props) {
    };
 
 
-  const handelDecisionBtn = async (id,status) => {
+  const handelDecisionBtn = async (id,status, auction = false) => {
     const formData = new FormData();
       formData.append('_id', id);
       formData.append('status', status);
+      if(auction){
+        formData.append('auctionData.startDate', new Date());
+      }
 
     const confirm = await CheckOperation()
     if(confirm.isConfirmed === true){
@@ -196,7 +199,7 @@ const expandDetails = (id) => {
                 <TableBody>
                   <TableRow >
                     <TableCell colSpan="2" align="center">
-                      <Button color="success" onClick={()=>{handelDecisionBtn(e._id, 'approve')}} variant="outlined" startIcon={<CheckCircleIcon />}>
+                      <Button color="success" onClick={()=>{handelDecisionBtn(e._id, 'approve' , e.type.name=== "Auction"&& true)}} variant="outlined" startIcon={<CheckCircleIcon />}>
                         Approve
                       </Button>
                     </TableCell>

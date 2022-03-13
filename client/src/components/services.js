@@ -11,10 +11,8 @@ import {NavLinks} from './Styles/navbarElementsStyle';
 import EstateDetailsSections from './estateDetailsSections';
 import {MyContext} from '../components/provider';
 import {CheckData} from './checkData';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import {CompareMood} from './appAlerts'
-
+import FilterBox from './filterBox'
 function Services(props) {
   const [page, setPage] = React.useState(1);
   const [data, setData] = React.useState([]);
@@ -124,22 +122,10 @@ function Services(props) {
 
       {
       props.from === "My Estates" &&
-      <Box sx={{
-        m: "2%",
-        padding: "0.5%",
-        backgroundColor: 'white',
-        borderRadius: "1rem"
-          }}>
-      <ToggleButtonGroup
-        color="primary"
-        value={statusFilter}
-        exclusive
-        onChange={handleStatusFilterChange}>
-    <ToggleButton value="approve">My Approved Estates</ToggleButton>
-    <ToggleButton value="pending">My Pending Estates</ToggleButton>
-    <ToggleButton value="reject">My Rejected Estates</ToggleButton>
-</ToggleButtonGroup>
-</Box>
+
+      <FilterBox value={statusFilter} onChange={handleStatusFilterChange}
+        options={[{value:"approve",title: "My Approved Estates"},{value:"pending",title: "My Pending Estates"},{value:"reject",title: "My Rejected Estates"}]}      />
+
       }
       { validation?
         <Loading mood={validation} />:<>

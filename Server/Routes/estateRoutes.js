@@ -73,4 +73,11 @@ router.post("/placaBid",function(req,res){
 
 
 
+/*----------Sprint 4----------*/
+
+router.get("/auctionResult/:estateId",function(req,res){
+ estate.auctionResult(req , res);
+})
+
+
 module.exports = router;

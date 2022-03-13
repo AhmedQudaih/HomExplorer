@@ -7,8 +7,9 @@ const estate = require('./Model/estateModel');
 main().catch(err => console.log(err));
 
 async function main() {
-//  await mongoose.connect('mongodb://localhost:27017/HomExplorer'); // local DB
-  await mongoose.connect('mongodb+srv://wamb:wamb123@homeexplorerdb.ykmn0.mongodb.net/HomExplorer'); // Atlas DB Server
+  await mongoose.connect('mongodb://localhost:27017/HomExplorer'); // local DB
+
+  //await mongoose.connect('mongodb+srv://wamb:wamb123@homeexplorerdb.ykmn0.mongodb.net/HomExplorer'); // Atlas DB Server
 }
 
 

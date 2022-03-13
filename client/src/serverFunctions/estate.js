@@ -1,6 +1,6 @@
 const Waiting = require("../components/waiting");
-const url = "https://homeexplorerapi.herokuapp.com/";
-//const url = "http://localhost:4000/";
+//const url = "https://homeexplorerapi.herokuapp.com/";
+const url = "http://localhost:4000/";
 
 exports.getEstates = function(partition) {
   const requestOptions = {
@@ -131,6 +131,21 @@ exports.scheduleVisit = function(data){
   Waiting.Waiting(true);
   return callServer(url+"scheduleVisit",requestOptions);
 }
+
+
+/*----------------------Sprint 4----------------------*/
+
+
+exports.endAuction = function(id){
+  const requestOptions = {
+     method: 'get',
+     headers: { 'Content-Type': 'application/json' },
+ };
+  return callServer(url+"auctionResult/"+id, requestOptions, true );
+}
+
+
+
 
 function callServer(url, requestOptions, noDataReply ){
   return (fetch(url,requestOptions).then(response => {

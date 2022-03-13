@@ -39,7 +39,7 @@ const ScheduleVisit = (props) => {
     required
     onChange={(event)=>{setValue(event.target.value)}}
     value = {value}
-    / >
+    />
     <Button color={validation.value} onClick={handleScheduleSubmite} variant="outlined" >
       Schedule Visit
     </Button>

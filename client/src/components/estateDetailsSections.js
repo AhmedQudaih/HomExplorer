@@ -17,6 +17,8 @@ import EstateForm from './estateForm';
 import {StatusAlert, CheckOperation} from './appAlerts';
 import ScheduleVisit from './scheduleVisit';
 import PlaceBid from './PlaceBid';
+import EndAuction from './endAuction';
+
 
 function EstateDetailsSections(props){
   const getSave=(estateId)=>{
@@ -57,12 +59,13 @@ return(
         <EstateDetails data={props.data} />
         <ScheduleVisit userId={"620a7b01d691986bf34fcbde"} estateId={props.data} />
         <PlaceBid userId={"620a7b01d691986bf34fcbde"} estateId={props.data}/>
+        <EndAuction estateId={props.data._id}/>
           <DetailsBtnCard>
             <Button color="primary" onClick={()=>props.handleDetailsAndCompare("compare",props.data)}  variant="outlined" startIcon={<CompareIcon  />}>
               Compare
             </Button>
-            <RateEstate updateData={props.updateData} rate={getRate(props.data._id)} userId={"620a7b01d691986bf34fcbde"} estateId={props.data._id}/>
-          <SaveEstate updateData={props.updateData} save={getSave(props.data._id)} userId={"620a7b01d691986bf34fcbde"} estate={props.data} />
+            <RateEstate updateData={props.updateData} rate={getRate(props.data._id)} userId={"61fa26aae91bd24b703d989d"} estateId={props.data._id}/>
+          <SaveEstate updateData={props.updateData} save={getSave(props.data._id)} userId={"61fa26aae91bd24b703d989d"} estate={props.data} />
         </DetailsBtnCard >
         <DetailsBtnCard>
           <Button color="error" onClick={()=>handelDeleteBtn(props.data._id)} variant="outlined" startIcon={<DeleteIcon />}>

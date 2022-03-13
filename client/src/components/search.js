@@ -7,8 +7,7 @@ import {Search as SearchIcon, ExpandMore as ExpandMoreIcon, ExpandLess as Expand
 import Loading from './loading';
 import {MyContext} from '../components/provider';
 import {CheckData} from './checkData';
-import {DropDownLists, FormInputs} from './formInputs'
-
+import {DropDownLists, FormInputs} from './formInputs';
 function Search(props) {
 
   const data = {
@@ -75,7 +74,7 @@ return(
 
 
 
-              <Button  variant="contained" color = {"success"} onClick={()=>{props.filterFunc(searchData)}} >
+              <Button id="SearchBtn" variant="contained" color = {"success"} onClick={()=>{props.filterFunc(searchData)}} >
               <SearchIcon />
               </Button>
 

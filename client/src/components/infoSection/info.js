@@ -41,7 +41,8 @@ const InfoSection = ({
                                 <Heading lightText={lightText}>{headline}</Heading>
                                 <Subtitle darkText={darkText}>{description}</Subtitle>
                                 <BtnWrap>
-                                    <ButtonR to='home'
+                                    <ButtonR to='products'
+                                      state="Auction"
                                     duration={500}
                                     exact="true"
                                     offset={-80}

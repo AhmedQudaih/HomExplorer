@@ -133,7 +133,6 @@ exports.scheduleVisit = function(data){
 }
 
 
-
 /*----------------------Sprint 4----------------------*/
 exports.placeBid = function(data){
   const requestOptions = {
@@ -145,6 +144,14 @@ exports.placeBid = function(data){
 //  return callServer(url+"scheduleVisit",requestOptions);
 }
 
+
+exports.endAuction = function(id){
+  const requestOptions = {
+     method: 'get',
+     headers: { 'Content-Type': 'application/json' },
+ };
+  return callServer(url+"auctionResult/"+id, requestOptions, true );
+}
 
 
 

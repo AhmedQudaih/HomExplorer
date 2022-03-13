@@ -67,9 +67,6 @@ exports.deleteEstate = function(req, res) {
 exports.addEstate = function(req, res) {
 
   var newEstate = new estate.estateModel(req.body);
-  if(req.body.duration){
-    newEstate.auctionData.duration = req.body.duration;
-  }
   picAddOperation(req.files, newEstate);
   newEstate.save(function(error, estate) {
     if (error){
@@ -111,6 +108,7 @@ exports.updateEstate = function(req, res) {
       })
     }
     req.body.status?null:req.body.status = "pending" ;
+    console.log(req.body);
     estate.estateModel.updateOne({
         _id: req.body._id
       }, req.body,

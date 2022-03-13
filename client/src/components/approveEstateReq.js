@@ -140,11 +140,13 @@ const expandDetails = (id) => {
                   </TableRow >
                 </TableBody>
                 {e.type.name=== "Auction"&&
+                    <TableBody>
                     <TableRow>
                           <TableCell colSpan="4" align="center">
                       Auction Duration : {e.auctionData.duration} Days
                        </TableCell>
                   </TableRow >
+                    </TableBody>
               }
 
                 <TableHead>

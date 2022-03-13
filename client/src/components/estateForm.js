@@ -145,14 +145,14 @@ function fileValue(){
               return <Loading mood={check}/>
             }
 
-  console.log(estate.type);
+  console.log(estate);
           function auctionData() {
             console.log(estate.type);
             if (typeof estate.type !=="object"){
             if (estate.type && context.categoryAndType.type.find(e => e._id === estate.type).name ==="Auction"){
               EstateAuctionVali(validation, estate);
               return(
-                <FormInputs fullWidth={true} validation={validation.duration} label={"auction duration"} type={"number"} name={"duration"} helperText={"Please enter the estate auction duration in weeks"} handleChange={handleChange} value={estate.duration||""}/>
+                <FormInputs fullWidth={true} validation={validation.duration} label={"auction duration"} type={"number"} name={"auctionData.duration"} helperText={"Please enter the estate auction duration in weeks"} handleChange={handleChange} value={estate["auctionData.duration"]||""}/>
               );
             }
             }

@@ -14,7 +14,7 @@ export const CheckData = (props) => {
 
 
 export const EstateAuctionVali = (validation,estate) => {
-    validation.duration= estate.duration!==undefined && estate.duration > 2 && estate.duration< 15 ?"success":"error";
+    validation.duration= estate["auctionData.duration"]!==undefined && estate["auctionData.duration"] > 2 && estate["auctionData.duration"]< 15 ?"success":"error";
 }
 
 

@@ -31,6 +31,15 @@ function EstateForm(props) {
 
   const handelUpdateform = React.useCallback(() => {
         if(props.type==='Update' && props.data.category._id){
+          if(props.data.type.name === "Auction"){
+            setEstate((prevEstate) => {
+             return {
+                ...prevEstate,
+                  "auctionData.duration": props.data.auctionData.duration,
+              };
+            });
+          }
+
     setEstate((prevEstate) => {
      return {
         ...prevEstate,

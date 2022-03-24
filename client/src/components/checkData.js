@@ -13,6 +13,8 @@ export const CheckData = (props) => {
 }
 
 
+/*------------------------------ Estate Validation ------------------------------*/
+
 export const EstateAuctionVali = (validation,estate) => {
     validation.duration= estate["auctionData.duration"]!==undefined && estate["auctionData.duration"] > 2 && estate["auctionData.duration"]< 15 ?"success":"error";
 }
@@ -67,6 +69,8 @@ export const PlaceBidVal = (validation, value) => {
 }
 
 
+/*------------------------------ Validation Function ------------------------------*/
+
 export const FormValid = (validation, msg) => {
     let alertMsg =""
     Object.entries(validation).forEach(([key, value]) => {
@@ -74,3 +78,20 @@ export const FormValid = (validation, msg) => {
        return alertMsg;
 
 }
+
+/*------------------------------ User Validation ------------------------------*/
+  export const UserFormVali = (validation,user) => {
+    validation.Name = user.name!==undefined && user.name.length > 0 ?"success":"error";
+    //eslint-disable-next-line
+    validation.Password = user.password!==undefined && user.password.match("^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*?[#?!@$%^&*-])(?=.*[a-zA-Z]).{8,}$")? "success":"error";
+    //eslint-disable-next-line
+    validation.Email= user.email!==undefined && user.email.match(/.+\@.+\..+/) ? "success":"error";
+    validation.PhoneNumber = user.phoneNumber!==undefined && user.phoneNumber.length > 0 && user.phoneNumber.length < 20   ? "success":"error";
+  }
+
+  export const UserFormValiMsg = (msg) => {
+    msg.Name="Please Enter your fullname";
+    msg.Password="Password Should be minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character";
+    msg.Email="Please Enter correct email example@example.com";
+    msg.PhoneNumber="Please Enter Phone Number";
+  }

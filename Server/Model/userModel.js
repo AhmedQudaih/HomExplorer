@@ -6,6 +6,7 @@ const userSchema = new Schema ({
         name: { type: String, required: true },
         password: { type: String,
            required: true,
+           match:"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*?[#?!@$%^&*-])(?=.*[a-zA-Z]).{8,}$"
           },
         email: {
           type: String,

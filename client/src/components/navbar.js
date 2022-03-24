@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import FaBars from '@material-ui/icons/Menu';
+import FaBars from '@mui/icons-material/Menu';
 import {animateScroll as scroll} from 'react-scroll';
 import {
   Nav,
@@ -9,11 +9,12 @@ import {
   NavMenu,
   NavItem,
   NavLinks,
-  NavBtn,
-  NavBtnLink
+  NavBtn
 } from './Styles/navbarElementsStyle';
 import OptionsBar from './optionsBar.js';
 import { useLocation } from "react-router-dom";
+import LoginForm from './loginForm';
+
 const Navbar = ({toggle}) => {
   const [scrollNav, setScrollNav] = useState(false)
 
@@ -59,10 +60,9 @@ const Navbar = ({toggle}) => {
           <NavLinks to="/#signup" smooth={true} duration={500}  exact='true' offset={-80}>Sign Up</NavLinks>
         </NavItem>
       </NavMenu>
-      {false?
+      {true?
       <NavBtn>
-        <NavBtnLink to="/signin">
-          Sign In</NavBtnLink>
+      <LoginForm />
       </NavBtn>:
       <NavBtn>
           <OptionsBar />

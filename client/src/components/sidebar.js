@@ -2,7 +2,7 @@ import React from 'react';
 import { SidebarContainer, Icon, CloseIconStyle, SidebarWrapper,
   SidebarMenu, SidebarLink, SideBtnWrap,
   SidebarRoute } from './Styles/sidebarElementsStyle';
-import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from '@mui/icons-material/Close';
 import OptionsBar from './optionsBar.js';
 const Sidebar = ({isOpen, toggle}) => {
   return (

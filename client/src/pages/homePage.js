@@ -1,8 +1,9 @@
 import React from 'react'
 import Main from '../components/main.js';
 import Info from '../components/infoSection/info.js';
-import { homeObjOne, homeObjTwo ,homeObjThree } from '../components/infoSection/data.js';
+import { homeObjOne, homeObjTwo } from '../components/infoSection/data.js';
 import Services from '../components/services';
+import RegistrationForm from '../components/registrationForm';
 function Home() {
     return (
         <div>
@@ -10,7 +11,7 @@ function Home() {
             <Info {...homeObjOne} />
             <Info {...homeObjTwo} />
             <Services ID="services" from="Services" />
-            <Info {...homeObjThree} />
+            <RegistrationForm />
         </div>
     )
 }

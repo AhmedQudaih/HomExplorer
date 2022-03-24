@@ -5,7 +5,7 @@ import {ServicesProductContainer, ServicesProductH1, ServicesProductWrapper, Ser
 import EstateCard from './estateCard';
 import serverFunctions from '../serverFunctions/estate'
 import {ButtonR as ButtonMain} from './Styles/buttonElementsStyle';
-import {ArrowForward} from '@material-ui/icons';
+import {ArrowForward} from '@mui/icons-material';
 import {MainBtnArrowStyle} from './Styles/mainElementsStyle';
 import {NavLinks} from './Styles/navbarElementsStyle';
 import EstateDetailsSections from './estateDetailsSections';

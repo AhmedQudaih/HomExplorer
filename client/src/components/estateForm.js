@@ -10,7 +10,7 @@ import {
 import MyMap from './map';
 import {Button , Dialog ,DialogContent,Chip,Stack } from '@mui/material';
 import Loading from './loading';
-import {CameraAltOutlined , AddCircleOutline as AddCircleOutlineIcon ,Cached as CachedIcon, Save as SaveIcon , Close as CloseIcon} from "@material-ui/icons";
+import {CameraAltOutlined , AddCircleOutline as AddCircleOutlineIcon ,Cached as CachedIcon, Save as SaveIcon , Close as CloseIcon} from "@mui/icons-material";
 import serverFunctions from '../serverFunctions/estate';
 import {MyContext} from '../components/provider';
 import {EstateFormVali, CheckData, FormValid, EstateFormValiMsg,EstateAuctionVali} from './checkData';

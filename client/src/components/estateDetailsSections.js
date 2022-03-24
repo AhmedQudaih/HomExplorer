@@ -8,7 +8,7 @@ import {
   Delete as DeleteIcon,
   Close as CloseIcon,
   Compare as CompareIcon
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 import serverFunctions from '../serverFunctions/estate'
 import EstateDetails from './estateDetails';
 import SaveEstate from './saveEstate'

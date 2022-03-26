@@ -7,14 +7,15 @@ exports.login = function(formData) {
          body: formData
      };
      Waiting.Waiting(true);
-        return callServer(url+"login", requestOptions );
+        return callServer(url+"user/login", requestOptions );
 }
 
   exports.addUser = function(formData) {
     const requestOptions = {
            method: 'POST',
-           body: formData
+           headers: { 'Content-Type': 'application/json' },
+           body: JSON.stringify(formData)
        };
        Waiting.Waiting(true);
-          return callServer(url+"addUser", requestOptions );
+          return callServer(url+"user/addUser", requestOptions );
   }

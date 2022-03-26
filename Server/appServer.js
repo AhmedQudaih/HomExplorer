@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use('/uploads', express.static('uploads'));
 app.use("/" , require(path.join(__dirname +"/Routes/estateRoutes")));
+app.use("/user" , require(path.join(__dirname +"/Routes/userRoutes")));
 
 
 

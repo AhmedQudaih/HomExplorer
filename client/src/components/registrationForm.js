@@ -42,12 +42,14 @@ const RegistrationForm = ()=> {
       ValidationMsg(subVali);
       return;
     }
-      const formData = new FormData(event.target);
-      const Status = await serverFunctions.addUser(formData);
+
+      const Status = await serverFunctions.addUser(user);
       if(Status ==='error'){
          StatusAlert("error");
-       }else{
-         StatusAlert('Added');
+       }else if(Status ==='exists'){
+          StatusAlert("email exists");
+        }else{
+         StatusAlert("Added");
        }
   }
 

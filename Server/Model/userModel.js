@@ -6,7 +6,7 @@ const userSchema = new Schema ({
         name: { type: String, required: true },
         password: { type: String,
            required: true,
-           match:"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*?[#?!@$%^&*-])(?=.*[a-zA-Z]).{8,}$"
+           match:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*?[#?!@$%^&*-])(?=.*[a-zA-Z]).{8,}$/
           },
         email: {
           type: String,
@@ -15,7 +15,7 @@ const userSchema = new Schema ({
           unique: true
           },
         phoneNumber: { type: Number, required: true },
-        role: {type:  Schema.Types.ObjectId, ref: 'role', required: true }
+        role: {type: String,  default: 'user' }
 });
 
 const userModel = mongoose.model('user', userSchema)

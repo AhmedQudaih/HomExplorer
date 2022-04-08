@@ -18,6 +18,7 @@ import {StatusAlert, CheckOperation} from './appAlerts';
 import ScheduleVisit from './scheduleVisit';
 import PlaceBid from './PlaceBid';
 import EndAuction from './endAuction';
+import Users from './Users'
 
 
 function EstateDetailsSections(props){
@@ -85,6 +86,7 @@ return(
           </Button>
           <EstateForm handleClose={handleClose} updateData={props.updateData} type={"Update"} data={props.data}/>
         </DetailsBtnCard >
+        <Users />
     </EstateCardDivCard >
   );
 }

@@ -168,7 +168,7 @@ const expandDetails = (id) => {
                 <TableBody>
                   <TableRow >
                       <TableCell colSpan="2"  align="center">
-                        <ScheduleVisit userId={"61fa26aae91bd24b703d989d"} updateFunc={handelChange} estateId={e.estateId} />
+                        <ScheduleVisit updateFunc={handelChange} estateId={e.estateId} />
                 </TableCell >
                   </TableRow >
                 </TableBody>

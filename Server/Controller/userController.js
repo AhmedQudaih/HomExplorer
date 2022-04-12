@@ -41,7 +41,7 @@ exports.login = function(req,res){
             return res.json({
               message:"Success",
               userId:user._id,
-              token:"Bearer" + token
+              token:"Bearer " + token
             })
           }
         )
@@ -56,7 +56,7 @@ exports.login = function(req,res){
 }
 
 exports.verifyJWT= function (req,res,next) {
-  const token = req.headers["x-access-token"]?.split(' ')[1]
+  const token = req.headers["x-access-token"]?.split(' ')[1];
   if(token){
     jwt.verify(token,privateKey,(err,decoded)=>{
       if(err) return res.json({
@@ -80,7 +80,7 @@ exports.verifyJWT= function (req,res,next) {
 
 
 exports.checkAdmin = function(req,res){
-  user.userModel.findOne({_id:req.params.userId,role:"admin"}).then(user => {
+  user.userModel.findOne({_id:req.user.id,role:"admin"}).then(user => {
         res.status(200).send(user?true:false);
       }).catch(error=>{
         res.status(400).send(JSON.stringify(error));

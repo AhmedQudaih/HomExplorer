@@ -61,7 +61,7 @@ return(
 
         { props.data.type.name === "Auction" && <EstateAuctionSection data={props.data} />}
 
-        {props.userId === props.data._id?
+        {props.userId === props.data.sellerId?
         <DetailsBtnCard>
           <Button color="error" onClick={()=>handelDeleteBtn(props.data._id)} variant="outlined" startIcon={<DeleteIcon />}>
             Delete

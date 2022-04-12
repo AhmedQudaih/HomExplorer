@@ -1,7 +1,6 @@
 import React from 'react';
 import PlaceBid from './PlaceBid';
 import EndAuction from './endAuction';
-import {UserId} from '../components/checkData';
 function EstateAuctionSection(props){
 
     var nowDate = new Date();
@@ -10,7 +9,7 @@ function EstateAuctionSection(props){
   return(
         <>
         {auctionDate.getDate() > nowDate.getDate()?
-         <PlaceBid userId={UserId()} estateId={props.data._id}/>
+         <PlaceBid estateId={props.data._id}/>
         :<EndAuction estateId={props.data._id}/>
     }
     </>

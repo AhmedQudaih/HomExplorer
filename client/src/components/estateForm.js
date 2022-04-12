@@ -16,7 +16,6 @@ import {MyContext} from '../components/provider';
 import {EstateFormVali, CheckData, FormValid, EstateFormValiMsg,EstateAuctionVali} from './checkData';
 import {StatusAlert, ValidationMsg} from './appAlerts';
 import {DropDownLists, FormInputs} from './formInputs';
-import {UserId} from '../components/checkData';
 
 function EstateForm(props) {
 
@@ -87,7 +86,6 @@ function EstateForm(props) {
       }
         event.target.pic.files = fileValue();
         const formData = new FormData(event.target);
-         formData.append('sellerId',estate.sellerId);
          estate.addressOnMap.forEach(element =>{formData.append('addressOnMap',element);});
           if(props.type === 'Add'){
               return addSubmit(formData)
@@ -247,8 +245,7 @@ export default EstateForm;
 EstateForm.defaultProps = {
   data:{
     addressOnMap: [30.044417093043883 ,31.235753400264315],
-    pic: [],
-    sellerId:UserId()
+    pic: []
   },
   type:"Add"
 }

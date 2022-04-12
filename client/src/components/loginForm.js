@@ -55,12 +55,6 @@ return(
                 <NavBtnLink to="#" onClick={handleOpen}>Sign In</NavBtnLink>
 
       }
-
-
-
-
-
-
      <div>
            <Dialog style={EstateFormAnimation} open={open} onClose={handleClose} scroll={"paper"}>
              <div style={EstateFormClose}>
@@ -83,8 +77,6 @@ return(
              </Dialog>
          </div>
       </div>
-
-
   )
 
 }

@@ -13,8 +13,8 @@ const Provider = (props) =>{
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const save = await serverFunctions.getSaved(UserId());
-      const rate = await serverFunctions.getRate(UserId());
+      const save = await serverFunctions.getSaved();
+      const rate = await serverFunctions.getRate();
       const estateReq = await serverFunctions.approveEstateRequests();
       const categoryAndType = await serverFunctions.getCategoryAndType();
       const visitReq = await serverFunctions.getVisits(JSON.stringify({"sellerId":UserId()}));

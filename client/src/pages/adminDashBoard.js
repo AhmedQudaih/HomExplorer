@@ -1,7 +1,7 @@
 import React from 'react';
 import ApproveEstateReq from '../components/approveEstateReq';
 import {MyContext} from '../components/provider';
-import {CheckAuth, UserId} from '../components/checkData';
+import {CheckAuth} from '../components/checkData';
 import {useNavigate} from "react-router-dom";
 import serverUserFunctions from '../serverFunctions/user';
 function AdminDashBoard() {
@@ -10,7 +10,7 @@ function AdminDashBoard() {
 
     const CheckAdminAuth = async () => {
       if(CheckAuth()){
-        let res = await serverUserFunctions.checkAdmin(UserId());
+        let res = await serverUserFunctions.checkAdmin();
         if (res) return ;
       }
       return navigate("/");

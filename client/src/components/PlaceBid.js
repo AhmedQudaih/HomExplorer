@@ -36,7 +36,6 @@ const PlaceBid = (props) => {
       const confirm = await CheckOperation()
       if(confirm.isConfirmed === true){
         const status = await serverFunctions.placeBid({
-          "userId" : props.userId,
           "estateId" : props.estateId,
           "price" : total
           });

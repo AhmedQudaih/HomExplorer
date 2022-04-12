@@ -9,7 +9,6 @@ import serverFunctions from '../serverFunctions/user';
 import {useNavigate} from "react-router-dom";
 import {StatusAlert} from './appAlerts';
 import serverUserFunctions from '../serverFunctions/user';
-import {UserId} from '../components/checkData';
 function OptionsBar(props){
   const [state, setState] = React.useState(false);
   const [adminAuth, setAdminAuth] = React.useState(false);
@@ -28,7 +27,7 @@ function OptionsBar(props){
 
     React.useEffect(()=>{
       const CheckAdminAuth= async () => {
-        let res = await serverUserFunctions.checkAdmin(UserId());
+        let res = await serverUserFunctions.checkAdmin();
         setAdminAuth(res);
       }
       CheckAdminAuth();

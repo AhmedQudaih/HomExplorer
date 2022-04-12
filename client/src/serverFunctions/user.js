@@ -30,10 +30,11 @@ exports.login = function(formData) {
 exports.checkAdmin = function(id) {
   const requestOptions = {
          method: 'get',
-         headers: { 'Content-Type': 'application/json' },
+         headers: { 'Content-Type': 'application/json',
+         'x-access-token': localStorage.getItem("HomExplorerToken")},
      };
      Waiting.Waiting(true);
-        return callServer(url+"user/checkAdmin/"+id, requestOptions );
+        return callServer(url+"user/checkAdmin", requestOptions );
 }
 
   exports.logOut = function() {

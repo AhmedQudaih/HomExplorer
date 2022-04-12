@@ -350,3 +350,23 @@ exports.auctionResult= function (req,res){
        res.status(400).send(JSON.stringify(error));
       })
   }
+/*---------------------------- Sprint 5 ----------------------*/
+
+function findUsersData(){
+
+  userModel.find().select('name').select('email').select('phoneNumber')
+  .then(result => console.log(result))
+  .catch(err => console.log(err))
+}
+
+function ChangeToAdmin(req,res) 
+{  
+    var adminroleid;
+     cursor = roleModel.find({name:"Admin"})
+     .then(result => {adminroleid = JSON.stringify(result[0]._id).replace('"','').replace('"',''); console.log(adminroleid)})
+    const filter =  {_id:req.body.userid};
+    const update = {role:adminroleid};
+    userModel.findOneAndUpdate(filter,update)
+        .then(result => {console.log("Done");})
+        .catch(err=>{console.log(err);}) 
+}

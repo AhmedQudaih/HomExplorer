@@ -1,6 +1,7 @@
 const express = require("express");
 const uploadpPic = require("../Controller/uploadPic");
 const estate = require("../Controller/estateController");
+const auth = require("../Controller/estateController").verifyJWT;
 const router  = express.Router();
 
 router.get("/getEstates/:partition",function(req,res){

@@ -5,7 +5,7 @@ import {
   Close as CloseIcon, ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon
 } from "@mui/icons-material";
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableFooter, TablePagination} from '@mui/material';
-import {ServicesProductContainer, ServicesProductH1, ServicesH1Color, ServicesBackground} from './Styles/servicesElementsStyle';
+import {ServicesProductContainer, ServicesProductH1} from './Styles/servicesElementsStyle';
 import Loading from './loading';
 import {TableExpandDiv} from './Styles/tableStyle';
 import {CheckData} from './checkData';
@@ -82,8 +82,8 @@ const expandDetails = (id) => {
 
 
 
-  return (<ServicesProductContainer style={ServicesBackground} id="VisitRequests">
-      <ServicesProductH1 style={ServicesH1Color}>Visit Requests</ServicesProductH1>
+  return (<ServicesProductContainer id="VisitRequests">
+      <ServicesProductH1 >Visit Requests</ServicesProductH1>
 
         <FilterBox value={statusFilter} onChange={(event)=>{handleStatusFilterChange(event.target.value)}}
           options={[{ value:"myVisit",title: "myVisit"},{value:"approve",title: "Approved Visits"},{value:"pending",title: "Pending Visits"},{value:"reject",title: "Rejected Visits"}]}      />

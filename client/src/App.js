@@ -8,7 +8,9 @@ import Home from './pages/homePage.js';
 import Products from './pages/productsPage.js';
 import Admin from './pages/admin.js';
 import Provider from './components/provider';
+import AdminDashBoard from './pages/adminDashBoard.js';
 import NotFound404Component from './components/notFound404Component';
+
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = (status) => {
@@ -23,6 +25,7 @@ function App() {
         <Route exact path="" element={<Home />}/>
         <Route exact path="products" element={<Products />}/>
         <Route exact path="admin" element={<Admin />}/>
+        <Route exact path="adminDashBoard" element={<AdminDashBoard />}/>
         <Route exact path='*' element={<NotFound404Component />} />
       </Routes >
       <Footer/>

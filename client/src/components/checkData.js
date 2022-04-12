@@ -13,6 +13,15 @@ export const CheckData = (props) => {
 }
 
 
+export const CheckAuth = () => {
+  return localStorage.getItem('HomExplorerToken');
+}
+
+export const UserId = () => {
+  return localStorage.getItem('HomExplorerUserId');
+}
+
+
 /*------------------------------ Estate Validation ------------------------------*/
 
 export const EstateAuctionVali = (validation,estate) => {

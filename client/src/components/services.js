@@ -11,7 +11,8 @@ import {NavLinks} from './Styles/navbarElementsStyle';
 import EstateDetailsSections from './estateDetailsSections';
 import {MyContext} from '../components/provider';
 import {CheckData} from './checkData';
-import {CompareMood} from './appAlerts'
+import {CompareMood} from './appAlerts';
+import {UserId} from './checkData';
 import FilterBox from './filterBox'
 function Services(props) {
   const [page, setPage] = React.useState(1);
@@ -113,10 +114,10 @@ function Services(props) {
       }
     const validation = CheckData([data==="error" || data === "NoData" ?data:data.length, context.saveList, context.rateList]);
 
-  return (<ServicesProductContainer style={props.from === "Services" || props.from === "My Estates"
+  return (<ServicesProductContainer style={props.dark === true
       ? ServicesBackground
       : null} id={props.ID} >
-    <ServicesProductH1 style={props.from === "Services"|| props.from === "My Estates"
+    <ServicesProductH1 style={props.dark === true
         ? ServicesH1Color
         : null}>{props.from}</ServicesProductH1>
 
@@ -163,7 +164,7 @@ function Services(props) {
     }
     <ServicesProductWrapper id={"details"+props.ID}>
       {detailsAndCompare.compare &&<> {CompareMood(true)} <EstateDetailsSections key={detailsAndCompare.compare._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.compare}/></>}
-      {detailsAndCompare.details && <EstateDetailsSections key={detailsAndCompare.details._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.details}/>}
+      {detailsAndCompare.details && <EstateDetailsSections key={detailsAndCompare.details._id} userId={UserId()} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.details}/>}
     </ServicesProductWrapper >
     </>}
   </ServicesProductContainer>)    }}</MyContext.Consumer>
@@ -172,5 +173,5 @@ function Services(props) {
 
 export default Services
 Services.defaultProps = {
-  from: ""
+  dark:false
 }

@@ -10,7 +10,7 @@ function Home() {
             <Main />
             <Info {...homeObjOne} />
             <Info {...homeObjTwo} />
-            <Services ID="services" from="Services" />
+            <Services dark={true} ID="services" from="Services" />
             <RegistrationForm />
         </div>
     )

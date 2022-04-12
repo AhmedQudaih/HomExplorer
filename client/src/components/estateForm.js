@@ -16,6 +16,7 @@ import {MyContext} from '../components/provider';
 import {EstateFormVali, CheckData, FormValid, EstateFormValiMsg,EstateAuctionVali} from './checkData';
 import {StatusAlert, ValidationMsg} from './appAlerts';
 import {DropDownLists, FormInputs} from './formInputs';
+import {UserId} from '../components/checkData';
 
 function EstateForm(props) {
 
@@ -247,7 +248,7 @@ EstateForm.defaultProps = {
   data:{
     addressOnMap: [30.044417093043883 ,31.235753400264315],
     pic: [],
-    sellerId:"61fa26aae91bd24b703d989d"
+    sellerId:UserId()
   },
   type:"Add"
 }

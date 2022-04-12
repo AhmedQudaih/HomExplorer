@@ -13,7 +13,8 @@ import { NavBtnLink } from './Styles/navbarElementsStyle';
 import serverFunctions from '../serverFunctions/user';
 import {StatusAlert} from './appAlerts';
 import { FormInputs} from './formInputs';
-
+import { SidebarRoute } from './Styles/sidebarElementsStyle';
+import { useNavigate} from "react-router-dom";
 function LoginForm(props) {
 
 
@@ -21,6 +22,7 @@ function LoginForm(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [user, setUser] = React.useState({});
+  const navigate = useNavigate();
 
   function handleChange(event) {
     let name = event.target.name;
@@ -35,12 +37,12 @@ function LoginForm(props) {
 
   const submitLoginForm = async (event) =>{
     event.preventDefault();
-      const formData = new FormData(event.target);
-      const Status = await serverFunctions.login(formData);
+      const Status = await serverFunctions.login(user);
       if(Status ==='error'){
          StatusAlert("error");
        }else{
-         StatusAlert('Added');
+         navigate('/');
+         StatusAlert('logged in');
        }
   }
 
@@ -48,9 +50,16 @@ function LoginForm(props) {
 
 return(
     <div >
+      {props.toggle?
+            <SidebarRoute onClick={()=>{props.toggle(false);handleOpen()}} to="#">Sign In</SidebarRoute>:
+                <NavBtnLink to="#" onClick={handleOpen}>Sign In</NavBtnLink>
+
+      }
 
 
-         <NavBtnLink to="#" onClick={handleOpen}>Sign In</NavBtnLink>
+
+
+
 
      <div>
            <Dialog style={EstateFormAnimation} open={open} onClose={handleClose} scroll={"paper"}>

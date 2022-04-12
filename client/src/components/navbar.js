@@ -14,6 +14,7 @@ import {
 import OptionsBar from './optionsBar.js';
 import { useLocation } from "react-router-dom";
 import LoginForm from './loginForm';
+import {CheckAuth} from './checkData';
 
 const Navbar = ({toggle}) => {
   const [scrollNav, setScrollNav] = useState(false)
@@ -60,12 +61,12 @@ const Navbar = ({toggle}) => {
           <NavLinks to="/#signup" smooth={true} duration={500}  exact='true' offset={-80}>Sign Up</NavLinks>
         </NavItem>
       </NavMenu>
-      {true?
+      {CheckAuth()?
       <NavBtn>
-      <LoginForm />
+        <OptionsBar />
       </NavBtn>:
       <NavBtn>
-          <OptionsBar />
+        <LoginForm />
       </NavBtn>}
     </NavbarContainer>
   </Nav>)

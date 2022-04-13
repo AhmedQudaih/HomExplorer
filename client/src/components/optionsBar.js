@@ -4,14 +4,35 @@ import EstateForm from './estateForm';
 import { NavBtnLink } from './Styles/navbarElementsStyle';
 import {SidebarRoute, OptionsBarLinks } from './Styles/sidebarElementsStyle';
 import {MyContext} from '../components/provider';
-import {DateRangeOutlined as DateRangeOutlinedIcon, BookmarkBorder as BookmarkBorderIcon, AssignmentOutlined as AssignmentOutlinedIcon, AssignmentLateOutlined  } from '@material-ui/icons';
-
-
+import {Logout as LogoutIcon, DateRangeOutlined as DateRangeOutlinedIcon, AssignmentOutlined as AssignmentOutlinedIcon,BookmarkBorder as BookmarkBorderIcon, AdminPanelSettingsOutlined as AdminPanelSettingsOutlinedIcon  } from '@mui/icons-material';
+import serverFunctions from '../serverFunctions/user';
+import {useNavigate} from "react-router-dom";
+import {StatusAlert} from './appAlerts';
+import serverUserFunctions from '../serverFunctions/user';
 function OptionsBar(props){
   const [state, setState] = React.useState(false);
+  const [adminAuth, setAdminAuth] = React.useState(false);
+  const navigate = useNavigate();
     const toggleDrawer = ( open) => (event) => {
       setState(  open );
     };
+
+    const logOut =()=>{
+      toggleDrawer(false);
+      serverFunctions.logOut();
+      navigate('/');
+      StatusAlert('logged out');
+    }
+
+
+    React.useEffect(()=>{
+      const CheckAdminAuth= async () => {
+        let res = await serverUserFunctions.checkAdmin();
+        setAdminAuth(res);
+      }
+      CheckAdminAuth();
+    },[])
+
 
 
 
@@ -19,8 +40,7 @@ function OptionsBar(props){
         (context) => {
 
     const list = () => (
-      <div
-      >
+      <div>
         <List>
           <ListItem button>
             <EstateForm />
@@ -43,23 +63,31 @@ function OptionsBar(props){
           </ListItem>
 
         <ListItem  onClick={toggleDrawer(false)} button>
-            <OptionsBarLinks to="/admin#EstatesRequests">
-          <Badge badgeContent={context.estateRequests === "error" || context.estateRequests === "NoData"? 0 :context.estateRequests.length}  anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="error">
-          <Button color="success" variant="outlined" startIcon={<AssignmentLateOutlined />}>
-            Eatate Req
+            <OptionsBarLinks to="/admin#VisitRequests">
+          <Badge badgeContent={context.visitRequests.pending? context.visitRequests.pending.length: 0 }  anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="error">
+          <Button color="success" variant="outlined" startIcon={<DateRangeOutlinedIcon />}>
+            Estate Visits
           </Button>
               </Badge>
                </OptionsBarLinks>
         </ListItem>
 
+        {adminAuth &&
         <ListItem  onClick={toggleDrawer(false)} button>
-            <OptionsBarLinks to="/admin#VisitRequests">
-          <Badge badgeContent={context.visitRequests.pending? context.visitRequests.pending.length: 0 }  anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="error">
-          <Button color="success" variant="outlined" startIcon={<DateRangeOutlinedIcon />}>
-            estate visits
+            <OptionsBarLinks to="/adminDashBoard#EstatesRequests">
+          <Badge badgeContent={context.estateRequests === "error" || context.estateRequests === "NoData"? 0 :context.estateRequests.length}  anchorOrigin={{vertical: 'top', horizontal: 'left'}} color="error">
+          <Button color="warning" variant="outlined" startIcon={<AdminPanelSettingsOutlinedIcon />}>
+            Admin Board
           </Button>
               </Badge>
                </OptionsBarLinks>
+        </ListItem>
+       }
+
+        <ListItem onClick={logOut} button>
+          <Button color="error" variant="outlined" startIcon={<LogoutIcon />}>
+            Sign Out
+          </Button>
         </ListItem>
       </List>
 

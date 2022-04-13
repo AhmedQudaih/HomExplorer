@@ -12,7 +12,6 @@ const ScheduleVisit = (props) => {
   const handleScheduleSubmite = async () => {
     if(validation.value === "primary"){
     const status = await serverFunctions.scheduleVisit({
-      "visitorId" : props.userId,
       "estateId" : props.estateId._id,
       "date" : value
       });

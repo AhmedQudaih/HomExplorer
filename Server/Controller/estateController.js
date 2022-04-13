@@ -69,6 +69,7 @@ exports.deleteEstate = function(req, res) {
 exports.addEstate = function(req, res) {
 
   var newEstate = new estate.estateModel(req.body);
+  newEstate.sellerId = req.user.id;
   picAddOperation(req.files, newEstate);
   newEstate.save(function(error, estate) {
     if (error){
@@ -151,7 +152,7 @@ exports.getApproveEstateRequests = function(req, res) {
 
 exports.addAndUpdateRate = function(req, res) {
   const filter = {
-    userId: req.body.userId,
+    userId: req.user.id,
     estateId: req.body.estateId
   };
   const update = {
@@ -174,7 +175,7 @@ exports.addAndUpdateRate = function(req, res) {
 
 exports.getRates = function(req, res) {
   rate.rateModel.find({
-      userId: req.params.userId
+      userId: req.user.id
     },{_id:0 ,__v:0 ,userId:0})
     .then(result => {
       res.send(result);
@@ -187,7 +188,7 @@ exports.getRates = function(req, res) {
 
 exports.saveAndUnsave = function (req, res) {
   const filter = {
-    userId: req.body.userId,
+    userId: req.user.id,
     estateId: req.body.estateId
   };
   save.savedModel.find(filter, function(err, results) {
@@ -221,7 +222,7 @@ exports.saveAndUnsave = function (req, res) {
 
 exports.getSavedEstates = function(req, res) {
   save.savedModel.find({
-      userId: req.params.userId
+      userId: req.user.id
     },{_id:0 ,__v:0 ,userId:0}).populate('estateId').populate({
     path : 'estateId',
     populate : {
@@ -266,7 +267,7 @@ estate.estateModel.find(filter).populate('category').populate("type")
 
 exports.scheduleAndUpdateVisit = function(req, res) {
   const filter = {
-    visitorId: req.body.visitorId,
+    visitorId: req.user.id,
     estateId: req.body.estateId
   };
   const update = {
@@ -334,6 +335,7 @@ exports.getAuctionHighestPrice = function(req,res){
 
 exports.placeBid = function (req,res){
     const newBid = new bid.bidModel(req.body);
+    newBid.userId=req.user.id;
     newBid.save(function(error) {
       if (error) {
         return res.status(400).send(JSON.stringify(error));

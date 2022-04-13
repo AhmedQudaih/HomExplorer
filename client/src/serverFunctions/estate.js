@@ -1,6 +1,6 @@
 const Waiting = require("../components/waiting");
-//const url = "https://homeexplorerapi.herokuapp.com/";
-const url = "http://localhost:4000/";
+const {callServer, url}= require('./callServer');
+
 
 exports.getEstates = function(partition) {
   const requestOptions = {
@@ -32,6 +32,7 @@ exports.deleteEstate = function(id) {
   exports.addEstate = function(formData) {
     const requestOptions = {
            method: 'POST',
+           headers:{'x-access-token': localStorage.getItem("HomExplorerToken")},
            body: formData
        };
        Waiting.Waiting(true);
@@ -42,6 +43,7 @@ exports.deleteEstate = function(id) {
   exports.updateEstate = function(formData) {
     const requestOptions = {
            method: 'put',
+           headers:{'x-access-token': localStorage.getItem("HomExplorerToken")},
            body: formData
        };
        Waiting.Waiting(true);
@@ -64,7 +66,8 @@ exports.deleteEstate = function(id) {
 exports.rate = function(data) {
   const requestOptions = {
          method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
+         headers: { 'Content-Type': 'application/json',
+         'x-access-token': localStorage.getItem("HomExplorerToken") },
          body: JSON.stringify(data)
      };
      Waiting.Waiting(true);
@@ -75,16 +78,17 @@ exports.getRate = function(id) {
 
   const requestOptions = {
      method: 'get',
-     headers: { 'Content-Type': 'application/json' },
+     headers: { 'Content-Type': 'application/json', 'x-access-token': localStorage.getItem("HomExplorerToken") },
  };
-  return callServer(url+"getRates/"+id, requestOptions );
+  return callServer(url+"getRates", requestOptions );
 }
 
-exports.saveAndUnsave = function(data) {
+exports.saveAndUnsave = function(estateId) {
   const requestOptions = {
          method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify(data)
+         headers: { 'Content-Type': 'application/json',
+                    'x-access-token': localStorage.getItem("HomExplorerToken") },
+         body: JSON.stringify({"estateId":estateId})
      };
      Waiting.Waiting(true);
        return callServer(url+"saveAndUnsave", requestOptions );
@@ -94,9 +98,9 @@ exports.getSaved = function(id) {
 
   const requestOptions = {
      method: 'get',
-     headers: { 'Content-Type': 'application/json' },
+     headers: { 'Content-Type': 'application/json', 'x-access-token': localStorage.getItem("HomExplorerToken") },
  };
-  return callServer(url+"getSavedEstates/"+id, requestOptions );
+  return callServer(url+"getSavedEstates", requestOptions );
 }
 
 
@@ -125,7 +129,8 @@ exports.getVisits = function(id){
 exports.scheduleVisit = function(data){
   const requestOptions = {
     method:'POST',
-    headers:{'Content-Type': 'application/json'},
+    headers:{'Content-Type': 'application/json',
+    'x-access-token': localStorage.getItem("HomExplorerToken") },
     body: JSON.stringify(data)
   };
   Waiting.Waiting(true);
@@ -137,7 +142,8 @@ exports.scheduleVisit = function(data){
 exports.placeBid = function(data){
   const requestOptions = {
     method:'POST',
-    headers:{'Content-Type': 'application/json'},
+    headers:{'Content-Type': 'application/json',
+    'x-access-token': localStorage.getItem("HomExplorerToken")},
     body: JSON.stringify(data)
   };
   Waiting.Waiting(true);
@@ -159,26 +165,4 @@ exports.endAuction = function(id){
      headers: { 'Content-Type': 'application/json' },
  };
   return callServer(url+"auctionResult/"+id, requestOptions, true );
-}
-
-
-
-
-
-function callServer(url, requestOptions, noDataReply ){
-  return (fetch(url,requestOptions).then(response => {
-  if (response.ok) {
-    return response.json();
-  }
-  throw response;
-}).then(data => {
-  Waiting.Waiting(false);
-  return data.length !== 0 ? data: noDataReply?'NoData':[] ;
-
-
-}).catch(error => {
-  console.error("Error fetching data: ", error);
-  Waiting.Waiting(false);
-  return 'error';
-}));
 }

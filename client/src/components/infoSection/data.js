@@ -13,7 +13,8 @@ export const homeObjOne = {
     alt: 'Home',
     dark: true,
     primary: true,
-    darkText: false
+    darkText: false,
+    to:'products'
 };
 
 export const homeObjTwo = {
@@ -31,7 +32,9 @@ export const homeObjTwo = {
     alt: 'Home',
     dark: false,
     primary: false,
-    darkText: true
+    darkText: true,
+    to:'products',
+   state:"Auction"
 };
 
 export const homeObjThree = {
@@ -49,5 +52,6 @@ export const homeObjThree = {
     alt: 'Paper',
     dark: false,
     primary: false,
-    darkText: true
+    darkText: true,
+    to:"#"
 };

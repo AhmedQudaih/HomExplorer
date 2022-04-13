@@ -1,19 +1,23 @@
 import React from 'react';
 import Services from '../components/services';
-import ApproveEstateReq from '../components/approveEstateReq';
 import ApproveVisitReq from '../components/approveVisitReq';
-import serverFunctions from '../serverFunctions/estate'
+import serverEstateFunctions from '../serverFunctions/estate';
 import {MyContext} from '../components/provider';
-
+import {CheckAuth, UserId} from '../components/checkData';
+import {useNavigate} from "react-router-dom";
 function Admin() {
   const [myEstate, setMyEstate] = React.useState(false);
+  const navigate = useNavigate();
   React.useEffect(()=>{
+    if(!CheckAuth(true)){
+      return navigate("/");
+    }
     const getMyEstate = async () => {
-          let res = await serverFunctions.searchData({"sellerId":"61fa26aae91bd24b703d989d"});
+          let res = await serverEstateFunctions.searchData({"sellerId":UserId()});
           setMyEstate(res);
     }
     getMyEstate();
-  },[])
+  },[navigate])
 
 
   return (<MyContext.Consumer>{
@@ -30,9 +34,8 @@ function Admin() {
           return (
             <div>
               <Services  ID="SaveList" Data={approveEstateReqSec()} from="Saved Estates"/>
-              <Services  ID="MyEstate" Data={myEstate?myEstate:"NoData"} from="My Estates"/>
-              <ApproveEstateReq estateRequests={context.estateRequests} setEstateRequests={context.setEstateRequests} />
-                <ApproveVisitReq visitRequests={context.visitRequests} myVisits={context.myVisits} setVisitRequests={context.setVisitRequests} />
+              <Services  ID="MyEstate" dark={true} Data={myEstate?myEstate:"NoData"} from="My Estates"/>
+              <ApproveVisitReq visitRequests={context.visitRequests} myVisits={context.myVisits} setVisitRequests={context.setVisitRequests} />
             </div>)
         }
 

@@ -7,7 +7,6 @@ function RateEstate(props){
  const handleRate = (event, newValue) => {
      setValue(newValue);
      let Rate={};
-     Rate.userId=props.userId;
      Rate.estateId=props.estateId;
      Rate.rate = newValue;
      SaveNewRate(Rate);

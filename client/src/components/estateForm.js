@@ -10,7 +10,7 @@ import {
 import MyMap from './map';
 import {Button , Dialog ,DialogContent,Chip,Stack } from '@mui/material';
 import Loading from './loading';
-import {CameraAltOutlined , AddCircleOutline as AddCircleOutlineIcon ,Cached as CachedIcon, Save as SaveIcon , Close as CloseIcon} from "@material-ui/icons";
+import {CameraAltOutlined , AddCircleOutline as AddCircleOutlineIcon ,Cached as CachedIcon, Save as SaveIcon , Close as CloseIcon} from "@mui/icons-material";
 import serverFunctions from '../serverFunctions/estate';
 import {MyContext} from '../components/provider';
 import {EstateFormVali, CheckData, FormValid, EstateFormValiMsg,EstateAuctionVali} from './checkData';
@@ -95,7 +95,6 @@ function EstateForm(props) {
       }
         event.target.pic.files = fileValue();
         const formData = new FormData(event.target);
-         formData.append('sellerId',estate.sellerId);
          estate.addressOnMap.forEach(element =>{formData.append('addressOnMap',element);});
           if(props.type === 'Add'){
               return addSubmit(formData)
@@ -255,8 +254,7 @@ export default EstateForm;
 EstateForm.defaultProps = {
   data:{
     addressOnMap: [30.044417093043883 ,31.235753400264315],
-    pic: [],
-    sellerId:"61fa26aae91bd24b703d989d"
+    pic: []
   },
   type:"Add"
 }

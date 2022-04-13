@@ -44,7 +44,8 @@ function Products(props) {
     }
 
     if(Object.values(data).length === 0){
-    return setData([]);}
+      return setData([]);
+     }
 
     let res = await serverFunctions.searchData(data);
     setData(res);

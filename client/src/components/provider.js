@@ -1,5 +1,7 @@
 import React from 'react';
-import serverFunctions from '../serverFunctions/estate'
+import serverFunctions from '../serverFunctions/estate';
+import {UserId} from '../components/checkData';
+
 export const MyContext = React.createContext();
 const Provider = (props) =>{
 
@@ -11,12 +13,12 @@ const Provider = (props) =>{
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const save = await serverFunctions.getSaved("61fa26aae91bd24b703d989d");
-      const rate = await serverFunctions.getRate("61fa26aae91bd24b703d989d");
+      const save = await serverFunctions.getSaved();
+      const rate = await serverFunctions.getRate();
       const estateReq = await serverFunctions.approveEstateRequests();
       const categoryAndType = await serverFunctions.getCategoryAndType();
-      const visitReq = await serverFunctions.getVisits(JSON.stringify({"sellerId":"61fa26aae91bd24b703d989d"}));
-      const myVisitsReq = await serverFunctions.getVisits(JSON.stringify({"visitorId":"61fa26aae91bd24b703d989d"}));
+      const visitReq = await serverFunctions.getVisits(JSON.stringify({"sellerId":UserId()}));
+      const myVisitsReq = await serverFunctions.getVisits(JSON.stringify({"visitorId":UserId()}));
       setCategoryAndType(categoryAndType);
       setEstateRequests(estateReq);
       setSaveList(save);

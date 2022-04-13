@@ -8,7 +8,7 @@ import {
   Delete as DeleteIcon,
   Close as CloseIcon,
   Compare as CompareIcon
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 import serverFunctions from '../serverFunctions/estate'
 import EstateDetails from './estateDetails';
 import SaveEstate from './saveEstate'
@@ -16,9 +16,8 @@ import RateEstate from './rateEstate'
 import EstateForm from './estateForm';
 import {StatusAlert, CheckOperation} from './appAlerts';
 import ScheduleVisit from './scheduleVisit';
-import PlaceBid from './PlaceBid';
-import EndAuction from './endAuction';
-
+import {CheckAuth} from './checkData';
+import EstateAuctionSection from './estateAuctionSection';
 
 function EstateDetailsSections(props){
   const getSave=(estateId)=>{
@@ -51,15 +50,6 @@ function EstateDetailsSections(props){
     }
   }
 
-  function checkDate(){
-    var date1 = new Date(props.data.auctionData.startDate);
-    var date2 = new Date();
-    date1.setDate(date1.getDate() + props.data.auctionData.duration)
-    if(date1.getDate() > date2.getDate()){
-    return( <PlaceBid userId={"61fa26aae91bd24b703d989d"} estateId={props.data._id}/>);
-    }
-      return (<EndAuction estateId={props.data._id}/>);
-  }
 
 return(
     <EstateCardDivCard className ={!props.compareMode &&"expandClass"} >
@@ -67,24 +57,33 @@ return(
         <CloseIcon />
       </Button>
         <EstateDetails data={props.data} />
-        <ScheduleVisit userId={"61fa26aae91bd24b703d989d"} estateId={props.data} />
-        { props.data.type.name === "Auction" && checkDate()
+    {CheckAuth()?<>
 
-        }
-          <DetailsBtnCard>
-            <Button color="primary" onClick={()=>props.handleDetailsAndCompare("compare",props.data)}  variant="outlined" startIcon={<CompareIcon  />}>
-              Compare
-            </Button>
-            <RateEstate updateData={props.updateData} rate={getRate(props.data._id)} userId={"61fa26aae91bd24b703d989d"} estateId={props.data._id}/>
-          <SaveEstate updateData={props.updateData} save={getSave(props.data._id)} userId={"61fa26aae91bd24b703d989d"} estate={props.data} />
-        </DetailsBtnCard >
+        { props.data.type.name === "Auction" && <EstateAuctionSection data={props.data} />}
+
+        {props.userId === props.data.sellerId?
         <DetailsBtnCard>
-
           <Button color="error" onClick={()=>handelDeleteBtn(props.data._id)} variant="outlined" startIcon={<DeleteIcon />}>
             Delete
           </Button>
           <EstateForm handleClose={handleClose} updateData={props.updateData} type={"Update"} data={props.data}/>
-        </DetailsBtnCard >
+        </DetailsBtnCard >:
+        <>
+        <ScheduleVisit userId={props.userId} estateId={props.data} />
+        <DetailsBtnCard>
+          <Button color="primary" onClick={()=>props.handleDetailsAndCompare("compare",props.data)}  variant="outlined" startIcon={<CompareIcon  />}>
+            Compare
+          </Button>
+          <RateEstate updateData={props.updateData} rate={getRate(props.data._id)} userId={props.userId} estateId={props.data._id}/>
+        <SaveEstate updateData={props.updateData} save={getSave(props.data._id)} userId={props.userId} estate={props.data} />
+      </DetailsBtnCard >
+      </>
+      }
+        </>:
+          <Button color="primary" onClick={()=>props.handleDetailsAndCompare("compare",props.data)}  variant="outlined" startIcon={<CompareIcon  />}>
+            Compare
+          </Button>
+      }
     </EstateCardDivCard >
   );
 }

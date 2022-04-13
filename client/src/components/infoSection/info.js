@@ -28,7 +28,11 @@ const InfoSection = ({
     alt,
     primary,
     dark,
-    dark2
+    dark2,
+    btn=false,
+    onClick=null,
+    to,
+    state=null
     }) => {
     return (
         <>
@@ -40,9 +44,9 @@ const InfoSection = ({
                                 <TopLine>{topLine}</TopLine>
                                 <Heading lightText={lightText}>{headline}</Heading>
                                 <Subtitle darkText={darkText}>{description}</Subtitle>
-                                <BtnWrap>
-                                    <ButtonR to='products'
-                                      state="Auction"
+                              <BtnWrap onClick={onClick}>
+                                    <ButtonR to={to}
+                                    state={state}
                                     duration={500}
                                     exact="true"
                                     offset={-80}

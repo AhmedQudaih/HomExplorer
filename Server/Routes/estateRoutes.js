@@ -75,17 +75,6 @@ router.post("/placaBid",auth,function(req,res){
 router.get("/auctionResult/:estateId",auth,function(req,res){
  estate.auctionResult(req , res);
 })
-/*----------Sprint 5----------*/
-
-
-router.get("/getUsers",function(req,res){
- estate.getAllUsers(req , res);
-})
-
-
-router.post("/changeRole",function(req,res){
-  estate.ChangeRole(req,res);
-})
 
 
 module.exports = router;

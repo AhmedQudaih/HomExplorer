@@ -13,7 +13,8 @@ exports.getEstates = function(partition) {
 exports.deleteEstate = function(id) {
   const requestOptions = {
      method: 'delete',
-     headers: { 'Content-Type': 'application/json' },
+     headers: { 'Content-Type': 'application/json',
+     'x-access-token': localStorage.getItem("HomExplorerToken") },
      body: JSON.stringify({ _id: id })
  };
  Waiting.Waiting(true);
@@ -56,7 +57,8 @@ exports.deleteEstate = function(id) {
 
     const requestOptions = {
        method: 'get',
-       headers: { 'Content-Type': 'application/json' },
+       headers: { 'Content-Type': 'application/json',
+       'x-access-token': localStorage.getItem("HomExplorerToken") },
    };
     return callServer(url+"getApproveEstateRequests", requestOptions, true );
   }
@@ -121,7 +123,8 @@ exports.searchData = function(data) {
 exports.getVisits = function(id){
   const requestOptions = {
      method: 'get',
-     headers: { 'Content-Type': 'application/json' },
+     headers: { 'Content-Type': 'application/json',
+     'x-access-token': localStorage.getItem("HomExplorerToken") },
  };
   return callServer(url+"getVisitsDates/"+id, requestOptions, true );
 }
@@ -162,29 +165,8 @@ exports.getHighestPrice = function(id){
 exports.endAuction = function(id){
   const requestOptions = {
      method: 'get',
-     headers: { 'Content-Type': 'application/json' },
+     headers: { 'Content-Type': 'application/json',
+     'x-access-token': localStorage.getItem("HomExplorerToken") },
  };
   return callServer(url+"auctionResult/"+id, requestOptions, true );
-}
-
-
-/*----------------------Sprint 5----------------------*/
-
-exports.getUsers = function(){
-  const requestOptions = {
-    method:'get',
-    headers:{'Content-Type': 'application/json'},
-  };
-  Waiting.Waiting(true);
-  return callServer(url+"getUsers",requestOptions);
-}
-
-exports.changeRole = function(data){
-  const requestOptions = {
-    method:'POST',
-    headers:{'Content-Type': 'application/json'},
-    body: JSON.stringify(data)
-  };
-  Waiting.Waiting(true);
-  return callServer(url+"changeRole",requestOptions);
 }

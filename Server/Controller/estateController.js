@@ -353,22 +353,3 @@ exports.auctionResult= function (req,res){
        res.status(400).send(JSON.stringify(error));
       })
   }
-/*---------------------------- Sprint 5 ----------------------*/
-
-exports.getAllUsers = function(req,res){
-  user.userModel.find()
-  .then(result => res.send(result))
-  .catch(err => res.status(400).send(JSON.stringify(error)));
-}
-
-exports.ChangeRole= function(req,res)
-{ console.log(req.body.roleValue)
-    user.userModel.findOneAndUpdate({userId:req.body.userId},{admin:req.body.roleValue}).then(result => {
-      console.log("Done");
-      res.send(JSON.stringify("ok"));
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(400).send(JSON.stringify(err));
-    });
-}

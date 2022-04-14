@@ -1,9 +1,10 @@
 import React from "react";
 import {Table, TableCell, TableContainer, TableFooter, TablePagination, Paper, TableHead, TableRow, TableBody } from '@mui/material';
 import {StatusAlert, CheckOperation} from './appAlerts';
-import serverFunctions from '../serverFunctions/estate';
+import serverFunctions from '../serverFunctions/user';
 import {CheckData} from './checkData';
 import Loading from './loading';
+import {ServicesProductContainer, ServicesProductH1} from './Styles/servicesElementsStyle';
 function UsersReport() {
   const [users,setUsers]= React.useState([]);
   const [page, setPage] = React.useState(0);
@@ -48,7 +49,8 @@ function UsersReport() {
     const validation = CheckData([users === "error" || users === "NoData"?users:users.length]);
 
   return (
-
+    <ServicesProductContainer id="UsersReport">
+        <ServicesProductH1>Users Report</ServicesProductH1>
     <TableContainer component={Paper}>
         {validation? <Loading mood={validation}/>:
     <Table>
@@ -100,6 +102,7 @@ function UsersReport() {
     </Table>
     }
     </TableContainer>
+  </ServicesProductContainer>
   );
 }
 

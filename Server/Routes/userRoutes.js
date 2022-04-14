@@ -16,6 +16,14 @@ router.get("/checkAdmin",userController.verifyJWT,function(req,res){
   userController.checkAdmin(req, res);
 })
 
+router.get("/getUsers",userController.verifyJWT,function(req,res){
+ userController.getAllUsers(req , res);
+})
+
+
+router.post("/changeRole",userController.verifyJWT,function(req,res){
+  userController.ChangeRole(req,res);
+})
 
 
 

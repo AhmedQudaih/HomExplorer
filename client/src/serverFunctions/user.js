@@ -41,3 +41,24 @@ exports.checkAdmin = function(id) {
    localStorage.removeItem("HomExplorerToken");
    localStorage.removeItem("HomExplorerUserId");
   }
+
+  exports.getUsers = function(){
+    const requestOptions = {
+      method:'get',
+      headers:{'Content-Type': 'application/json',
+      'x-access-token': localStorage.getItem("HomExplorerToken")},
+    };
+    Waiting.Waiting(true);
+    return callServer(url+"user/getUsers",requestOptions);
+  }
+
+  exports.changeRole = function(data){
+    const requestOptions = {
+      method:'POST',
+      headers:{'Content-Type': 'application/json',
+      'x-access-token': localStorage.getItem("HomExplorerToken")},
+      body: JSON.stringify(data)
+    };
+    Waiting.Waiting(true);
+    return callServer(url+"user/changeRole",requestOptions);
+  }

@@ -162,6 +162,28 @@ exports.endAuction = function(id){
 }
 
 
+/*----------------------Sprint 5----------------------*/
+
+exports.getUsers = function(){
+  const requestOptions = {
+    method:'get',
+    headers:{'Content-Type': 'application/json'},
+  };
+  Waiting.Waiting(true);
+  return callServer(url+"getUsers",requestOptions);
+}
+
+exports.changeRole = function(data){
+  const requestOptions = {
+    method:'POST',
+    headers:{'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  };
+  Waiting.Waiting(true);
+  return callServer(url+"changeRole",requestOptions);
+}
+
+
 
 
 

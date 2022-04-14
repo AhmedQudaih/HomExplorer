@@ -4,7 +4,7 @@ import EstateForm from './estateForm';
 import { NavBtnLink } from './Styles/navbarElementsStyle';
 import {SidebarRoute, OptionsBarLinks } from './Styles/sidebarElementsStyle';
 import {MyContext} from '../components/provider';
-import {DateRangeOutlined as DateRangeOutlinedIcon, BookmarkBorder as BookmarkBorderIcon, AssignmentOutlined as AssignmentOutlinedIcon, AssignmentLateOutlined  } from '@material-ui/icons';
+import {DateRangeOutlined as DateRangeOutlinedIcon, BookmarkBorder as BookmarkBorderIcon, AssignmentOutlined as AssignmentOutlinedIcon, AssignmentLateOutlined  } from '@mui/icons-material';
 
 
 function OptionsBar(props){

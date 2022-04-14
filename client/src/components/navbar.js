@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import FaBars from '@material-ui/icons/Menu';
+import FaBars from '@mui/icons-material/Menu';
 import {animateScroll as scroll} from 'react-scroll';
 import {
   Nav,

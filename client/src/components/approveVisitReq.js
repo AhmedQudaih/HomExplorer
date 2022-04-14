@@ -3,7 +3,7 @@ import serverFunctions from '../serverFunctions/estate'
 import {
   CheckCircle as CheckCircleIcon ,
   Close as CloseIcon, ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableFooter, TablePagination} from '@mui/material';
 import {ServicesProductContainer, ServicesProductH1, ServicesH1Color, ServicesBackground} from './Styles/servicesElementsStyle';
 import Loading from './loading';

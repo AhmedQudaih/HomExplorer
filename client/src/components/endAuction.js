@@ -1,6 +1,6 @@
 import React from "react";
 import {Table,Button, TableCell, TableContainer, TableHead, TableRow, TableBody, Paper} from '@mui/material';
-import {ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon} from "@material-ui/icons";
+import {ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon} from "@mui/icons-material";
 import {TableExpandDiv} from './Styles/tableStyle';
 import { DetailsBtnCard } from "./Styles/estateDetailsStyle";
 import serverFunctions from '../serverFunctions/estate';

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const role = require("./roleModel");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema ({
@@ -14,7 +13,7 @@ const userSchema = new Schema ({
           unique: true
           },
         phoneNumber: { type: Number, required: true },
-        role: {type:  Schema.Types.ObjectId, ref: 'role', required: true }
+        admin: {type: Boolean, default: false }
 });
 
 const userModel = mongoose.model('user', userSchema)

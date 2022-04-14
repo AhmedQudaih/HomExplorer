@@ -6,6 +6,7 @@ const rate = require("../Model/rateModel");
 const save = require("../Model/savedModel");
 const visit = require("../Model/visitModel");
 const bid = require("../Model/bidEstateModel");
+const user = require("../Model/userModel");
 const fs = require('fs');
 
 
@@ -352,21 +353,20 @@ exports.auctionResult= function (req,res){
   }
 /*---------------------------- Sprint 5 ----------------------*/
 
-function findUsersData(){
-
-  userModel.find().select('name').select('email').select('phoneNumber')
-  .then(result => console.log(result))
-  .catch(err => console.log(err))
+exports.getAllUsers = function(req,res){
+  user.userModel.find()
+  .then(result => res.send(result))
+  .catch(err => res.status(400).send(JSON.stringify(error)));
 }
 
-function ChangeToAdmin(req,res) 
-{  
-    var adminroleid;
-     cursor = roleModel.find({name:"Admin"})
-     .then(result => {adminroleid = JSON.stringify(result[0]._id).replace('"','').replace('"',''); console.log(adminroleid)})
-    const filter =  {_id:req.body.userid};
-    const update = {role:adminroleid};
-    userModel.findOneAndUpdate(filter,update)
-        .then(result => {console.log("Done");})
-        .catch(err=>{console.log(err);}) 
+exports.ChangeRole= function(req,res)
+{ console.log(req.body.roleValue)
+    user.userModel.findOneAndUpdate({userId:req.body.userId},{admin:req.body.roleValue}).then(result => {
+      console.log("Done");
+      res.send(JSON.stringify("ok"));
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(400).send(JSON.stringify(err));
+    });
 }

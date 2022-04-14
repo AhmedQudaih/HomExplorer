@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const category = require('./Model/categoryModel');
 const type = require('./Model/estateTypeModel');
-const role = require('./Model/roleModel');
 const user = require('./Model/userModel');
 const estate = require('./Model/estateModel');
 main().catch(err => console.log(err));
@@ -17,14 +16,6 @@ async function main() {
 initDb();
 function initDb(){
 /*
-  const admin = new role.roleModel({ name: 'Admin' });
-  const userRole = new role.roleModel({ name: 'User' });
-
-  role.roleModel.insertMany([admin , userRole ]).then(function(){
-      console.log("roles inserted")  // Success
-  }).catch(function(error){
-      console.log(error)      // Failure
-  });
 
 const apartment = new category.categoryModel({ name: 'Apartment' });
 const villa = new category.categoryModel({ name: 'Villa' });
@@ -46,11 +37,11 @@ type.estateTypeModel.insertMany([auction , sell , rent ]).then(function(){
 });
 
 const newUser = new user.userModel({
-  name: "Second-User",
-  password: "User22@123",
-  email: "user22@gmail.com",
+  name: "AdminUser",
+  password: "Admin@user123",
+  email: "Admin@user.com",
   phoneNumber: "00121414252",
-  role:"618efd55de85932e186201af"
+  admin:"false"
 });
 
 newUser.save(function(err) {

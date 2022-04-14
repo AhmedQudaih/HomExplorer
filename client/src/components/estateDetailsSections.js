@@ -8,7 +8,7 @@ import {
   Delete as DeleteIcon,
   Close as CloseIcon,
   Compare as CompareIcon
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 import serverFunctions from '../serverFunctions/estate'
 import EstateDetails from './estateDetails';
 import SaveEstate from './saveEstate'
@@ -18,8 +18,6 @@ import {StatusAlert, CheckOperation} from './appAlerts';
 import ScheduleVisit from './scheduleVisit';
 import PlaceBid from './PlaceBid';
 import EndAuction from './endAuction';
-import Users from './Users'
-
 
 function EstateDetailsSections(props){
   const getSave=(estateId)=>{
@@ -86,7 +84,6 @@ return(
           </Button>
           <EstateForm handleClose={handleClose} updateData={props.updateData} type={"Update"} data={props.data}/>
         </DetailsBtnCard >
-        <Users />
     </EstateCardDivCard >
   );
 }

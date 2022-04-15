@@ -5,6 +5,7 @@ import {MyContext} from '../components/provider';
 import {CheckAuth} from '../components/checkData';
 import {useNavigate} from "react-router-dom";
 import serverUserFunctions from '../serverFunctions/user';
+import EstateReports from '../components/estateReports';
 function AdminDashBoard() {
   const navigate = useNavigate();
   React.useEffect(()=>{
@@ -25,6 +26,7 @@ function AdminDashBoard() {
           return (
             <div>
               <ApproveEstateReq estateRequests={context.estateRequests} setEstateRequests={context.setEstateRequests} />
+              <EstateReports />
               <UsersReport />
             </div>)
         }

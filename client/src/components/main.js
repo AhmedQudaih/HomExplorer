@@ -3,7 +3,7 @@ import { ButtonS } from './Styles/buttonElementsStyle';
 import Video from '../videos/video.mp4';
 import { MainContainer, MainBg, VideoBg, MainContent, MainH1,
 MainP, MainBtnWrapper, MainBtnArrowStyle } from './Styles/mainElementsStyle';
-import { ArrowForward, KeyboardArrowRight  } from '@material-ui/icons';
+import { ArrowForward, KeyboardArrowRight  } from '@mui/icons-material';
 function Main() {
     const [hover, setHover] = useState(false)
     const onHover = () => {

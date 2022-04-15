@@ -3,7 +3,7 @@ import Img from '../images/productMainImg.jpg';
 import {  MainBg ,ImgBg} from './Styles/mainElementsStyle';
 import { ProductMainH1,SearchMainContainer,CollapseDiv ,SearchMainContent,CollapseBtn  } from './Styles/searchElementsStyle';
 import { Slider ,Button,Typography} from '@mui/material';
-import {Search as SearchIcon, ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon} from '@material-ui/icons';
+import {Search as SearchIcon, ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon} from '@mui/icons-material';
 import Loading from './loading';
 import {MyContext} from '../components/provider';
 import {CheckData} from './checkData';

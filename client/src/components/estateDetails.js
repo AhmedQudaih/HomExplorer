@@ -8,7 +8,7 @@ import {
   LocalHotel as LocalHotelIcon,
   Bathtub as BathtubIcon,
   FullscreenExit as FullscreenExitIcon,
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 import {ExpandedIconDetailsCard} from './Styles/estateDetailsStyle';
 import {
   EstateCardDiv,

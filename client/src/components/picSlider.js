@@ -5,7 +5,7 @@ import {
 import {Button} from '@mui/material';
 import {
   KeyboardArrowRight, KeyboardArrowLeft,
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 
 //const url = "https://homeexplorerapi.herokuapp.com/uploads/"; // on Server
 const url = "http://localhost:4000/uploads/"; // on Local

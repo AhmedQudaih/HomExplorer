@@ -12,46 +12,17 @@ import {
   Sector
 } from "recharts";
 
-const Chart= () => {
+const Chart= (props) => {
+
   const [activeIndex, setActiveIndex] = useState(0);
+
   const onPieEnter = useCallback(
     (_, index) => {
       setActiveIndex(index);
     },
     [setActiveIndex]
   );
-  const data = [
-  {
-    name: "Auction",
-    value: 24 , //here add count of auctions
-    Apartment:10,
-    Villa:3
-  },
-  {
-    name: "Rent",
-    value: 13,//here add count of Rents
-    Apartment:10,
-    Villa:3
-  },
-  {
-    name: "Sell",
-    value: 20, //here add count of Sells
-   Apartment:11,
-   Villa:15
-  }
-];
-const data01 = [
-  {
-    name: "Apartment",
-    value: 24 , //here add count of auctions
-    
-  },
-  {
-    name: "Villa",
-    value: 13,//here add count of Rents
-    
-  } 
-];
+
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
   const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
@@ -97,58 +68,50 @@ const renderActiveShape = (props) => {
     </g>
   );
 };
-return(
 
-    <div>
-    <h1> Reports</h1>
-    <BarChart
-      width={500}
-      height={300}
-      data={data}
-      margin={{
-        top: 5,
-        right: 30,
-        left: 20,
-        bottom: 5
-      }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip  />
-      <Legend />
-      <Bar dataKey="Villa" barSize={40} fill="#039B5E" />
-      <Bar dataKey="Apartment" barSize={40} fill="#01bf71" />
-    </BarChart>
-      <PieChart width={400} height={400}>
-        <Pie
-        activeIndex={activeIndex}
-        activeShape={renderActiveShape}
-        data={data}
-        cx={200}
-        cy={200}
-        innerRadius={60}
-        outerRadius={80}
-        fill="#04AF6B"
-        dataKey="value"
-        onMouseEnter={onPieEnter}
-      />
-      </PieChart>
-      <PieChart width={400} height={400}>
-        <Pie
-        activeIndex={activeIndex}
-        activeShape={renderActiveShape}
-        data={data01}
-        cx={200}
-        cy={200}
-        innerRadius={60}
-        outerRadius={80}
-        fill="#04AF6B"
-        dataKey="value"
-        onMouseEnter={onPieEnter}
-      />
-      </PieChart>
-    </div>
-     );
+if(props.type === "bar"){
+  return(
+        <BarChart
+          width={500}
+          height={300}
+          data={props.data}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip  />
+          <Legend />
+          <Bar dataKey="Villa" barSize={40} fill="#039B5E" />
+          <Bar dataKey="Apartment" barSize={40} fill="#01bf71" />
+        </BarChart>
+  );
+}
+
+if(props.type === "pie"){
+
+return(
+        <PieChart width={400} height={400}>
+          <Pie
+          activeIndex={activeIndex}
+          activeShape={renderActiveShape}
+          data={props.data}
+          cx={200}
+          cy={200}
+          innerRadius={60}
+          outerRadius={80}
+          fill="#04AF6B"
+          dataKey="value"
+          onMouseEnter={onPieEnter}
+        />
+    </PieChart>);
+
+}
+
 };
 export default Chart;

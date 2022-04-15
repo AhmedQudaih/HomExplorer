@@ -1,6 +1,6 @@
 import React from 'react'
 import { animateScroll as scroll } from 'react-scroll'
-import {Instagram ,Facebook ,Twitter ,LinkedIn} from "@material-ui/icons";
+import {Instagram ,Facebook ,Twitter ,LinkedIn} from "@mui/icons-material";
 import {
     FooterContainer,
     FooterWrap,

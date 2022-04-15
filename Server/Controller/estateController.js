@@ -353,3 +353,32 @@ exports.auctionResult= function (req,res){
        res.status(400).send(JSON.stringify(error));
       })
   }
+
+////////////////////////////// srpint 5
+function get_estates (req,res){
+    var categories = [];
+    var types = [];
+    var estates_of_type = [];
+    var estate_of_categories = [];
+
+    categoryModel.find().distinct('_id')
+    .then(result=>{result.forEach(element => categories.push(JSON.stringify(element).replace('"','').replace('"','')));})
+    .catch(err => {console.log(err)})
+
+    estateTypeModel.find().distinct('_id')
+    .then(result=>{result.forEach(element => types.push(JSON.stringify(element).replace('"','').replace('"',''))); console.log(types)})
+    .catch(err => {console.log(err)})
+
+    types.forEach((element)=> {estateModel.find({type:element})
+    .then(result => {estates_of_type.push(result); console.log(result);})
+    .catch(err => {console.log(err)});
+    })
+    categories.forEach((element)=> {estateModel.find({type:element})
+    .then(result => {estate_of_categories.push(result); console.log(result);})
+    .catch(err => {console.log(err)});
+    res.send(estate_of_categories,estate_of_categories)
+
+    })
+
+
+}

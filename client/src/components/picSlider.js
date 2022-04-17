@@ -7,8 +7,8 @@ import {
   KeyboardArrowRight, KeyboardArrowLeft,
 } from "@mui/icons-material";
 
-//const url = "https://homeexplorerapi.herokuapp.com/uploads/"; // on Server
-const url = "http://localhost:4000/uploads/"; // on Local
+const url = "https://homeexplorerapi.herokuapp.com/uploads/"; // on Server
+//const url = "http://localhost:4000/uploads/"; // on Local
 
 function PicSlider(props){
 

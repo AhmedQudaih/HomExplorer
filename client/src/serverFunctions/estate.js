@@ -170,3 +170,12 @@ exports.endAuction = function(id){
  };
   return callServer(url+"auctionResult/"+id, requestOptions, true );
 }
+
+exports.estateReport = function(){
+  const requestOptions = {
+     method: 'get',
+     headers: { 'Content-Type': 'application/json',
+     'x-access-token': localStorage.getItem("HomExplorerToken") },
+ };
+  return callServer(url+"estateReport", requestOptions );
+}

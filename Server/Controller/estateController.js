@@ -353,3 +353,48 @@ exports.auctionResult= function (req,res){
        res.status(400).send(JSON.stringify(error));
       })
   }
+
+
+/*---------------------------- Sprint 5 ----------------------*/
+exports.estateReport = async function (req,res){
+    var report={type:{
+         Sell:{},
+         Auction:{},
+       Rent:{}
+     },
+     category:{}
+     };
+
+     var category=[];
+     var type=[];
+
+    try{
+
+    const allEstates = await estate.estateModel.find({}).populate('category').populate("type").exec();
+    allEstates.forEach(element => {
+       report.type[element.type.name][element.category.name] =  report.type[element.type.name][element.category.name] +1||1;
+       report.type[element.type.name]["value"] = report.type[element.type.name]["value"] +1||1;
+       report.category[element.category.name]=  report.category[element.category.name] +1||1;
+    });
+
+    for (const [key, value] of Object.entries(report.category)) {
+      category.push({name:key, value: value});
+    }
+
+    for (const [key, value] of Object.entries(report.type)) {
+      value.name = key
+      type.push(value);
+    }
+
+    report.category = category;
+    report.type = type;
+
+    res.send(report);
+
+    }catch(error){
+
+      console.log(error);
+      res.status(400).send(JSON.stringify(error));
+
+    }
+}

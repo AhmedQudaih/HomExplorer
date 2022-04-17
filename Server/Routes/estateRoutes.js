@@ -76,5 +76,10 @@ router.get("/auctionResult/:estateId",auth,function(req,res){
  estate.auctionResult(req , res);
 })
 
+/*---------Sprint 5-----------*/
+router.get("/estateReport",function(req,res){
+ estate.estateReport(req , res);
+})
+
 
 module.exports = router;

@@ -1,10 +1,12 @@
 const multer = require('multer');
-const storage = multer.diskStorage({
-	destination:  './uploads/',
-	filename: (req, file, cb) => {
-		const ext = file.mimetype.split("/")[1];
-		cb(null, file.fieldname + '-' + Date.now()+'.'+ext)
-	}
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'homeExplorerImages',
+  },
 });
 
 exports.upload = multer({
@@ -18,3 +20,14 @@ exports.upload = multer({
   }
 }
  });
+
+
+/*
+multer.diskStorage({
+	destination:  './uploads/',
+	filename: (req, file, cb) => {
+		const ext = file.mimetype.split("/")[1];
+		cb(null, file.fieldname + '-' + Date.now()+'.'+ext)
+	}
+});
+*/

@@ -8,6 +8,7 @@ const visit = require("../Model/visitModel");
 const bid = require("../Model/bidEstateModel");
 const user = require("../Model/userModel");
 const fs = require('fs');
+const cloudinary = require('cloudinary').v2;
 
 
 function picAddOperation(files, estate) {
@@ -29,9 +30,10 @@ function picAddOperation(files, estate) {
 function picDeleteOperation(picPath) {
   picPath.forEach((e) => {
     try {
-      fs.unlinkSync(e.path)
+      cloudinary.uploader.destroy(e.name);
     } catch (err) {
       console.error(err)
+      return (err);
     }
   })
 }

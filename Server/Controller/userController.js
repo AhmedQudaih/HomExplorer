@@ -35,7 +35,6 @@ exports.login = function(req,res){
         }
         jwt.sign(payload,
           privateKey,
-          {expiresIn:86400},
           (err,token)=>{
             if(err) return res.json({message:err})
             return res.json({

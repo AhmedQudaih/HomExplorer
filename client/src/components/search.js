@@ -58,7 +58,7 @@ return(
 
   <MyContext.Consumer>{
       (context) => {
-        const validation = CheckData([context.categoryAndType ==="error"?context.categoryAndType:context.categoryAndType.length]);
+        const validation = CheckData(context.categoryAndType);
 
     return (
         <SearchMainContainer>

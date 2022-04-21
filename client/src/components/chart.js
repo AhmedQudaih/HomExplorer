@@ -9,7 +9,8 @@ import {
   Legend,
   PieChart,
   Pie,
-  Sector
+  Sector,
+  ResponsiveContainer
 } from "recharts";
 
 const Chart= (props) => {
@@ -71,15 +72,13 @@ const renderActiveShape = (props) => {
 
 if(props.type === "bar"){
   return(
+    <ResponsiveContainer width='100%' height={300}>
         <BarChart
           width={500}
           height={300}
           data={props.data}
           margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5
+            top: 50
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
@@ -90,27 +89,28 @@ if(props.type === "bar"){
           <Bar dataKey="Villa" barSize={40} fill="#039B5E" />
           <Bar dataKey="Apartment" barSize={40} fill="#01bf71" />
         </BarChart>
+        </ResponsiveContainer>
+
   );
 }
 
 if(props.type === "pie"){
-
 return(
-        <PieChart width={400} height={400}>
+  <ResponsiveContainer height={400}>
+        <PieChart>
           <Pie
           activeIndex={activeIndex}
           activeShape={renderActiveShape}
           data={props.data}
-          cx={200}
-          cy={200}
-          innerRadius={60}
-          outerRadius={80}
+         innerRadius={60}
+         outerRadius={80}
           fill="#04AF6B"
           dataKey="value"
           onMouseEnter={onPieEnter}
         />
-    </PieChart>);
-
+    </PieChart>
+      </ResponsiveContainer>
+  );
 }
 
 };

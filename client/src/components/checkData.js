@@ -1,12 +1,11 @@
 export const CheckData = (props) => {
-
-  if (props.includes("error")) {
-    return ("error");
+  if (props === "error" || props === "NoData"|| props.length === 0) {
+    if (props.length === 0){
+      return "NoData";
+    }
+    return (props);
   }
-  if (props.includes("NoData")) {
-    return ("NoData");
-  }
-  if (props.includes(0)) {
+  if (props === "Loading") {
     return ("Loading");
   }
   return false;

@@ -47,7 +47,7 @@ const RegistrationForm = ()=> {
       if(Status ==='error'){
          StatusAlert("error");
        }else if(Status ==='exists'){
-          StatusAlert("email exists");
+          StatusAlert("AuthError");
         }else{
          StatusAlert("Added");
        }

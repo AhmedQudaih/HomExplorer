@@ -81,7 +81,12 @@ const expandDetails = (id) => {
 
 
 
-  const validation = CheckData([data === "error" || data === "NoData"?data:data.length]);
+  const validation = CheckData(data);
+
+
+
+
+
 
   return (<ServicesProductContainer id="EstatesRequests">
       <ServicesProductH1>Estates Requests</ServicesProductH1>

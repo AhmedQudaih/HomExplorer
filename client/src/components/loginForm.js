@@ -38,11 +38,11 @@ function LoginForm(props) {
   const submitLoginForm = async (event) =>{
     event.preventDefault();
       const Status = await serverFunctions.login(user);
-      if(Status ==='error'){
-         StatusAlert("error");
-       }else{
+      if(Status === 'Success'){
          navigate('/');
          StatusAlert('logged in');
+       }else{
+         StatusAlert("error", "Invalid Username or Password");
        }
   }
 

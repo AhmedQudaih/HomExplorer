@@ -5,11 +5,11 @@ import {UserId} from '../components/checkData';
 export const MyContext = React.createContext();
 const Provider = (props) =>{
 
-  const [saveList, setSaveList] = React.useState([]);
-  const [rateList, setRateList] = React.useState([]);
-  const [estateRequests, setEstateRequests] = React.useState([])
-  const [categoryAndType, setCategoryAndType] = React.useState([]);
-  const [visitRequests, setVisitRequests] = React.useState({"approve": [], "reject": [], "pending": [], "myVisit": []});
+  const [saveList, setSaveList] = React.useState("Loading");
+  const [rateList, setRateList] = React.useState("Loading");
+  const [estateRequests, setEstateRequests] = React.useState("Loading")
+  const [categoryAndType, setCategoryAndType] = React.useState("Loading");
+  const [visitRequests, setVisitRequests] = React.useState({"approve": "Loading", "reject": "Loading", "pending": "Loading", "myVisit": "Loading"});
 
   React.useEffect(() => {
     const fetchData = async () => {

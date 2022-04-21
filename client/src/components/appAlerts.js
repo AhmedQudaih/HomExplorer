@@ -2,12 +2,16 @@
 const Swal = require('sweetalert2')
 const errorMsg ="Somthing went wrong try again later";
 const successMsg = "successfully"
-exports.StatusAlert = (props)=> {
+exports.StatusAlert = (props, msg)=> {
 let icon;
 let message;
+
   if(props === 'error'){
      icon = 'error';
-     message = errorMsg;
+     message = msg || errorMsg;
+  }else if(props === 'AuthError'){
+      icon = "info";
+      message = 'Email exists';
   }else{
      icon = 'success';
      message = props +" "+successMsg;

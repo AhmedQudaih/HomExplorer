@@ -25,7 +25,7 @@ const EndAuction = (props) => {
       },[props.estateId]);
 
 
-      const validation = CheckData([data === "error" || data === "NoData"?data:data.length]);
+      const validation = CheckData(data);
 
     return(
     <DetailsBtnCard>

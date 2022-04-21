@@ -19,7 +19,7 @@ transition: all 0.2s ease-in-out;
 export const ChartDiv = styled.div`
 display: flex;
 flex-direction: row;
-width: 100%;
+width: 90%;
 justify-content: space-between;
 margin: 5% auto;
 border-radius: 1rem;
@@ -27,7 +27,8 @@ padding: 3rem;
 transition: all 0.2s ease-in-out;
 @media screen and (max-width: 80rem){
   flex-direction: column;
-  gap: 2rem;
+  justify-content: center;
+  align-items: center;
 }
 `
 

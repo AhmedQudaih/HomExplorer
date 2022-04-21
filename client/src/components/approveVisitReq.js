@@ -17,13 +17,12 @@ import FilterBox from './filterBox'
 function ApproveEstateReq(props) {
   const [expand, setExpand] = React.useState(false);
   const [statusFilter, setStatusFilter] = React.useState('myVisit');
-  const validation = CheckData([ props.visitRequests[statusFilter] === "error" || props.visitRequests[statusFilter] === "NoData"?  props.visitRequests[statusFilter]: props.visitRequests[statusFilter].length ===0? "NoData" : false ]);
+  const validation = CheckData(props.visitRequests[statusFilter] );
   const [page, setPage] = React.useState(0);
    const [rowsPerPage, setRowsPerPage] = React.useState(5);
    const handleChangePage = (event, newPage) => {
      setPage(newPage);
    };
-
    const handleChangeRowsPerPage = (event) => {
      setRowsPerPage(parseInt(event.target.value, 10));
      setPage(0);

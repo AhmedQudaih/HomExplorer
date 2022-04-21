@@ -16,7 +16,7 @@ import {UserId} from './checkData';
 import FilterBox from './filterBox'
 function Services(props) {
   const [page, setPage] = React.useState(1);
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState("Loading");
   const [detailsAndCompare, setDetailsAndCompare] = React.useState({details: false, compare: false});
   const [partition, setPartition] = React.useState(0);
   const totalPages = Math.ceil(data.length / 12);
@@ -31,7 +31,7 @@ function Services(props) {
           return setData(data);
         }
         setData((pre) => {
-          if(pre === "NoData"){
+          if(pre === "NoData" || pre === "Loading"){
             pre = []
           }
           return [
@@ -112,8 +112,8 @@ function Services(props) {
           }
         }
       }
-    const validation = CheckData([data==="error" || data === "NoData" ?data:data.length, context.saveList, context.rateList]);
-
+    const validation = CheckData(data);
+    
   return (<ServicesProductContainer style={props.dark === true
       ? ServicesBackground
       : null} id={props.ID} >

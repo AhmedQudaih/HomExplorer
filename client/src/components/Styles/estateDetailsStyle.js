@@ -17,18 +17,17 @@ transition: all 0.2s ease-in-out;
 `
 
 export const ChartDiv = styled.div`
-display: flex;
-flex-direction: row;
-width: 90%;
-justify-content: space-between;
-margin: 5% auto;
+
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+grid-gap: 4rem;
+width: 80%;
+margin: 0 auto;
 border-radius: 1rem;
 padding: 3rem;
 transition: all 0.2s ease-in-out;
 @media screen and (max-width: 80rem){
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  grid-template-columns: 1fr;
 }
 `
 

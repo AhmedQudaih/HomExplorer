@@ -43,3 +43,7 @@ transition: all 0.2s ease-in-out;
 }
 
 `
+
+export const SmallNote = styled.small`
+color: #AAAFAC;
+`

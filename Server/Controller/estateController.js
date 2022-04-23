@@ -9,6 +9,7 @@ const bid = require("../Model/bidEstateModel");
 const user = require("../Model/userModel");
 const fs = require('fs');
 const cloudinary = require('cloudinary').v2;
+const objectId = require('mongodb').ObjectID;
 
 
 function picAddOperation(files, estate) {
@@ -153,7 +154,30 @@ exports.getApproveEstateRequests = function(req, res) {
 
 /*----------------------------Sprint 2----------------------------*/
 
-exports.addAndUpdateRate = function(req, res) {
+async function estateOverAllRate(estateId){
+
+  var scoreTotal =0,
+   responseTotal  =0,
+   overallRating = 0;
+  try{
+    let rates = await rate.rateModel.aggregate().match({ estateId: objectId(estateId) }).group({ _id: '$rate', count: { $sum: 1 } });
+
+    rates.forEach(element =>{
+      scoreTotal +=  element.count * element._id;
+      responseTotal += element.count;
+    });
+    overallRating = scoreTotal/ responseTotal;
+
+    let modifiedEstate = await estate.estateModel.findOneAndUpdate({_id:estateId}, {rate:overallRating.toFixed(2)});
+
+    return {rate: modifiedEstate.rate};
+  }catch(error){
+    console.log(error);
+    return error
+  }
+}
+
+exports.addAndUpdateRate = async function(req, res) {
   const filter = {
     userId: req.user.id,
     estateId: req.body.estateId
@@ -161,19 +185,15 @@ exports.addAndUpdateRate = function(req, res) {
   const update = {
     rate: req.body.rate
   };
-  rate.rateModel.findOneAndUpdate(filter, update, {
-      upsert: true,
-      new: true,
-      setDefaultsOnInsert: true
-    })
-    .then(result => {
-      console.log("Done");
+  try{
+      await rate.rateModel.findOneAndUpdate(filter, update, {
+            upsert: true, new: true, setDefaultsOnInsert: true});
+      await estateOverAllRate(req.body.estateId);
       res.send(JSON.stringify("ok"));
-    })
-    .catch(err => {
-      console.log(err);
-      res.send(JSON.stringify(err));
-    })
+  }catch(error){
+    console.log(error);
+      res.send(JSON.stringify(error));
+  }
 }
 
 exports.getRates = function(req, res) {
@@ -202,7 +222,6 @@ exports.saveAndUnsave = function (req, res) {
       const x = new save.savedModel(filter);
       x.save()
         .then(result => {
-          console.log("saved");
           res.send(JSON.stringify("ok"));
         })
         .catch(err => {
@@ -212,7 +231,6 @@ exports.saveAndUnsave = function (req, res) {
     } else {
       save.savedModel.findOneAndDelete(filter)
         .then(result => {
-          console.log("Deleted");
           res.send(JSON.stringify("ok"));
         })
         .catch(err => {

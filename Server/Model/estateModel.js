@@ -14,6 +14,7 @@ const estateSchema = new Schema ({
         size : {type: Number, min: 20, max: 10000, required: true},
         desc: { type: String, minLength:30 ,required: true},
       status:{ type: String, default: 'pending'},
+      rate: { type: Number, default: 0, min: 0, max: 5},
       type: {  type:  Schema.Types.ObjectId, ref: 'estateType', required: true },
       category: {  type:  Schema.Types.ObjectId, ref: 'category', required: true },
       addressOnMap:{type: [Number] , required:true},

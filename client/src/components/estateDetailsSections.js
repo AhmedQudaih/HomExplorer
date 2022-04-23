@@ -24,10 +24,7 @@ function EstateDetailsSections(props){
     let save = props.saveList.find(i => i.estateId._id === estateId );
     return save?true:false;
   }
-  const getRate=(estateId)=>{
-    let rate = props.rateList.find(i => i.estateId === estateId );
-    return rate?rate.rate:rate=0;
-  }
+
   const handleClose = () => {
     if(props.compareMode === props.data._id){
       props.handleDetailsAndCompare("compare",false);
@@ -74,7 +71,7 @@ return(
           <Button color="primary" onClick={()=>props.handleDetailsAndCompare("compare",props.data)}  variant="outlined" startIcon={<CompareIcon  />}>
             Compare
           </Button>
-          <RateEstate updateData={props.updateData} rate={getRate(props.data._id)} userId={props.userId} estateId={props.data._id}/>
+          <RateEstate updateData={props.updateData} rate={props.data.rate} userId={props.userId} estateId={props.data._id}/>
         <SaveEstate updateData={props.updateData} save={getSave(props.data._id)} userId={props.userId} estate={props.data} />
       </DetailsBtnCard >
       </>

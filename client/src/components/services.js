@@ -90,12 +90,10 @@ function Services(props) {
           let update = data.filter(i => i._id !== modif);
           return setData(update);
         }
-        if (operation === "rate") {
-          let update = context.rateList.filter(i => i.estateId !== modif.estateId);
-          update.push({estateId: modif.estateId, rate: modif.rate})
-          return context.setRateList(update);
-        }
+
         if (operation === "save") {
+
+
           let index = context.saveList.findIndex(i => i.estateId._id === modif._id);
           if (index === -1) {
             context.setSaveList((pre) => {
@@ -110,10 +108,12 @@ function Services(props) {
             update.splice(index, 1);
             context.setSaveList(update);
           }
+
+
         }
       }
     const validation = CheckData(data);
-    
+
   return (<ServicesProductContainer style={props.dark === true
       ? ServicesBackground
       : null} id={props.ID} >
@@ -163,8 +163,8 @@ function Services(props) {
           </Box>
     }
     <ServicesProductWrapper id={"details"+props.ID}>
-      {detailsAndCompare.compare &&<> {CompareMood(true)} <EstateDetailsSections key={detailsAndCompare.compare._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.compare}/></>}
-      {detailsAndCompare.details && <EstateDetailsSections key={detailsAndCompare.details._id} userId={UserId()} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.details}/>}
+      {detailsAndCompare.compare &&<> {CompareMood(true)} <EstateDetailsSections key={detailsAndCompare.compare._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.compare}/></>}
+      {detailsAndCompare.details && <EstateDetailsSections key={detailsAndCompare.details._id} userId={UserId()} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.details}/>}
     </ServicesProductWrapper >
     </>}
   </ServicesProductContainer>)    }}</MyContext.Consumer>

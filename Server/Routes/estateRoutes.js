@@ -64,16 +64,17 @@ router.post("/scheduleVisit",auth,function(req,res){
 })
 /*----------Sprint 4----------*/
 
-router.get("/highestAuctionPrice/:estateId",function(req,res){
- estate.getAuctionHighestPrice(req , res);
-})
 
 router.post("/placaBid",auth,function(req,res){
   estate.placeBid(req,res);
 })
 
-router.get("/auctionResult/:estateId",auth,function(req,res){
- estate.auctionResult(req , res);
+router.post("/approveAuction",auth,function(req,res){
+  estate.approveAuction(req,res);
+})
+
+router.get("/auctionOperations/:estateId",auth,function(req,res){
+  estate.auctionOperations(req,res);
 })
 
 /*---------Sprint 5-----------*/

@@ -341,37 +341,95 @@ exports.getVisitsDates = function(req,res){
 /*---------------------------- Sprint 4 ----------------------*/
 
 
-
-exports.getAuctionHighestPrice = function(req,res){
-    bid.bidModel.findOne({estateId:req.params.estateId}).sort("-price").select({price: 1, _id: false}).then(result => {
-       res.send(result || {price:0});
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(400).send(JSON.stringify(err));
-    })
-}
-
-
-exports.placeBid = function (req,res){
-    const newBid = new bid.bidModel(req.body);
-    newBid.userId=req.user.id;
-    newBid.save(function(error) {
-      if (error) {
-        return res.status(400).send(JSON.stringify(error));
-      }
-      res.status(200).send(JSON.stringify("Ok"));
-    });
-}
-
-exports.auctionResult= function (req,res){
-    bid.bidModel.find({estateId:req.params.estateId}).sort('-price').limit(3).populate('userId').then(result =>{
-      res.send(result);
+  exports.approveAuction = async function(req, res) {
+    let estateData = await estate.estateModel.findById({_id: req.body._id})
+    var auctionEndDate = new Date();
+    auctionEndDate.setDate(auctionEndDate.getDate() + (estateData.auctionData.duration * 7));
+    console.log(auctionEndDate)
+    const update = {
+      "auctionData.endDate": auctionEndDate,
+      status: req.body.status
+    };
+    estate.estateModel.updateOne({ _id: req.body._id}, update).then((data)=>{
+        res.status(200).send(JSON.stringify("Ok"));
     }).catch(err=> {
       console.log(err);
-       res.status(400).send(JSON.stringify(error));
+       res.status(400).send(JSON.stringify(err));
       })
+    }
+
+
+
+exports.placeBid = async function (req,res){
+  let auctionEndStatus = await auctionEnd();
+  if(auctionEndStatus.status || auctionEndStatus.auctionOwner === req.user.id){
+    let response = await auctionResult(req.body.estateId);
+    res.status(400).send(JSON.stringify("Cant place bid to an ended auction"))
   }
+  const newBid = new bid.bidModel(req.body);
+  newBid.userId=req.user.id;
+  newBid.save(function(error) {
+    if (error) {
+      return res.status(400).send(JSON.stringify(error));
+    }
+    res.status(200).send(JSON.stringify("Bid submited with amount: "+req.body.price));
+  });
+}
+
+async function auctionResult (estateId){
+  try {
+    let result = await bid.bidModel.find({estateId:estateId}).sort('-price').limit(3).populate('userId');
+    return result;
+  } catch (err) {
+    return err;
+  }
+}
+
+  async function getAuctionHighestPrice (estateId){
+    try{
+      let price = await bid.bidModel.findOne({estateId:estateId}).sort("-price").select({price: 1, _id: false})
+      return price || {price:0};
+    }catch(err){
+      console.log(err);
+      return err;
+    }
+  }
+
+  async function auctionEnd (estateId){
+    try{
+      var estateData = await estate.estateModel.findOne({_id:estateId});
+      var nowDate = new Date();
+      var auctionDate = new Date(estateData.auctionData.endDate);
+      let diff = auctionDate.getTime() - nowDate.getTime();
+      let msInDays = 1000 * 3600 * 24;
+      let daysRemain = diff/msInDays
+      return {status:daysRemain <= 0,daysRemain: parseInt(daysRemain), auctionOwner:estateData.sellerId}
+    }catch(err){
+      console.log(err);
+      return err;
+    }
+  }
+
+    exports.auctionOperations = async function(req,res){
+      try {
+        let auctionEndStatus = await auctionEnd(req.params.estateId);
+        if(auctionEndStatus.status){
+          if( auctionEndStatus.auctionOwner == req.user.id){
+              let response = await auctionResult(req.params.estateId)
+                res.send({auctionResult:response});
+          }else {
+              res.send({auctionResult:"Auction ended"});
+          }
+        }else{
+          let response = await getAuctionHighestPrice(req.params.estateId);
+          res.send({auctionHighestPrice:response,daysRemain:auctionEndStatus.daysRemain});
+        }
+      } catch (err) {
+        console.log(err);
+        res.status(400).send(JSON.stringify(err));
+      }
+    }
+
 
 
 /*---------------------------- Sprint 5 ----------------------*/

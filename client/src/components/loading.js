@@ -9,7 +9,7 @@ if(props.mood === "NoData" || props.mood === "error"){
         <IconNoDataWrap>
             <IconNoData src={img} alt={"alt"} />
         </IconNoDataWrap>
-        <Heading>[No Data]</Heading>
+        <Heading>[{props.msg|| "No Data"}]</Heading>
         </NoDataContainer>
     );
   }else {

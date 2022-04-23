@@ -21,9 +21,8 @@ const estateSchema = new Schema ({
           contract: {type: {path:String , name:String} , required:true},
        pic:  {type: [{path:String , name:String}], required:true },
       auctionData: {
-              startDate:{type:Date},
+              endDate:{type:Date},
               duration:{type:Number},
-
     }
 });
 estateSchema.index({ address: "text", desc:"text" });

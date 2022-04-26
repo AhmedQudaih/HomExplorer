@@ -2,6 +2,7 @@ const express = require("express");
 const uploadpPic = require("../Controller/uploadPic");
 const estate = require("../Controller/estateController");
 const auth = require("../Controller/userController").verifyJWT;
+const adminCheck = require("../Controller/userController").serverAdminCheck;
 const router  = express.Router();
 
 router.get("/getEstates/:partition",function(req,res){
@@ -23,6 +24,10 @@ router.post("/addEstate",auth,upFi,function(req,res){
 
 router.put("/updateEstate",auth,upFi,function(req,res){
   estate.updateEstate(req , res);
+})
+
+router.post("/approveEstate",auth,adminCheck,function(req,res){
+  estate.approveEstate(req,res);
 })
 
 router.get("/getCategoryAndType",function(req,res){
@@ -62,14 +67,19 @@ router.get("/getVisitsDates/:filter",auth,function(req,res){
 router.post("/scheduleVisit",auth,function(req,res){
   estate.scheduleAndUpdateVisit(req,res);
 })
-/*----------Sprint 4----------*/
 
+router.post("/approveScheduleVisit",auth,function(req,res){
+  estate.approveScheduleVisit(req,res);
+})
+
+
+/*----------Sprint 4----------*/
 
 router.post("/placaBid",auth,function(req,res){
   estate.placeBid(req,res);
 })
 
-router.post("/approveAuction",auth,function(req,res){
+router.post("/approveAuction",auth,adminCheck,function(req,res){
   estate.approveAuction(req,res);
 })
 
@@ -78,7 +88,7 @@ router.get("/auctionOperations/:estateId",auth,function(req,res){
 })
 
 /*---------Sprint 5-----------*/
-router.get("/estateReport",function(req,res){
+router.get("/estateReport",auth,adminCheck,function(req,res){
  estate.estateReport(req , res);
 })
 

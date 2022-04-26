@@ -30,13 +30,12 @@ function ApproveEstateReq(props) {
 
   const handelDecisionBtn = async (data,status) => {
     const formData = {
-      'visitorId':data.visitorId,
-      'estateId':data.estateId,
+      'visitId':data._id,
       'status':status
     }
     const confirm = await CheckOperation()
     if(confirm.isConfirmed === true){
-     const Status = await serverFunctions.scheduleVisit(formData);
+     const Status = await serverFunctions.approveScheduleVisit(formData);
       if(Status ==='error'){
          StatusAlert("error");
        }else{

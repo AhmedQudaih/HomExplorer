@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  DetailsBtnCard
+  DetailsBtnCard,CenterDetailsBtnCard
 } from './Styles/estateDetailsStyle';
 import {EstateCardDivCard} from './Styles/estateCardStyle';
 import {Button} from '@mui/material';
@@ -54,7 +54,7 @@ return(
         <CloseIcon />
       </Button>
         <EstateDetails data={props.data} />
-    {CheckAuth()?<>
+    {CheckAuth()&&<>
 
         { props.data.type.name === "Auction" && <EstateAuctionSection data={props.data} />}
 
@@ -67,20 +67,17 @@ return(
         </DetailsBtnCard >:
         <>
         <ScheduleVisit userId={props.userId} estateId={props.data} />
-        <DetailsBtnCard>
-          <Button color="primary" onClick={()=>props.handleDetailsAndCompare("compare",props.data)}  variant="outlined" startIcon={<CompareIcon  />}>
-            Compare
-          </Button>
-          <RateEstate updateData={props.updateData} rate={props.data.rate} userId={props.userId} estateId={props.data._id}/>
         <SaveEstate updateData={props.updateData} save={getSave(props.data._id)} userId={props.userId} estate={props.data} />
-      </DetailsBtnCard >
+        <CenterDetailsBtnCard>
+          <RateEstate updateData={props.updateData} rate={props.data.rate} userId={props.userId} estateId={props.data._id}/>
+    </CenterDetailsBtnCard >
       </>
       }
-        </>:
+        </>  }
           <Button color="primary" onClick={()=>props.handleDetailsAndCompare("compare",props.data)}  variant="outlined" startIcon={<CompareIcon  />}>
             Compare
           </Button>
-      }
+
     </EstateCardDivCard >
   );
 }

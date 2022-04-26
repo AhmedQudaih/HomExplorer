@@ -12,8 +12,11 @@ const Provider = (props) =>{
 
   React.useEffect(() => {
     const fetchData = async () => {
+      if(!UserId()){
+          return;
+      }
       const save = await serverFunctions.getSaved();
-      const estateReq = await serverFunctions.approveEstateRequests();
+      const estateReq = await serverFunctions.getEstateRequests();
       const categoryAndType = await serverFunctions.getCategoryAndType();
       const visitReq = await serverFunctions.getVisits(JSON.stringify({"sellerId":UserId()}));
       const myVisitsReq = await serverFunctions.getVisits(JSON.stringify({"visitorId":UserId()}));
@@ -24,7 +27,7 @@ const Provider = (props) =>{
       }
     fetchData();
   }, []);
-  
+
 
 
 return(

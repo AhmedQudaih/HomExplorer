@@ -10,6 +10,7 @@ const user = require("../Model/userModel");
 const fs = require('fs');
 const cloudinary = require('cloudinary').v2;
 const objectId = require('mongodb').ObjectID;
+const emailNotification = require("./notification");
 
 
 function picAddOperation(files, estate) {
@@ -127,6 +128,20 @@ exports.updateEstate = function(req, res) {
   });
 
 }
+
+
+exports.approveEstate = function(req, res) {
+    estate.estateModel.findOneAndUpdate({_id: req.body._id},{status:req.body.status},{new: true}).populate('sellerId','email')
+    .then((data) => {
+        emailNotification.estateNotification(data);
+        res.status(200).send(JSON.stringify("Ok"));
+  }).catch(err =>{
+    console.log(err)
+    res.status(400).send(JSON.stringify(err));
+  });
+
+}
+
 
 exports.getCategoryAndType = async function(req, res) {
   var categoryAndType = {};
@@ -301,7 +316,7 @@ exports.scheduleAndUpdateVisit = function(req, res) {
       setDefaultsOnInsert: true
     })
     .then(result => {
-      console.log("Done");
+        emailNotification.scheduleVisitNotifictaion(result._id);
       res.send(JSON.stringify("ok"));
     })
     .catch(err => {
@@ -309,6 +324,19 @@ exports.scheduleAndUpdateVisit = function(req, res) {
       res.send(JSON.stringify(err));
     })
 }
+
+exports.approveScheduleVisit = function(req, res) {
+  visit.visitModel.findOneAndUpdate({_id:req.body.visitId}, {status:req.body.status})
+    .then(result => {
+      emailNotification.scheduleVisitReplyNotifictaion(result._id);
+      res.send(JSON.stringify("ok"));
+    })
+    .catch(err => {
+      console.log(err);
+      res.send(JSON.stringify(err));
+    })
+}
+
 
 exports.getVisitsDates = function(req,res){
   req = JSON.parse(req.params.filter)
@@ -361,7 +389,7 @@ exports.getVisitsDates = function(req,res){
 
 
 exports.placeBid = async function (req,res){
-  let auctionEndStatus = await auctionEnd();
+  let auctionEndStatus = await auctionEnd(req.body.estateId);
   if(auctionEndStatus.status || auctionEndStatus.auctionOwner === req.user.id){
     let response = await auctionResult(req.body.estateId);
     res.status(400).send(JSON.stringify("Cant place bid to an ended auction"))
@@ -372,6 +400,7 @@ exports.placeBid = async function (req,res){
     if (error) {
       return res.status(400).send(JSON.stringify(error));
     }
+    emailNotification.placeBidNotification(req.body.estateId)
     res.status(200).send(JSON.stringify("Bid submited with amount: "+req.body.price));
   });
 }

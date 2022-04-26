@@ -39,7 +39,7 @@ function ApproveEstateReq(props) {
       if(auction){
          Status = await serverFunctions.updateAuctionStatus(formData);
       }else{
-         Status = await serverFunctions.updateEstate(formData);
+         Status = await serverFunctions.approveEstateRequests(formData);
       }
       if(Status ==='error'){
          StatusAlert("error");

@@ -51,9 +51,18 @@ exports.deleteEstate = function(id) {
       return callServer(url+"updateEstate", requestOptions );
   }
 
+  exports.approveEstateRequests = function(data){
+    const requestOptions = {
+      method:'POST',
+      headers:{'Content-Type': 'application/json',
+      'x-access-token': localStorage.getItem("HomExplorerToken") },
+      body: JSON.stringify(data)
+    };
+    return callServer(url+"approveEstate",requestOptions);
+  }
 
 
-  exports.approveEstateRequests = function(formData) {
+  exports.getEstateRequests = function(formData) {
 
     const requestOptions = {
        method: 'get',
@@ -138,6 +147,17 @@ exports.scheduleVisit = function(data){
   };
   Waiting.Waiting(true);
   return callServer(url+"scheduleVisit",requestOptions);
+}
+
+exports.approveScheduleVisit = function(data){
+  const requestOptions = {
+    method:'POST',
+    headers:{'Content-Type': 'application/json',
+    'x-access-token': localStorage.getItem("HomExplorerToken") },
+    body: JSON.stringify(data)
+  };
+  Waiting.Waiting(true);
+  return callServer(url+"approveScheduleVisit",requestOptions);
 }
 
 

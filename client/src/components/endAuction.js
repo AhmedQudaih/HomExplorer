@@ -3,29 +3,20 @@ import {Table,Button, TableCell, TableContainer, TableHead, TableRow, TableBody,
 import {ExpandMore as ExpandMoreIcon, ExpandLess as ExpandLessIcon} from "@mui/icons-material";
 import {TableExpandDiv} from './Styles/tableStyle';
 import { DetailsBtnCard } from "./Styles/estateDetailsStyle";
-import serverFunctions from '../serverFunctions/estate';
 import {CheckData} from './checkData';
 import Loading from './loading';
 const EndAuction = (props) => {
 
   const [expand, setExpand] = React.useState(false);
-  const [data, setData] = React.useState(false);
+  const data = props.data
 
 
   const expandDetails = (id) => {
     expand === id ? setExpand(false):setExpand(id);
     }
 
-      React.useEffect(() => {
-        const fetchData = async () => {
-          const data = await serverFunctions.endAuction(props.estateId);
-            setData(data);
-        }
-        fetchData();
-      },[props.estateId]);
 
-
-      const validation = CheckData([data === "error" || data === "NoData"?data:data.length]);
+  const validation = CheckData(data);
 
     return(
     <DetailsBtnCard>

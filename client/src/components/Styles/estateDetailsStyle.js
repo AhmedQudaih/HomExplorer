@@ -15,19 +15,34 @@ transition: all 0.2s ease-in-out;
   gap: 2rem;
 }
 `
-
-export const ChartDiv = styled.div`
+export const CenterDetailsBtnCard = styled.div`
 display: flex;
 flex-direction: row;
-width: 100%;
-justify-content: space-between;
+width: 80%;
+justify-content: center;
 margin: 5% auto;
 border-radius: 1rem;
 padding: 3rem;
+box-shadow: 0 0.1rem 0.3rem rgba(0,0,0,0.2);
 transition: all 0.2s ease-in-out;
 @media screen and (max-width: 80rem){
   flex-direction: column;
   gap: 2rem;
+}
+`
+
+export const ChartDiv = styled.div`
+
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+grid-gap: 4rem;
+width: 80%;
+margin: 0 auto;
+border-radius: 1rem;
+padding: 3rem;
+transition: all 0.2s ease-in-out;
+@media screen and (max-width: 80rem){
+  grid-template-columns: 1fr;
 }
 `
 
@@ -42,4 +57,8 @@ transition: all 0.2s ease-in-out;
   grid-template-columns: 1fr 1fr  ;
 }
 
+`
+
+export const SmallNote = styled.small`
+color: #AAAFAC;
 `

@@ -147,7 +147,7 @@ function fileValue(){
 
   return (
     <MyContext.Consumer>{(context)=>{
-            const check = CheckData([context.categoryAndType ==="error"?context.categoryAndType:context.categoryAndType.length]);
+            const check = CheckData(context.categoryAndType);
             if(check){
               return <Loading mood={check}/>
             }

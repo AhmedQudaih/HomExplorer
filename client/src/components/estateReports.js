@@ -5,7 +5,7 @@ import {EstateCardDiv} from './Styles/estateCardStyle';
 import serverFunctions from '../serverFunctions/estate';
 const EstateReports = ()=>{
 
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState("Loading");
 
     React.useEffect(() => {
       const fetchData = async () => {
@@ -18,7 +18,7 @@ const EstateReports = ()=>{
   return(
     <ChartDiv>
       <div>
-        <EstateCardDiv><h2>Types Report</h2></EstateCardDiv>
+        <EstateCardDiv><h2>Types Report </h2></EstateCardDiv>
         <Chart data={data.type} type="pie" />
       </div>
       <div>

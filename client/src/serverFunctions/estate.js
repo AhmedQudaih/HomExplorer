@@ -51,9 +51,18 @@ exports.deleteEstate = function(id) {
       return callServer(url+"updateEstate", requestOptions );
   }
 
+  exports.approveEstateRequests = function(data){
+    const requestOptions = {
+      method:'POST',
+      headers:{'Content-Type': 'application/json',
+      'x-access-token': localStorage.getItem("HomExplorerToken") },
+      body: JSON.stringify(data)
+    };
+    return callServer(url+"approveEstate",requestOptions);
+  }
 
 
-  exports.approveEstateRequests = function(formData) {
+  exports.getEstateRequests = function(formData) {
 
     const requestOptions = {
        method: 'get',
@@ -140,6 +149,17 @@ exports.scheduleVisit = function(data){
   return callServer(url+"scheduleVisit",requestOptions);
 }
 
+exports.approveScheduleVisit = function(data){
+  const requestOptions = {
+    method:'POST',
+    headers:{'Content-Type': 'application/json',
+    'x-access-token': localStorage.getItem("HomExplorerToken") },
+    body: JSON.stringify(data)
+  };
+  Waiting.Waiting(true);
+  return callServer(url+"approveScheduleVisit",requestOptions);
+}
+
 
 /*----------------------Sprint 4----------------------*/
 exports.placeBid = function(data){
@@ -153,22 +173,25 @@ exports.placeBid = function(data){
   return callServer(url+"placaBid",requestOptions);
 }
 
-
-exports.getHighestPrice = function(id){
+exports.auctionOperations = function(data){
   const requestOptions = {
-     method: 'get',
-     headers: { 'Content-Type': 'application/json' },
- };
-  return callServer(url+"highestAuctionPrice/"+id, requestOptions, true );
+    method:'get',
+    headers:{'Content-Type': 'application/json',
+    'x-access-token': localStorage.getItem("HomExplorerToken")},
+  };
+  Waiting.Waiting(true);
+  return callServer(url+"auctionOperations/"+data,requestOptions);
 }
 
-exports.endAuction = function(id){
+exports.updateAuctionStatus = function(formData) {
   const requestOptions = {
-     method: 'get',
-     headers: { 'Content-Type': 'application/json',
-     'x-access-token': localStorage.getItem("HomExplorerToken") },
- };
-  return callServer(url+"auctionResult/"+id, requestOptions, true );
+         method: 'POST',
+         headers:{'Content-Type': 'application/json',
+         'x-access-token': localStorage.getItem("HomExplorerToken")},
+         body: JSON.stringify(formData)
+     };
+     Waiting.Waiting(true);
+    return callServer(url+"approveAuction", requestOptions );
 }
 
 exports.estateReport = function(){

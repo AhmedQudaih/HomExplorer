@@ -1,12 +1,10 @@
 import React from 'react';
 import { SidebarContainer, Icon, CloseIconStyle, SidebarWrapper,
-  SidebarMenu, SidebarLink, SideBtnWrap } from './Styles/sidebarElementsStyle';
+  SidebarMenu, SidebarLink, SideBtnWrap, SidebarRoute } from './Styles/sidebarElementsStyle';
 import CloseIcon from '@mui/icons-material/Close';
 import OptionsBar from './optionsBar.js';
-import LoginForm from './loginForm';
 import {CheckAuth} from './checkData';
-
-const Sidebar = ({isOpen, toggle}) => {
+const Sidebar = ({isOpen, toggle, setAuth}) => {
   return (
     <SidebarContainer isOpen={isOpen}>
       <Icon onClick={()=>{toggle(false)}}>
@@ -21,10 +19,10 @@ const Sidebar = ({isOpen, toggle}) => {
         </SidebarMenu>
           {CheckAuth()?
         <SideBtnWrap  onClick={()=>{toggle(false)}}>
-          <OptionsBar Mobile={true}/>
+          <OptionsBar Mobile={true} setAuth={setAuth}/>
         </SideBtnWrap>:
         <SideBtnWrap>
-          <LoginForm toggle={toggle} />
+            <SidebarRoute onClick={()=>{toggle(false)}} state={"signIn"} to="/authPage">Sign In</SidebarRoute>
         </SideBtnWrap>}
       </SidebarWrapper>
     </SidebarContainer>

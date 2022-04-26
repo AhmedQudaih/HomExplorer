@@ -5,24 +5,12 @@ import {StatusAlert,ValidationMsg, CheckOperation} from './appAlerts';
 import {PlaceBidVal} from './checkData';
 import { EstateCardH2} from './Styles/estateCardStyle';
 import {ScheduleCard, ScheduleCardHeader} from './Styles/scheduleVisitStyle';
-
+import {SmallNote} from './Styles/estateDetailsStyle';
 const PlaceBid = (props) => {
 
   const [value, setValue] = React.useState("");
-  const [currentBid, setCurrentBid] = React.useState(0);
+  const [currentBid, setCurrentBid] = React.useState(props.data.auctionHighestPrice.price);
   var total = currentBid + value;
-
-    React.useEffect(() => {
-      const fetchData = async () => {
-        const currBid = await serverFunctions.getHighestPrice(props.estateId);
-        setCurrentBid(parseInt(currBid.price))
-
-
-      }
-      fetchData();
-    }, [props.estateId]);
-
-
 
   const validation={};
   PlaceBidVal(validation, value);
@@ -42,7 +30,7 @@ const PlaceBid = (props) => {
         if(status==="error"){
           StatusAlert("error");
         }else{
-          StatusAlert("Bid submited with amount: "+total);
+          StatusAlert(status);
           setCurrentBid(total);
           setValue("");
         }
@@ -51,7 +39,6 @@ const PlaceBid = (props) => {
   return(
     <ScheduleCard>
     <ScheduleCardHeader>PlaceBid:</ScheduleCardHeader>
-
         <EstateCardH2>
             Current Highest Bid : {currentBid}
         </EstateCardH2>
@@ -70,6 +57,7 @@ const PlaceBid = (props) => {
         <Button color="error" onClick={handlPlaceBidSubmite} variant="outlined" >
             Bid Now !
         </Button>
+        <SmallNote>( {props.data.daysRemain} days Remain )</SmallNote>
     </ScheduleCard>
   );
 }

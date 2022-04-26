@@ -6,7 +6,7 @@ import {CheckData} from './checkData';
 import Loading from './loading';
 import {ServicesProductContainer, ServicesProductH1} from './Styles/servicesElementsStyle';
 function UsersReport() {
-  const [users,setUsers]= React.useState([]);
+  const [users,setUsers]= React.useState("Loading");
   const [page, setPage] = React.useState(0);
    const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -46,7 +46,7 @@ function UsersReport() {
     fetchData();
   },[])
 
-    const validation = CheckData([users === "error" || users === "NoData"?users:users.length]);
+    const validation = CheckData(users);
 
   return (
     <ServicesProductContainer id="UsersReport">

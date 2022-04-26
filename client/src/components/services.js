@@ -16,7 +16,7 @@ import {UserId} from './checkData';
 import FilterBox from './filterBox'
 function Services(props) {
   const [page, setPage] = React.useState(1);
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState("Loading");
   const [detailsAndCompare, setDetailsAndCompare] = React.useState({details: false, compare: false});
   const [partition, setPartition] = React.useState(0);
   const totalPages = Math.ceil(data.length / 12);
@@ -31,7 +31,7 @@ function Services(props) {
           return setData(data);
         }
         setData((pre) => {
-          if(pre === "NoData"){
+          if(pre === "NoData" || pre === "Loading"){
             pre = []
           }
           return [
@@ -90,12 +90,10 @@ function Services(props) {
           let update = data.filter(i => i._id !== modif);
           return setData(update);
         }
-        if (operation === "rate") {
-          let update = context.rateList.filter(i => i.estateId !== modif.estateId);
-          update.push({estateId: modif.estateId, rate: modif.rate})
-          return context.setRateList(update);
-        }
+
         if (operation === "save") {
+
+
           let index = context.saveList.findIndex(i => i.estateId._id === modif._id);
           if (index === -1) {
             context.setSaveList((pre) => {
@@ -110,9 +108,11 @@ function Services(props) {
             update.splice(index, 1);
             context.setSaveList(update);
           }
+
+
         }
       }
-    const validation = CheckData([data==="error" || data === "NoData" ?data:data.length, context.saveList, context.rateList]);
+    const validation = CheckData(data);
 
   return (<ServicesProductContainer style={props.dark === true
       ? ServicesBackground
@@ -163,8 +163,8 @@ function Services(props) {
           </Box>
     }
     <ServicesProductWrapper id={"details"+props.ID}>
-      {detailsAndCompare.compare &&<> {CompareMood(true)} <EstateDetailsSections key={detailsAndCompare.compare._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.compare}/></>}
-      {detailsAndCompare.details && <EstateDetailsSections key={detailsAndCompare.details._id} userId={UserId()} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} rateList={context.rateList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.details}/>}
+      {detailsAndCompare.compare &&<> {CompareMood(true)} <EstateDetailsSections key={detailsAndCompare.compare._id} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.compare}/></>}
+      {detailsAndCompare.details && <EstateDetailsSections key={detailsAndCompare.details._id} userId={UserId()} compareMode={detailsAndCompare.compare._id} saveList={context.saveList} updateData={updateData} handleDetailsAndCompare={handleDetailsAndCompare} data={detailsAndCompare.details}/>}
     </ServicesProductWrapper >
     </>}
   </ServicesProductContainer>)    }}</MyContext.Consumer>

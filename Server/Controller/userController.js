@@ -2,8 +2,10 @@ const express = require("express");
 const user = require("../Model/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
 
 exports.addUser = async function(req, res) {
+  req.body.email = req.body.email.toLowerCase();
   const checkEmail = await user.userModel.findOne({email:req.body.email});
   if(checkEmail){
     return res.send(JSON.stringify("exists"));
@@ -19,8 +21,8 @@ exports.addUser = async function(req, res) {
   });
 }
 
-const privateKey='3c33af1c644bc8c2e289504c1c056f80b1d23851926de9c19270222e5e11161580f3aef0f4af85226067cd1b9cbe3db89ebf044b99f53aa9807c8885e7e70873';
 exports.login = function(req,res){
+  req.body.email = req.body.email.toLowerCase();
   user.userModel.findOne({email:req.body.email}).then(user => {
     if(!user){
       return res.json({
@@ -34,7 +36,7 @@ exports.login = function(req,res){
           userName: user.name
         }
         jwt.sign(payload,
-          privateKey,
+          process.env.jwtPrivateKey,
           (err,token)=>{
             if(err) return res.json({message:err})
             return res.json({
@@ -57,7 +59,7 @@ exports.login = function(req,res){
 exports.verifyJWT= function (req,res,next) {
   const token = req.headers["x-access-token"]?.split(' ')[1];
   if(token){
-    jwt.verify(token,privateKey,(err,decoded)=>{
+    jwt.verify(token,process.env.jwtPrivateKey,(err,decoded)=>{
       if(err) return res.json({
         isLoggedIn: false,
         message:"Failed To Authenticate"
@@ -74,6 +76,19 @@ exports.verifyJWT= function (req,res,next) {
     })
   }
 }
+
+
+exports.serverAdminCheck = async function(req,res,next){
+  var adminCheck = await user.userModel.findOne({_id:req.user.id,admin: true});
+  if(adminCheck){
+    next();
+  }else{
+    res.status(400).send(JSON.stringify("admin privilege needed"));
+
+  }
+  }
+
+
 
 exports.checkAdmin = function(req,res){
   user.userModel.findOne({_id:req.user.id,admin: true}).then(user => {
@@ -92,9 +107,8 @@ exports.checkAdmin = function(req,res){
   }
 
   exports.ChangeRole= function(req,res)
-  { console.log(req.body.roleValue)
+  {
       user.userModel.findOneAndUpdate({userId:req.body.userId},{admin:req.body.roleValue}).then(result => {
-        console.log("Done");
         res.send(JSON.stringify("ok"));
       })
       .catch(err => {

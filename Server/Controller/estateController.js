@@ -9,6 +9,8 @@ const bid = require("../Model/bidEstateModel");
 const user = require("../Model/userModel");
 const fs = require('fs');
 const cloudinary = require('cloudinary').v2;
+const objectId = require('mongodb').ObjectID;
+const emailNotification = require("./notification");
 
 
 function picAddOperation(files, estate) {
@@ -127,6 +129,20 @@ exports.updateEstate = function(req, res) {
 
 }
 
+
+exports.approveEstate = function(req, res) {
+    estate.estateModel.findOneAndUpdate({_id: req.body._id},{status:req.body.status},{new: true}).populate('sellerId','email')
+    .then((data) => {
+        emailNotification.estateNotification(data);
+        res.status(200).send(JSON.stringify("Ok"));
+  }).catch(err =>{
+    console.log(err)
+    res.status(400).send(JSON.stringify(err));
+  });
+
+}
+
+
 exports.getCategoryAndType = async function(req, res) {
   var categoryAndType = {};
   try{
@@ -153,7 +169,30 @@ exports.getApproveEstateRequests = function(req, res) {
 
 /*----------------------------Sprint 2----------------------------*/
 
-exports.addAndUpdateRate = function(req, res) {
+async function estateOverAllRate(estateId){
+
+  var scoreTotal =0,
+   responseTotal  =0,
+   overallRating = 0;
+  try{
+    let rates = await rate.rateModel.aggregate().match({ estateId: objectId(estateId) }).group({ _id: '$rate', count: { $sum: 1 } });
+
+    rates.forEach(element =>{
+      scoreTotal +=  element.count * element._id;
+      responseTotal += element.count;
+    });
+    overallRating = scoreTotal/ responseTotal;
+
+    let modifiedEstate = await estate.estateModel.findOneAndUpdate({_id:estateId}, {rate:overallRating.toFixed(2)});
+
+    return {rate: modifiedEstate.rate};
+  }catch(error){
+    console.log(error);
+    return error
+  }
+}
+
+exports.addAndUpdateRate = async function(req, res) {
   const filter = {
     userId: req.user.id,
     estateId: req.body.estateId
@@ -161,19 +200,15 @@ exports.addAndUpdateRate = function(req, res) {
   const update = {
     rate: req.body.rate
   };
-  rate.rateModel.findOneAndUpdate(filter, update, {
-      upsert: true,
-      new: true,
-      setDefaultsOnInsert: true
-    })
-    .then(result => {
-      console.log("Done");
+  try{
+      await rate.rateModel.findOneAndUpdate(filter, update, {
+            upsert: true, new: true, setDefaultsOnInsert: true});
+      await estateOverAllRate(req.body.estateId);
       res.send(JSON.stringify("ok"));
-    })
-    .catch(err => {
-      console.log(err);
-      res.send(JSON.stringify(err));
-    })
+  }catch(error){
+    console.log(error);
+      res.send(JSON.stringify(error));
+  }
 }
 
 exports.getRates = function(req, res) {
@@ -202,7 +237,6 @@ exports.saveAndUnsave = function (req, res) {
       const x = new save.savedModel(filter);
       x.save()
         .then(result => {
-          console.log("saved");
           res.send(JSON.stringify("ok"));
         })
         .catch(err => {
@@ -212,7 +246,6 @@ exports.saveAndUnsave = function (req, res) {
     } else {
       save.savedModel.findOneAndDelete(filter)
         .then(result => {
-          console.log("Deleted");
           res.send(JSON.stringify("ok"));
         })
         .catch(err => {
@@ -283,7 +316,7 @@ exports.scheduleAndUpdateVisit = function(req, res) {
       setDefaultsOnInsert: true
     })
     .then(result => {
-      console.log("Done");
+        emailNotification.scheduleVisitNotifictaion(result._id);
       res.send(JSON.stringify("ok"));
     })
     .catch(err => {
@@ -291,6 +324,19 @@ exports.scheduleAndUpdateVisit = function(req, res) {
       res.send(JSON.stringify(err));
     })
 }
+
+exports.approveScheduleVisit = function(req, res) {
+  visit.visitModel.findOneAndUpdate({_id:req.body.visitId}, {status:req.body.status})
+    .then(result => {
+      emailNotification.scheduleVisitReplyNotifictaion(result._id);
+      res.send(JSON.stringify("ok"));
+    })
+    .catch(err => {
+      console.log(err);
+      res.send(JSON.stringify(err));
+    })
+}
+
 
 exports.getVisitsDates = function(req,res){
   req = JSON.parse(req.params.filter)
@@ -323,38 +369,96 @@ exports.getVisitsDates = function(req,res){
 /*---------------------------- Sprint 4 ----------------------*/
 
 
-
-exports.getAuctionHighestPrice = function(req,res){
-    bid.bidModel.findOne({estateId:req.params.estateId}).sort("-price").select({price: 1, _id: false}).then(result => {
-       res.send(result || {price:0});
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(400).send(JSON.stringify(err));
-    })
-
-}
-
-
-exports.placeBid = function (req,res){
-    const newBid = new bid.bidModel(req.body);
-    newBid.userId=req.user.id;
-    newBid.save(function(error) {
-      if (error) {
-        return res.status(400).send(JSON.stringify(error));
-      }
-      res.status(200).send(JSON.stringify("Ok"));
-    });
-}
-
-exports.auctionResult= function (req,res){
-    bid.bidModel.find({estateId:req.params.estateId}).sort('-price').limit(3).populate('userId').then(result =>{
-      res.send(result);
+  exports.approveAuction = async function(req, res) {
+    let estateData = await estate.estateModel.findById({_id: req.body._id})
+    var auctionEndDate = new Date();
+    auctionEndDate.setDate(auctionEndDate.getDate() + (estateData.auctionData.duration * 7));
+    console.log(auctionEndDate)
+    const update = {
+      "auctionData.endDate": auctionEndDate,
+      status: req.body.status
+    };
+    estate.estateModel.updateOne({ _id: req.body._id}, update).then((data)=>{
+        res.status(200).send(JSON.stringify("Ok"));
     }).catch(err=> {
       console.log(err);
-       res.status(400).send(JSON.stringify(error));
+       res.status(400).send(JSON.stringify(err));
       })
+    }
+
+
+
+exports.placeBid = async function (req,res){
+  let auctionEndStatus = await auctionEnd(req.body.estateId);
+  if(auctionEndStatus.status || auctionEndStatus.auctionOwner === req.user.id){
+    let response = await auctionResult(req.body.estateId);
+    res.status(400).send(JSON.stringify("Cant place bid to an ended auction"))
   }
+  const newBid = new bid.bidModel(req.body);
+  newBid.userId=req.user.id;
+  newBid.save(function(error) {
+    if (error) {
+      return res.status(400).send(JSON.stringify(error));
+    }
+    emailNotification.placeBidNotification(req.body.estateId)
+    res.status(200).send(JSON.stringify("Bid submited with amount: "+req.body.price));
+  });
+}
+
+async function auctionResult (estateId){
+  try {
+    let result = await bid.bidModel.find({estateId:estateId}).sort('-price').limit(3).populate('userId');
+    return result;
+  } catch (err) {
+    return err;
+  }
+}
+
+  async function getAuctionHighestPrice (estateId){
+    try{
+      let price = await bid.bidModel.findOne({estateId:estateId}).sort("-price").select({price: 1, _id: false})
+      return price || {price:0};
+    }catch(err){
+      console.log(err);
+      return err;
+    }
+  }
+
+  async function auctionEnd (estateId){
+    try{
+      var estateData = await estate.estateModel.findOne({_id:estateId});
+      var nowDate = new Date();
+      var auctionDate = new Date(estateData.auctionData.endDate);
+      let diff = auctionDate.getTime() - nowDate.getTime();
+      let msInDays = 1000 * 3600 * 24;
+      let daysRemain = diff/msInDays
+      return {status:daysRemain <= 0,daysRemain: parseInt(daysRemain), auctionOwner:estateData.sellerId}
+    }catch(err){
+      console.log(err);
+      return err;
+    }
+  }
+
+    exports.auctionOperations = async function(req,res){
+      try {
+        let auctionEndStatus = await auctionEnd(req.params.estateId);
+        if(auctionEndStatus.status){
+          if( auctionEndStatus.auctionOwner == req.user.id){
+              let response = await auctionResult(req.params.estateId)
+                res.send({auctionResult:response});
+          }else {
+              res.send({auctionResult:"Auction ended"});
+          }
+        }else{
+          let response = await getAuctionHighestPrice(req.params.estateId);
+          res.send({auctionHighestPrice:response,daysRemain:auctionEndStatus.daysRemain});
+        }
+      } catch (err) {
+        console.log(err);
+        res.status(400).send(JSON.stringify(err));
+      }
+    }
+
 
 
 /*---------------------------- Sprint 5 ----------------------*/

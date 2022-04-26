@@ -6,6 +6,7 @@ const multer = require('multer');
 const db = require(path.join(__dirname +'/db'));
 const cors = require("cors");
 const cloudinary = require('cloudinary').v2;
+require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 4000;
 app.use(cors());
@@ -16,9 +17,9 @@ app.use("/" , require(path.join(__dirname +"/Routes/estateRoutes")));
 app.use("/user" , require(path.join(__dirname +"/Routes/userRoutes")));
 
 cloudinary.config({
-  cloud_name: 'hfppkqtdq',
-  api_key: '724671626624426',
-  api_secret: 'OyULCe6_K81mSi1vwuKP16kz9HI'
+  cloud_name: process.env.cloudinaryCloudName,
+  api_key: process.env.cloudinaryApiKey,
+  api_secret: process.env.cloudinaryApiSecret
 });
 
 

@@ -9,7 +9,8 @@ import {
   Legend,
   PieChart,
   Pie,
-  Sector
+  Sector,
+  ResponsiveContainer
 } from "recharts";
 
 const Chart= (props) => {
@@ -25,21 +26,17 @@ const Chart= (props) => {
 
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
-  const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
-  const sin = Math.sin(-RADIAN * midAngle);
-  const cos = Math.cos(-RADIAN * midAngle);
-  const sx = cx + (outerRadius + 10) * cos;
-  const sy = cy + (outerRadius + 10) * sin;
-  const mx = cx + (outerRadius + 30) * cos;
-  const my = cy + (outerRadius + 30) * sin;
-  const ex = mx + (cos >= 0 ? 1 : -1) * 22;
-  const ey = my;
-  const textAnchor = cos >= 0 ? 'start' : 'end';
-
+   const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent } = props;
+   const sin = Math.sin(-RADIAN * midAngle);
+   const cos = Math.cos(-RADIAN * midAngle);
+   const sx = cx + (outerRadius + 10) * cos;
+   const sy = cy + (outerRadius + 10) * sin;
+   const mx = cx + (outerRadius + 30) * cos;
+   const my = cy + (outerRadius + 30) * sin;
   return (
     <g>
       <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-        {payload.name}
+        {payload.name +" ("+ (percent * 100).toFixed(2)+"%)"}
       </text>
       <Sector
         cx={cx}
@@ -59,27 +56,21 @@ const renderActiveShape = (props) => {
         outerRadius={outerRadius + 10}
         fill={fill}
       />
-      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#">{`NO ${value}`}</text>
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
-        {`( ${(percent * 100).toFixed(2)}%)`}
-      </text>
+      <path d={`M${sx},${sy}L${mx},${my}`} stroke={fill} fill="none" />
+       <circle cx={mx} cy={my} r={2} fill={fill} stroke="none" />
     </g>
   );
 };
 
 if(props.type === "bar"){
   return(
+    <ResponsiveContainer width='100%' height={300}>
         <BarChart
           width={500}
           height={300}
           data={props.data}
           margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5
+            top: 50
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
@@ -90,27 +81,28 @@ if(props.type === "bar"){
           <Bar dataKey="Villa" barSize={40} fill="#039B5E" />
           <Bar dataKey="Apartment" barSize={40} fill="#01bf71" />
         </BarChart>
+        </ResponsiveContainer>
+
   );
 }
 
 if(props.type === "pie"){
-
 return(
-        <PieChart width={400} height={400}>
+  <ResponsiveContainer height={400}>
+        <PieChart>
           <Pie
           activeIndex={activeIndex}
           activeShape={renderActiveShape}
           data={props.data}
-          cx={200}
-          cy={200}
-          innerRadius={60}
-          outerRadius={80}
+         innerRadius={60}
+         outerRadius={80}
           fill="#04AF6B"
           dataKey="value"
           onMouseEnter={onPieEnter}
         />
-    </PieChart>);
-
+    </PieChart>
+      </ResponsiveContainer>
+  );
 }
 
 };

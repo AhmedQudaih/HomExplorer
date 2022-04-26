@@ -9,14 +9,15 @@ import {
   NavMenu,
   NavItem,
   NavLinks,
-  NavBtn
+  NavBtn,
+  NavBtnLink
 } from './Styles/navbarElementsStyle';
 import OptionsBar from './optionsBar.js';
 import { useLocation } from "react-router-dom";
-import LoginForm from './loginForm';
 import {CheckAuth} from './checkData';
 
-const Navbar = ({toggle}) => {
+
+const Navbar = ({toggle,setAuth}) => {
   const [scrollNav, setScrollNav] = useState(false)
 
   const changeNav = () => {
@@ -63,10 +64,10 @@ const Navbar = ({toggle}) => {
       </NavMenu>
       {CheckAuth()?
       <NavBtn>
-        <OptionsBar />
+        <OptionsBar setAuth={setAuth} />
       </NavBtn>:
       <NavBtn>
-        <LoginForm />
+          <NavBtnLink to="/authPage" state={"signIn"} >Sign In</NavBtnLink>
       </NavBtn>}
     </NavbarContainer>
   </Nav>)

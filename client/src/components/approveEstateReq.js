@@ -31,16 +31,16 @@ function ApproveEstateReq(props) {
 
 
   const handelDecisionBtn = async (id,status, auction = false) => {
-    const formData = new FormData();
-      formData.append('_id', id);
-      formData.append('status', status);
-      if(auction){
-        formData.append('auctionData.startDate', new Date());
-      }
 
+    var formData = {"_id": id,"status":status };
     const confirm = await CheckOperation()
     if(confirm.isConfirmed === true){
-     const Status = await serverFunctions.updateEstate(formData);
+      var Status;
+      if(auction){
+         Status = await serverFunctions.updateAuctionStatus(formData);
+      }else{
+         Status = await serverFunctions.approveEstateRequests(formData);
+      }
       if(Status ==='error'){
          StatusAlert("error");
        }else{
@@ -79,18 +79,13 @@ const expandDetails = (id) => {
 
    };
 
-
-
-  const validation = CheckData([data === "error" || data === "NoData"?data:data.length]);
+  const validation = CheckData(data);
 
   return (<ServicesProductContainer id="EstatesRequests">
       <ServicesProductH1>Estates Requests</ServicesProductH1>
 
         <FilterBox value={statusFilter} onChange={handleStatusFilterChange}
           options={[{value:"object",title: "Auction Requests"},{value:"undefined",title: "Estates Requests"}]} />
-
-
-
 
     {validation? <Loading mood={validation}/>:
     <TableContainer component={Paper}>

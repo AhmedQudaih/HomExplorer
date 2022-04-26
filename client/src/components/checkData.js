@@ -90,8 +90,8 @@ export const FormValid = (validation, msg) => {
 /*------------------------------ User Validation ------------------------------*/
   export const UserFormVali = (validation,user) => {
     validation.Name = user.name!==undefined && user.name.length > 0 ?"success":"error";
-    //eslint-disable-next-line
-    validation.Password = user.password!==undefined && user.password.match("^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*?[#?!@$%^&*-])(?=.*[a-zA-Z]).{8,}$")? "success":"error";
+
+    validation.Password = user.password!==undefined && user.password.match("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}")? "success":"error";
     //eslint-disable-next-line
     validation.Email= user.email!==undefined && user.email.match(/.+\@.+\..+/) ? "success":"error";
     validation.PhoneNumber = user.phoneNumber!==undefined && user.phoneNumber.length > 0 && user.phoneNumber.length < 20   ? "success":"error";

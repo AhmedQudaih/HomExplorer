@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 require('dotenv').config();
 
 exports.addUser = async function(req, res) {
+  req.body.email = req.body.email.toLowerCase();
   const checkEmail = await user.userModel.findOne({email:req.body.email});
   if(checkEmail){
     return res.send(JSON.stringify("exists"));
@@ -21,6 +22,7 @@ exports.addUser = async function(req, res) {
 }
 
 exports.login = function(req,res){
+  req.body.email = req.body.email.toLowerCase();
   user.userModel.findOne({email:req.body.email}).then(user => {
     if(!user){
       return res.json({

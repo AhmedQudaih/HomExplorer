@@ -6,8 +6,9 @@ import {Button} from '@mui/material';
 import {Save as SaveIcon} from "@mui/icons-material";
 import serverFunctions from '../serverFunctions/user';
 import {StatusAlert, ValidationMsg} from './appAlerts';
+import { useNavigate} from "react-router-dom";
 const RegistrationForm = ()=> {
-
+  const navigate = useNavigate();
   const [user, setUser] = React.useState({});
 
   let validation ={};
@@ -41,6 +42,7 @@ const RegistrationForm = ()=> {
        }else if(Status ==='exists'){
           StatusAlert("AuthError");
         }else{
+          navigate('/');
          StatusAlert("Added");
        }
   }

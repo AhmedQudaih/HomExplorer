@@ -2,7 +2,7 @@ import styled from "styled-components";
 import 'animate.css';
 export const UserMainForm = styled.form`
 display: grid;
-grid-template-columns: 0.002fr 1fr 1fr;
+grid-template-columns:  1fr 1fr;
 align-items: center;
 grid-gap: 1.6rem;
 padding: 2% 0%;
@@ -20,13 +20,10 @@ animation-duration: 0.5s;
 `
 
 export const UserFormTitleBtn = styled.h1`
- grid-column: 2/ -1;
+ grid-column: 1/ -1;
  text-align: center;
  margin: 2% 0%;
- @media screen and (max-width: 76.8rem){
-     grid-column: 1;
 
- }
 
 `
 export const UserFormBackBtn = styled.div`
@@ -40,11 +37,8 @@ export const UserFormBackBtn = styled.div`
 
 `
 export const UserFormSubmitBtn = styled.div`
- grid-column: 2 / -1;
+ grid-column: 1 / -1;
  text-align: center;
- @media screen and (max-width: 76.8rem){
-     grid-column: 1;
 
- }
 
 `

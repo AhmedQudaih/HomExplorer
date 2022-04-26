@@ -20,6 +20,7 @@ function OptionsBar(props){
     const logOut =()=>{
       toggleDrawer(false);
       serverFunctions.logOut();
+      props.setAuth(false);
       navigate('/');
       StatusAlert('logged out');
     }

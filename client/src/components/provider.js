@@ -26,7 +26,7 @@ const Provider = (props) =>{
       setVisitRequests({"approve": visitReq.approve, "reject": visitReq.reject, "pending": visitReq.pending ,"myVisit": myVisitsReq});
       }
     fetchData();
-  }, []);
+  }, [props.auth]);
 
 
 

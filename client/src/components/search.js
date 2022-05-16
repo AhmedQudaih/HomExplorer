@@ -59,7 +59,6 @@ return(
   <MyContext.Consumer>{
       (context) => {
         const validation = CheckData(context.categoryAndType);
-
     return (
         <SearchMainContainer>
             <MainBg>

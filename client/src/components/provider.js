@@ -12,15 +12,15 @@ const Provider = (props) =>{
 
   React.useEffect(() => {
     const fetchData = async () => {
+      const categoryAndType = await serverFunctions.getCategoryAndType();
+      setCategoryAndType(categoryAndType);
       if(!UserId()){
           return;
       }
       const save = await serverFunctions.getSaved();
       const estateReq = await serverFunctions.getEstateRequests();
-      const categoryAndType = await serverFunctions.getCategoryAndType();
       const visitReq = await serverFunctions.getVisits(JSON.stringify({"sellerId":UserId()}));
       const myVisitsReq = await serverFunctions.getVisits(JSON.stringify({"visitorId":UserId()}));
-      setCategoryAndType(categoryAndType);
       setEstateRequests(estateReq);
       setSaveList(save);
       setVisitRequests({"approve": visitReq.approve, "reject": visitReq.reject, "pending": visitReq.pending ,"myVisit": myVisitsReq});

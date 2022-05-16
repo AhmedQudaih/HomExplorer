@@ -276,7 +276,9 @@ exports.getSavedEstates = function(req, res) {
 
 
 exports.search = function(req, res) {
+
   let filter = req.body;
+  filter.status = "approve";
 
   if(req.body.text){
       filter.$text = {

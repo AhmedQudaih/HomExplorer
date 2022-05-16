@@ -14,7 +14,7 @@ function Products(props) {
     const fetchData = async () => {
 
       delete location.state;
-     let res = await serverFunctions.searchData({type:"61a81506d4c8835ca4a2060d"});
+     let res = await serverFunctions.searchData({type:"625cc20fc17223a46e1a97ed"});
       setData(res);
     }
       if(location.state === "Auction"){

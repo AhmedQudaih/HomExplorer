@@ -22,8 +22,8 @@ function App() {
   return (<Provider auth={auth}>
     <div id="loading"></div>
     <Router basename="/">
-      <Sidebar isOpen={isOpen} setAuth={setAuth} toggle={toggle}/>
-      <Navbar toggle={toggle} setAuth={setAuth} />
+      <Sidebar isOpen={isOpen} auth={auth} setAuth={setAuth} toggle={toggle}/>
+      <Navbar toggle={toggle} auth={auth} setAuth={setAuth} />
       <Routes >
         <Route exact path="" element={<Home />}/>
         <Route exact path="products" element={<Products />}/>

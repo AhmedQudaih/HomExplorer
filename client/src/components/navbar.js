@@ -14,10 +14,10 @@ import {
 } from './Styles/navbarElementsStyle';
 import OptionsBar from './optionsBar.js';
 import { useLocation } from "react-router-dom";
-import {CheckAuth} from './checkData';
 
 
-const Navbar = ({toggle,setAuth}) => {
+
+const Navbar = ({toggle,setAuth, auth}) => {
   const [scrollNav, setScrollNav] = useState(false)
 
   const changeNav = () => {
@@ -58,11 +58,11 @@ const Navbar = ({toggle,setAuth}) => {
         <NavItem>
           <NavLinks to="/#services" smooth={true} duration={500} exact='true' offset={-80}>Services</NavLinks>
         </NavItem>
-        <NavItem>
+        {!auth && <NavItem>
           <NavLinks to="/#signup" smooth={true} duration={500}  exact='true' offset={-80}>Sign Up</NavLinks>
-        </NavItem>
+        </NavItem>}
       </NavMenu>
-      {CheckAuth()?
+      {auth?
       <NavBtn>
         <OptionsBar setAuth={setAuth} />
       </NavBtn>:

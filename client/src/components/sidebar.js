@@ -3,8 +3,7 @@ import { SidebarContainer, Icon, CloseIconStyle, SidebarWrapper,
   SidebarMenu, SidebarLink, SideBtnWrap, SidebarRoute } from './Styles/sidebarElementsStyle';
 import CloseIcon from '@mui/icons-material/Close';
 import OptionsBar from './optionsBar.js';
-import {CheckAuth} from './checkData';
-const Sidebar = ({isOpen, toggle, setAuth}) => {
+const Sidebar = ({isOpen, toggle, setAuth, auth}) => {
   return (
     <SidebarContainer isOpen={isOpen}>
       <Icon onClick={()=>{toggle(false)}}>
@@ -15,9 +14,9 @@ const Sidebar = ({isOpen, toggle, setAuth}) => {
           <SidebarLink to="/#recommendations" onClick={()=>{toggle(false)}}>Recommendations</SidebarLink>
           <SidebarLink to="/#auction" onClick={()=>{toggle(false)}}>Auction</SidebarLink>
           <SidebarLink to="/#services" onClick={()=>{toggle(false)}}>Services</SidebarLink>
-          <SidebarLink to="/#signup" onClick={()=>{toggle(false)}}>Sign Up</SidebarLink>
+          {!auth && <SidebarLink to="/#signup" onClick={()=>{toggle(false)}}>Sign Up</SidebarLink>}
         </SidebarMenu>
-          {CheckAuth()?
+          {auth?
         <SideBtnWrap  onClick={()=>{toggle(false)}}>
           <OptionsBar Mobile={true} setAuth={setAuth}/>
         </SideBtnWrap>:

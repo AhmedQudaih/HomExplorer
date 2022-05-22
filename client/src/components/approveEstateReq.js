@@ -140,7 +140,7 @@ const expandDetails = (id) => {
                     <TableBody>
                     <TableRow>
                           <TableCell colSpan="4" align="center">
-                      Auction Duration : {e.auctionData.duration} Days
+                      Auction Duration : {e.auctionData.duration} Weeks
                        </TableCell>
                   </TableRow >
                     </TableBody>

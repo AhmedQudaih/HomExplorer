@@ -37,8 +37,8 @@ export const EstateFormVali = (validation,estate) => {
   validation.Number_Of_BathRooms= estate.numOfBathRooms!==undefined && estate.numOfBathRooms > 0 && estate.numOfBathRooms < 30  ? "success":"error";
   validation.floor = estate.floor!==undefined && estate.floor >= 0 && estate.floor < 164  ? "success":"error";
   validation.Size= estate.size!==undefined && estate.size > 20 && estate.size < 10000?"success":"error";
-  validation.Description= estate.desc!==undefined && estate.desc.length > 30 ?"success":"error" ;
-  validation.Address= estate.address!==undefined && estate.address.length > 4 ?"success":"error";
+  validation.Description= estate.desc!==undefined && estate.desc.length > 30 && estate.desc.match("[a-zA-Z0-9,#.-]+") ?"success":"error" ;
+  validation.Address= estate.address!==undefined && estate.address.length > 4 && estate.address.match("[a-zA-Z0-9,#.-]+") ?"success":"error";
   validation.Type= estate.type!==undefined && estate.type.length > 0 ?"success":"error";
   validation.Category= estate.category!==undefined && estate.category.length > 0 ?"success":"error";
   validation.Contract= estate.contract!==undefined && estate.contract !== null ?"success":"error";
@@ -58,7 +58,7 @@ export const EstateFormValiMsg = (msg) => {
   msg.Category="Choose estate Category";
   msg.Contract="Upload your estate contract";
   msg.Images="Upload your estate images";
-  msg.duration="Estate duration should be between 2 and 15 days";
+  msg.duration="Estate duration should be between 2 and 15 weeks";
 }
 
 export const ScheduleInputeVal = (validation, value) => {

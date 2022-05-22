@@ -19,13 +19,16 @@ import {DropDownLists, FormInputs} from './formInputs';
 
 function EstateForm(props) {
 
-
+  const [estate, setEstate] = React.useState(props.data);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const [estate, setEstate] = React.useState(props.data);
+  const handleClose = () => {
+    setOpen(false);
+    props.data.pic=[];
+    setEstate(props.data);
+  };
   const [deletedPicNames, setDeletedPicNames] = React.useState([]);
-
+console.log(props.data)
 
 
 
@@ -97,11 +100,12 @@ function EstateForm(props) {
         const formData = new FormData(event.target);
          estate.addressOnMap.forEach(element =>{formData.append('addressOnMap',element);});
           if(props.type === 'Add'){
-              return addSubmit(formData)
-          }
-              formData.append('_id',estate._id);
-              formData.append('deletedPicNames',deletedPicNames);
-              return updateSubmit(formData);
+             addSubmit(formData)
+          }else{
+                formData.append('_id',estate._id);
+                formData.append('deletedPicNames',deletedPicNames);
+                updateSubmit(formData);
+              }
     }
 
 

@@ -14,46 +14,51 @@ exports.addUser = async function(req, res) {
   var newUser = new user.userModel(req.body);
   newUser.save(function(error, user) {
     if (error){
-        console.log(error)
            return res.status(400).send(JSON.stringify(error));
     }
-    res.status(200).send(JSON.stringify("Ok"));
-  });
+      createToken(user,res)
+    });
 }
 
-exports.login = function(req,res){
+exports.login = async function(req,res){
   req.body.email = req.body.email.toLowerCase();
-  user.userModel.findOne({email:req.body.email}).then(user => {
-    if(!user){
+  try{
+  var findUser = await user.userModel.findOne({email:req.body.email}).exec();
+    if(!findUser){
       return res.json({
         message:"Invalid Username or Password"
       })
     }
-    bcrypt.compare(req.body.password, user.password).then(isCorrect => {
-      if (isCorrect) {
-        const payload = {
-          id:user._id,
-          userName: user.name
-        }
-        jwt.sign(payload,
-          process.env.jwtPrivateKey,
-          (err,token)=>{
-            if(err) return res.json({message:err})
-            return res.json({
-              message:"Success",
-              userId:user._id,
-              token:"Bearer " + token
-            })
-          }
-        )
-      } else {
+    var isCorrect = await bcrypt.compare(req.body.password, findUser.password);
+    console.log(isCorrect);
+    if(isCorrect){
+      createToken(findUser, res);
+    } else {
+      return res.json({
+        message:"Invalid Username or Password"
+      })
+    }
+    } catch(error){
+         return res.status(400).send(JSON.stringify(error));
+    }
+}
+ function createToken(user,res){
+
+    const payload = {
+      id:user._id,
+      userName: user.name
+    }
+     jwt.sign(payload,
+      process.env.jwtPrivateKey,
+      (err,token)=>{
+        if(err) return res.json({message:err})
         return res.json({
-          message:"Invalid Username or Password"
+          message:"Success",
+          userId:user._id,
+          token:"Bearer " + token
         })
       }
-    })
-  })
-
+    )
 }
 
 exports.verifyJWT= function (req,res,next) {

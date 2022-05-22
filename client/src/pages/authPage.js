@@ -23,7 +23,7 @@ function AuthPage(props) {
     }
     return (
         <div>
-          <RegistrationForm />
+          <RegistrationForm setAuth={props.setAuth} />
         </div>
     )
 }

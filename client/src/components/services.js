@@ -24,13 +24,17 @@ function Services(props) {
   React.useEffect(() => {
     const fetchData = async () => {
       if (props.Data) {
-          setData(props.Data)
+          setData(props.Data);
+          setPage(1);
       } else {
-        const data = await serverFunctions.getEstates(partition);
-        if(data === "error" || data === "NoData"){
-          return setData(data);
-        }
+        var data = await serverFunctions.getEstates(partition);
         setData((pre) => {
+          if(data === "error" || data === "NoData"){
+              if(pre === "Loading"){
+                return data;
+              }
+              data = [];
+          }
           if(pre === "NoData" || pre === "Loading"){
             pre = []
           }

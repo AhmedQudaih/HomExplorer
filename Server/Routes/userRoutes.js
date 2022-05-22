@@ -12,7 +12,7 @@ router.post("/login",function(req,res){
   userController.login(req, res);
 })
 
-router.get("/checkAdmin",userController.verifyJWT,userController.serverAdminCheck,function(req,res){
+router.get("/checkAdmin",userController.verifyJWT,function(req,res){
   userController.checkAdmin(req, res);
 })
 

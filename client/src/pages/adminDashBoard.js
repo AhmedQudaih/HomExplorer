@@ -13,7 +13,7 @@ function AdminDashBoard() {
     const CheckAdminAuth = async () => {
       if(CheckAuth()){
         let res = await serverUserFunctions.checkAdmin();
-        if (res) return ;
+        if (res === true) return ;
       }
       return navigate("/");
     }

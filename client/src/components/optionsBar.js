@@ -29,7 +29,7 @@ function OptionsBar(props){
     React.useEffect(()=>{
       const CheckAdminAuth= async () => {
         let res = await serverUserFunctions.checkAdmin();
-        setAdminAuth(res);
+        setAdminAuth(res=== true?true:false);
       }
       CheckAdminAuth();
     },[])

@@ -25,7 +25,7 @@ function EstateForm(props) {
   const handleClose = () => setOpen(false);
 
   const [deletedPicNames, setDeletedPicNames] = React.useState([]);
-console.log(props.data)
+
 
 
 
@@ -80,7 +80,7 @@ console.log(props.data)
           }else{
            handleClose();
            props.handleClose("compare",false)
-           props.updateData("delete", estate._id);
+           props.updateData("delete");
            StatusAlert('Updated');
          }
       }

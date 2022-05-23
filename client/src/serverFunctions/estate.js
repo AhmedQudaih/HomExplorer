@@ -61,6 +61,14 @@ exports.deleteEstate = function(id) {
     return callServer(url+"approveEstate",requestOptions);
   }
 
+exports.getMyEstates = function(){
+  const requestOptions = {
+    method:'get',
+    headers: { 'Content-Type': 'application/json',
+    'x-access-token': localStorage.getItem("HomExplorerToken") },
+  };
+  return callServer(url+"myEstates",requestOptions, true);
+}
 
   exports.getEstateRequests = function(formData) {
 

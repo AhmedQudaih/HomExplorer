@@ -167,6 +167,16 @@ exports.getApproveEstateRequests = function(req, res) {
 
 }
 
+
+exports.getMyEstates = function(req,res){
+  estate.estateModel.find({sellerId:req.user.id}).populate('category').populate("type").exec(function(error,myEstates) {
+    if (error) {
+      return res.status(400).send(JSON.stringify(error));
+    }
+    res.send(myEstates);
+  });
+}
+
 /*----------------------------Sprint 2----------------------------*/
 
 async function estateOverAllRate(estateId){

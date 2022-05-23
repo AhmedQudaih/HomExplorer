@@ -91,13 +91,16 @@ function Services(props) {
     <MyContext.Consumer>{(context)=>{
       const updateData = (operation, modif) => {
         if (operation === "delete") {
-          let update = data.filter(i => i._id !== modif);
-          return setData(update);
+            setData("Loading")
+          if(props.updateData){
+            props.updateData(pre=>!pre)
+          }else{
+            setPage(1);
+            setPartition(0);
+          }
         }
 
         if (operation === "save") {
-
-
           let index = context.saveList.findIndex(i => i.estateId._id === modif._id);
           if (index === -1) {
             context.setSaveList((pre) => {
@@ -112,8 +115,6 @@ function Services(props) {
             update.splice(index, 1);
             context.setSaveList(update);
           }
-
-
         }
       }
     const validation = CheckData(data);

@@ -38,6 +38,10 @@ router.get("/getApproveEstateRequests",auth,function(req,res){
  estate.getApproveEstateRequests(req , res);
 })
 
+router.get("/myEstates",auth,function(req,res){
+  estate.getMyEstates(req,res);
+})
+
 /*----------Sprint 2----------*/
 router.post("/addAndUpdateRate",auth,function(req,res){
  estate.addAndUpdateRate(req , res);

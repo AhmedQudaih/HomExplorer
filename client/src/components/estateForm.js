@@ -22,11 +22,8 @@ function EstateForm(props) {
   const [estate, setEstate] = React.useState(props.data);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => {
-    setOpen(false);
-    props.data.pic=[];
-    setEstate(props.data);
-  };
+  const handleClose = () => setOpen(false);
+
   const [deletedPicNames, setDeletedPicNames] = React.useState([]);
 console.log(props.data)
 
@@ -101,6 +98,8 @@ console.log(props.data)
          estate.addressOnMap.forEach(element =>{formData.append('addressOnMap',element);});
           if(props.type === 'Add'){
              addSubmit(formData)
+             props.data.pic=[];
+             setEstate(props.data);
           }else{
                 formData.append('_id',estate._id);
                 formData.append('deletedPicNames',deletedPicNames);

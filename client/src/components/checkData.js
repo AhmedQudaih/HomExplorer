@@ -46,6 +46,20 @@ export const EstateFormVali = (validation,estate) => {
 
   }
 
+
+  export const PredictionFormVali = (validation,estate) => {
+
+    validation.Number_Of_Rooms = estate.numOfRooms!==undefined && estate.numOfRooms > 0 && estate.numOfRooms < 30  ? "success":"error";
+    validation.Number_Of_BathRooms= estate.numOfBathRooms!==undefined && estate.numOfBathRooms > 0 && estate.numOfBathRooms < 30  ? "success":"error";
+    validation.floor = estate.floor!==undefined && estate.floor >= 0 && estate.floor < 164  ? "success":"error";
+    validation.Size= estate.size!==undefined && estate.size > 20 && estate.size < 10000?"success":"error";
+    validation.Description= estate.desc!==undefined && estate.desc.length > 30 && estate.desc.match("[a-zA-Z0-9,#.-]+") ?"success":"error" ;
+    validation.Address= estate.address!==undefined && estate.address.length > 4 && estate.address.match("[a-zA-Z0-9,#.-]+") ?"success":"error";
+    validation.Type= estate.type!==undefined && estate.type.length > 0 ?"success":"error";
+    validation.Category= estate.category!==undefined && estate.category.length > 0 ?"success":"error";
+  
+    }
+
 export const EstateFormValiMsg = (msg) => {
   msg.Price="Price should be between 0 and 200000000";
   msg.Number_Of_Rooms="Number of Rooms should be between 0 and 30";

@@ -42,3 +42,10 @@ export const UserFormSubmitBtn = styled.div`
 
 
 `
+
+export const PredictionFormBackBtn = styled.div`
+ grid-column: 1 / -1;
+ text-align: center;
+
+
+`

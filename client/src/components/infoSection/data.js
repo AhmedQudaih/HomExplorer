@@ -55,3 +55,22 @@ export const homeObjThree = {
     darkText: true,
     to:"authPage"
 };
+
+export const homeObjFour = {
+    id: 'prediction',
+    lightBg: true,
+    lightText: false,
+    lightTextDesc: false,
+    topLine: 'Prediction',
+    headline:'Lorem Ipsum is simply text',
+    description:
+    'Lorem Ipsum has been the industrys standard dummy text ever since the 1500s when an unknown printer took a galley.',
+    buttonLabel: 'Start Now',
+    imgStart: false,
+    img: require('../../images/svg-3.svg').default,
+    alt: 'Paper',
+    dark: false,
+    primary: false,
+    darkText: true,
+    to:"#"
+};

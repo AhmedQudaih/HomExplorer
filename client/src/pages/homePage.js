@@ -3,14 +3,18 @@ import Main from '../components/main.js';
 import Info from '../components/infoSection/info.js';
 import { homeObjOne, homeObjTwo, homeObjThree } from '../components/infoSection/data.js';
 import Services from '../components/services';
-function Home() {
+import PredictionForm from '../components/predictionForm';
+function Home(props) {
     return (
         <div>
             <Main />
             <Info {...homeObjOne} />
             <Info {...homeObjTwo} />
             <Services dark={true} ID="services" from="Services" />
-            <Info {...homeObjThree} />
+            <PredictionForm />
+            {!props.auth &&
+              <Info {...homeObjThree} />
+            }
         </div>
     )
 }

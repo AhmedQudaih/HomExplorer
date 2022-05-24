@@ -27,8 +27,6 @@ function EstateForm(props) {
   const [deletedPicNames, setDeletedPicNames] = React.useState([]);
 
 
-
-
   const handelUpdateform = React.useCallback(() => {
         if(props.type==='Update' && props.data.category._id){
           if(props.data.type.name === "Auction"){

@@ -20,11 +20,12 @@ const PredictionForm = ()=> {
   const [map, setMap] = React.useState(false);
 
   React.useEffect(() => {
+    setMap(false);
     const timer = setTimeout(() => {
      setMap(true);
-   }, 2500);
+   }, 3000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [formActive]);
 
   let validation ={};
   let msg ={};

@@ -58,6 +58,9 @@ const Navbar = ({toggle,setAuth, auth}) => {
         <NavItem>
           <NavLinks to="/#services" smooth={true} duration={500} exact='true' offset={-80}>Services</NavLinks>
         </NavItem>
+        <NavItem>
+          <NavLinks to="/#prediction" smooth={true} duration={500} exact='true' offset={-80}>Prediction</NavLinks>
+        </NavItem>
         {!auth && <NavItem>
           <NavLinks to="/#signup" smooth={true} duration={500}  exact='true' offset={-80}>Sign Up</NavLinks>
         </NavItem>}

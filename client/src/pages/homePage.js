@@ -11,8 +11,8 @@ function Home() {
             <Info {...homeObjOne} />
             <Info {...homeObjTwo} />
             <Services dark={true} ID="services" from="Services" />
-            <Info {...homeObjThree} />
             <PredictionForm />
+            <Info {...homeObjThree} />
         </div>
     )
 }

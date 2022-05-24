@@ -194,6 +194,9 @@ exports.updateAuctionStatus = function(formData) {
     return callServer(url+"approveAuction", requestOptions );
 }
 
+
+/*----------------------Sprint 5----------------------*/
+
 exports.estateReport = function(){
   const requestOptions = {
      method: 'get',
@@ -201,4 +204,17 @@ exports.estateReport = function(){
      'x-access-token': localStorage.getItem("HomExplorerToken") },
  };
   return callServer(url+"estateReport", requestOptions );
+}
+
+/*----------------------Sprint 6----------------------*/
+
+exports.predictEstate = function(formData){
+  const requestOptions = {
+         method: 'POST',
+         headers:{'Content-Type': 'application/json',
+         'x-access-token': localStorage.getItem("HomExplorerToken")},
+         body: JSON.stringify(formData)
+     };
+     Waiting.Waiting(true);
+    return callServer(url+"predictEstatePrice", requestOptions );
 }

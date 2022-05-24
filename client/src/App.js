@@ -25,7 +25,7 @@ function App() {
       <Sidebar isOpen={isOpen} auth={auth} setAuth={setAuth} toggle={toggle}/>
       <Navbar toggle={toggle} auth={auth} setAuth={setAuth} />
       <Routes >
-        <Route exact path="" element={<Home />}/>
+        <Route exact path="" element={<Home auth={auth} />}/>
         <Route exact path="products" element={<Products />}/>
         <Route exact path="admin" element={<Admin />}/>
         <Route exact path="adminDashBoard" element={<AdminDashBoard />}/>

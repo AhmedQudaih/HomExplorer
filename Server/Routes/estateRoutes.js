@@ -92,5 +92,9 @@ router.get("/estateReport",auth,adminCheck,function(req,res){
  estate.estateReport(req , res);
 })
 
+/*--------Sprint 6 ------------*/
+router.post("/predictEstatePrice", function(req,res){
+  console.log(req.body);
+})
 
 module.exports = router;

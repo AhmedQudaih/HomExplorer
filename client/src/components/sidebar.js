@@ -14,6 +14,7 @@ const Sidebar = ({isOpen, toggle, setAuth, auth}) => {
           <SidebarLink to="/#recommendations" onClick={()=>{toggle(false)}}>Recommendations</SidebarLink>
           <SidebarLink to="/#auction" onClick={()=>{toggle(false)}}>Auction</SidebarLink>
           <SidebarLink to="/#services" onClick={()=>{toggle(false)}}>Services</SidebarLink>
+          <SidebarLink to="/#prediction" onClick={()=>{toggle(false)}}>Prediction</SidebarLink>
           {!auth && <SidebarLink to="/#signup" onClick={()=>{toggle(false)}}>Sign Up</SidebarLink>}
         </SidebarMenu>
           {auth?

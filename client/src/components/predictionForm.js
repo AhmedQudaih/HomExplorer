@@ -17,6 +17,14 @@ const PredictionForm = ()=> {
 
   const [data, setData] = React.useState({addressOnMap: [30.044417093043883 ,31.235753400264315]});
   const [formActive, setFormActive] = React.useState(false);
+  const [map, setMap] = React.useState(false);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+     setMap(true);
+   }, 2500);
+    return () => clearTimeout(timer);
+  }, []);
 
   let validation ={};
   let msg ={};
@@ -77,11 +85,12 @@ const PredictionForm = ()=> {
     <FormInputs  validation={validation.Number_Of_BathRooms} type={"number"} name={"numOfBathRooms"} label={"Number of Bathrooms"} helperText={""} handleChange={handleChange} value={data.numOfBathRooms||""}/>
     <FormInputs  validation={validation.Description} label={"Description"} type={"text"} name={"desc"} helperText={"Please describe the estate, neighborhood and any constraints"} handleChange={handleChange} multiline={true} value={data.desc||""}/>
     <FormInputs  fullWidth={true} validation={validation.Address} label={"Address"} name={"address"}  type={"text"} helperText={"Please enter the estate address and mark it on map"} handleChange={handleChange} value={data.address||""}/>
-<PredictionFormBackBtn class="map">
 
-      <MyMap Change={handleChange} Location={data.addressOnMap} />
-
- </PredictionFormBackBtn>
+    {map &&
+        <PredictionFormBackBtn>
+              <MyMap Change={handleChange} Location={data.addressOnMap} />
+         </PredictionFormBackBtn>
+    }
 
      <PredictionFormBackBtn>
        <Button type="submit" color="success" variant="outlined" startIcon={<SaveIcon />}>

@@ -11,6 +11,8 @@ padding: 2% 0%;
 margin: 2% 10%;
 background: #f9f9f9;
 transition: all 0.2s ease-in-out;
+animation: backInRight;
+animation-duration: 0.5s;
 
 }
 @media screen and (max-width: 76.8rem){
@@ -18,10 +20,6 @@ transition: all 0.2s ease-in-out;
 }
 
 `
-/*
-animation: backInRight;
-animation-duration: 0.5s;
-*/
 export const PredictionFormTitleBtn = styled.h1`
  grid-column: 1/ -1;
  text-align: center;

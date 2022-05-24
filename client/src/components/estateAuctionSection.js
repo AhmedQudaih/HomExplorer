@@ -17,7 +17,6 @@ function EstateAuctionSection(props){
 
 
     const validation = CheckData(auction);
-
     if(validation || auction.length===0 || auction.auctionResult === "Auction ended"){
       return(
         <DetailsBtnCard>
@@ -30,7 +29,7 @@ function EstateAuctionSection(props){
         <>
         {auction.auctionResult?
         <EndAuction data={auction.auctionResult} estateId={props.data._id}/>
-        :<PlaceBid data={auction} estateId={props.data._id}/>
+        :<PlaceBid daysRemain={auction} estate={props.data}/>
     }
     </>
   );

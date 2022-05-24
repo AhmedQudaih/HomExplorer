@@ -9,7 +9,7 @@ import {SmallNote} from './Styles/estateDetailsStyle';
 const PlaceBid = (props) => {
 
   const [value, setValue] = React.useState("");
-  const [currentBid, setCurrentBid] = React.useState(props.data.auctionHighestPrice.price);
+  const [currentBid, setCurrentBid] = React.useState(props.estate.price);
   var total = currentBid + value;
 
   const validation={};
@@ -24,7 +24,7 @@ const PlaceBid = (props) => {
       const confirm = await CheckOperation()
       if(confirm.isConfirmed === true){
         const status = await serverFunctions.placeBid({
-          "estateId" : props.estateId,
+          "estateId" : props.estate._id,
           "price" : total
           });
         if(status==="error"){
@@ -57,7 +57,7 @@ const PlaceBid = (props) => {
         <Button color="error" onClick={handlPlaceBidSubmite} variant="outlined" >
             Bid Now !
         </Button>
-        <SmallNote>( {props.data.daysRemain} days Remain )</SmallNote>
+        <SmallNote>( {props.daysRemain} days Remain )</SmallNote>
     </ScheduleCard>
   );
 }

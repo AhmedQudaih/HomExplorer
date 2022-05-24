@@ -4,7 +4,7 @@ import Info from '../components/infoSection/info.js';
 import { homeObjOne, homeObjTwo, homeObjThree } from '../components/infoSection/data.js';
 import Services from '../components/services';
 import PredictionForm from '../components/predictionForm';
-function Home() {
+function Home(props) {
     return (
         <div>
             <Main />
@@ -12,7 +12,9 @@ function Home() {
             <Info {...homeObjTwo} />
             <Services dark={true} ID="services" from="Services" />
             <PredictionForm />
-            <Info {...homeObjThree} />
+            {!props.auth &&
+              <Info {...homeObjThree} />
+            }
         </div>
     )
 }

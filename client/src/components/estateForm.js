@@ -25,9 +25,6 @@ function EstateForm(props) {
   const handleClose = () => setOpen(false);
 
   const [deletedPicNames, setDeletedPicNames] = React.useState([]);
-console.log(props.data)
-
-
 
   const handelUpdateform = React.useCallback(() => {
         if(props.type==='Update' && props.data.category._id){

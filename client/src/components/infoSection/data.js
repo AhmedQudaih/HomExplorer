@@ -39,9 +39,9 @@ export const homeObjTwo = {
 
 export const homeObjThree = {
     id: 'signup',
-    lightBg: true,
-    lightText: false,
-    lightTextDesc: false,
+    lightBg: false,
+    lightText: true,
+    lightTextDesc: true,
     topLine: 'Join Our Team',
     headline:'Creating an account is extremely easy',
     description:
@@ -50,9 +50,9 @@ export const homeObjThree = {
     imgStart: false,
     img: require('../../images/svg-3.svg').default,
     alt: 'Paper',
-    dark: false,
-    primary: false,
-    darkText: true,
+    dark: true,
+    primary: true,
+    darkText: false,
     to:"authPage"
 };
 

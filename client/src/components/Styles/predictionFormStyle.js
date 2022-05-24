@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import 'animate.css';
-export const UserMainForm = styled.form`
+
+
+export const PredictionMainForm = styled.form`
 display: grid;
 grid-template-columns:  1fr 1fr;
 align-items: center;
@@ -9,8 +11,6 @@ padding: 2% 0%;
 margin: 2% 10%;
 background: #f9f9f9;
 transition: all 0.2s ease-in-out;
-animation: backInRight;
-animation-duration: 0.5s;
 
 }
 @media screen and (max-width: 76.8rem){
@@ -18,25 +18,19 @@ animation-duration: 0.5s;
 }
 
 `
-
-export const UserFormTitleBtn = styled.h1`
+/*
+animation: backInRight;
+animation-duration: 0.5s;
+*/
+export const PredictionFormTitleBtn = styled.h1`
  grid-column: 1/ -1;
  text-align: center;
  margin: 2% 0%;
 
 
 `
-export const UserFormBackBtn = styled.div`
- grid-row: 2 / 4;
- text-align: center;
- margin: 2% 0%;
- @media screen and (max-width: 76.8rem){
-     grid-column: 1;
 
- }
-
-`
-export const UserFormSubmitBtn = styled.div`
+export const PredictionFormBackBtn = styled.div`
  grid-column: 1 / -1;
  text-align: center;
 

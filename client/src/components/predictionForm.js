@@ -1,20 +1,23 @@
 import React from "react";
 import {FormInputs, DropDownLists} from './formInputs';
 import {PredictionFormVali, FormValid, EstateFormValiMsg} from './checkData';
-import {UserMainForm, UserFormTitleBtn, PredictionFormBackBtn, UserFormSubmitBtn} from './Styles/registrationFormStyle';
+import { PredictionFormTitleBtn, PredictionMainForm, PredictionFormBackBtn} from './Styles/predictionFormStyle';
 import {Button} from '@mui/material';
 import {Save as SaveIcon} from "@mui/icons-material";
-import serverFunctions from '../serverFunctions/user';
+import serverFunctions from '../serverFunctions/estate';
 import Info from './infoSection/info.js';
 import { homeObjFour } from './infoSection/data.js';
 import { KeyboardArrowLeft} from "@mui/icons-material";
 import {StatusAlert, ValidationMsg} from './appAlerts';
 import MyMap from './map';
 import {MyContext} from '../components/provider';
+
+
 const PredictionForm = ()=> {
 
-  const [data, setData] = React.useState({});
+  const [data, setData] = React.useState({addressOnMap: [30.044417093043883 ,31.235753400264315]});
   const [formActive, setFormActive] = React.useState(false);
+
   let validation ={};
   let msg ={};
   PredictionFormVali(validation , data);
@@ -45,14 +48,12 @@ const PredictionForm = ()=> {
       ValidationMsg(subVali);
       return;
     }
-      const formData = new FormData(event.target);
-      console.log(formData);
-    /*  const Status = await serverFunctions.addUser(formData);
+      const Status = await serverFunctions.predictEstate(data);
       if(Status ==='error'){
          StatusAlert("error");
        }else{
          StatusAlert('Added');
-       }*/
+       }
   }
   return (<MyContext.Consumer>{
       (context) => {
@@ -61,31 +62,33 @@ const PredictionForm = ()=> {
     <>
 
 {formActive?
-<UserMainForm onSubmit={submitPredictionForm}>
-<UserFormTitleBtn>Prediction Form</UserFormTitleBtn>
+<PredictionMainForm onSubmit={submitPredictionForm}>
+<PredictionFormTitleBtn>Prediction Form</PredictionFormTitleBtn>
 <PredictionFormBackBtn>
     <Button size="small" onClick={handleFormActive}>
         <KeyboardArrowLeft />
     </Button>
 </PredictionFormBackBtn>
-    <DropDownLists name={"category"} handleChange={handleChange} helperText={"Please select estate category"} validation={validation.Category} value={data.category||""} options={context.categoryAndType.category}/>
-    <DropDownLists name={"type"} handleChange={handleChange} helperText={"Please select estate type"} validation={validation.Type} value={data.type||""} options={context.categoryAndType.type}/>
-    <FormInputs validation={validation.Size} type={"number"} name={"size"} label={"Size"} helperText={"Please enter size in meter square (&#13217;)"} handleChange={handleChange} value={data.size||""}/>
-    <FormInputs validation={validation.floor} type={"number"} name={"floor"} label={"Floor"} helperText={"Please enter in which floor or number of floors if villa"} handleChange={handleChange} value={data.floor||""}/>
-    <FormInputs validation={validation.Number_Of_Rooms} type={"number"} name={"numOfRooms"} label={"Number of Rooms"} helperText={""} handleChange={handleChange} value={data.numOfRooms||""}/>
-    <FormInputs validation={validation.Number_Of_BathRooms} type={"number"} name={"numOfBathRooms"} label={"Number of Bathrooms"} helperText={""} handleChange={handleChange} value={data.numOfBathRooms||""}/>
-    <FormInputs validation={validation.Description} label={"Description"} type={"text"} name={"desc"} helperText={"Please describe the estate, neighborhood and any constraints"} handleChange={handleChange} multiline={true} value={data.desc||""}/>
-    <FormInputs fullWidth={true} validation={validation.Address} label={"Address"} name={"address"}  type={"text"} helperText={"Please enter the estate address and mark it on map"} handleChange={handleChange} value={data.address||""}/>
- <UserFormSubmitBtn>
-    <MyMap Change={handleChange} Location={data.addressOnMap} />
- </UserFormSubmitBtn>
+    <DropDownLists  name={"category"} handleChange={handleChange} helperText={"Please select estate category"} validation={validation.Category} value={data.category||""} options={context.categoryAndType.category}/>
+    <DropDownLists  name={"type"} handleChange={handleChange} helperText={"Please select estate type"} validation={validation.Type} value={data.type||""} options={context.categoryAndType.type}/>
+    <FormInputs  validation={validation.Size} type={"number"} name={"size"} label={"Size"} helperText={"Please enter size in meter square (&#13217;)"} handleChange={handleChange} value={data.size||""}/>
+    <FormInputs  validation={validation.floor} type={"number"} name={"floor"} label={"Floor"} helperText={"Please enter in which floor or number of floors if villa"} handleChange={handleChange} value={data.floor||""}/>
+    <FormInputs  validation={validation.Number_Of_Rooms} type={"number"} name={"numOfRooms"} label={"Number of Rooms"} helperText={""} handleChange={handleChange} value={data.numOfRooms||""}/>
+    <FormInputs  validation={validation.Number_Of_BathRooms} type={"number"} name={"numOfBathRooms"} label={"Number of Bathrooms"} helperText={""} handleChange={handleChange} value={data.numOfBathRooms||""}/>
+    <FormInputs  validation={validation.Description} label={"Description"} type={"text"} name={"desc"} helperText={"Please describe the estate, neighborhood and any constraints"} handleChange={handleChange} multiline={true} value={data.desc||""}/>
+    <FormInputs  fullWidth={true} validation={validation.Address} label={"Address"} name={"address"}  type={"text"} helperText={"Please enter the estate address and mark it on map"} handleChange={handleChange} value={data.address||""}/>
+<PredictionFormBackBtn class="map">
 
-     <UserFormSubmitBtn>
+      <MyMap Change={handleChange} Location={data.addressOnMap} />
+
+ </PredictionFormBackBtn>
+
+     <PredictionFormBackBtn>
        <Button type="submit" color="success" variant="outlined" startIcon={<SaveIcon />}>
        Save
        </Button>
-     </UserFormSubmitBtn>
-   </UserMainForm>:<Info {...homeObjFour} />
+     </PredictionFormBackBtn>
+   </PredictionMainForm>:<Info {...homeObjFour} />
 }
 </>
   )}

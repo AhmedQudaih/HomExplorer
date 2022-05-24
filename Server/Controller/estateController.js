@@ -406,15 +406,16 @@ exports.placeBid = async function (req,res){
     let response = await auctionResult(req.body.estateId);
     res.status(400).send(JSON.stringify("Cant place bid to an ended auction"))
   }
+  try {
   const newBid = new bid.bidModel(req.body);
   newBid.userId=req.user.id;
-  newBid.save(function(error) {
-    if (error) {
-      return res.status(400).send(JSON.stringify(error));
+  newBid.save();
+  emailNotification.placeBidNotification(req.body.estateId)
+  estate.estateModel.updateOne({ _id: req.body.estateId}, {price:req.body.price}).exec();
+  res.status(200).send(JSON.stringify("Ok"));
+  }catch (error) {
+  res.status(400).send(JSON.stringify(error));
     }
-    emailNotification.placeBidNotification(req.body.estateId)
-    res.status(200).send(JSON.stringify("Bid submited with amount: "+req.body.price));
-  });
 }
 
 async function auctionResult (estateId){
@@ -425,16 +426,6 @@ async function auctionResult (estateId){
     return err;
   }
 }
-
-  async function getAuctionHighestPrice (estateId){
-    try{
-      let price = await bid.bidModel.findOne({estateId:estateId}).sort("-price").select({price: 1, _id: false})
-      return price || {price:0};
-    }catch(err){
-      console.log(err);
-      return err;
-    }
-  }
 
   async function auctionEnd (estateId){
     try{
@@ -462,11 +453,9 @@ async function auctionResult (estateId){
               res.send({auctionResult:"Auction ended"});
           }
         }else{
-          let response = await getAuctionHighestPrice(req.params.estateId);
-          res.send({auctionHighestPrice:response,daysRemain:auctionEndStatus.daysRemain});
+          res.status(200).send(JSON.stringify(auctionEndStatus.daysRemain));
         }
       } catch (err) {
-        console.log(err);
         res.status(400).send(JSON.stringify(err));
       }
     }

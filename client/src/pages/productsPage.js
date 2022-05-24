@@ -42,9 +42,9 @@ function Products(props) {
         data[key] = value;
       }
     }
-
+ 
     if(Object.values(data).length === 0){
-      return setData([]);
+      return ;
      }
 
     let res = await serverFunctions.searchData(data);

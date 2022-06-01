@@ -20,7 +20,7 @@ function Main() {
                     Pick your home now!
                 </MainP>
                 <MainBtnWrapper>
-                    <ButtonS to="/#signup" onMouseEnter={onHover}
+                    <ButtonS to="/products" onMouseEnter={onHover}
                     onMouseLeave={onHover}
                     primary="true"
                     dark="true"

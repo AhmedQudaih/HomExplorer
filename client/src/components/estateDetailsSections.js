@@ -3,7 +3,7 @@ import {
   DetailsBtnCard,CenterDetailsBtnCard
 } from './Styles/estateDetailsStyle';
 import {EstateCardDivCard} from './Styles/estateCardStyle';
-import {Button} from '@mui/material';
+import {Button,Chip} from '@mui/material';
 import {
   Delete as DeleteIcon,
   Close as CloseIcon,
@@ -54,7 +54,7 @@ return(
         <CloseIcon />
       </Button>
         <EstateDetails data={props.data} />
-    {CheckAuth()&&<>
+    {CheckAuth()?<>
 
         { props.data.type.name === "Auction" && <EstateAuctionSection data={props.data} />}
 
@@ -73,7 +73,7 @@ return(
     </CenterDetailsBtnCard >
       </>
       }
-        </>  }
+        </>:<Chip label="Note: Login to See More..."  sx={{ mx: 4, mb:1 }} color="warning" variant="outlined" /> }
           <Button color="primary" onClick={()=>props.handleDetailsAndCompare("compare",props.data)}  variant="outlined" startIcon={<CompareIcon  />}>
             Compare
           </Button>

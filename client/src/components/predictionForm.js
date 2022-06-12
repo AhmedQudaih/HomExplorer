@@ -8,7 +8,7 @@ import serverFunctions from '../serverFunctions/estate';
 import Info from './infoSection/info.js';
 import { homeObjFour } from './infoSection/data.js';
 import { KeyboardArrowLeft} from "@mui/icons-material";
-import {StatusAlert, ValidationMsg} from './appAlerts';
+import {StatusAlert, ValidationMsg, ShowData} from './appAlerts';
 import MyMap from './map';
 import {MyContext} from '../components/provider';
 
@@ -61,7 +61,7 @@ const PredictionForm = ()=> {
       if(Status ==='error'){
          StatusAlert("error");
        }else{
-         StatusAlert('Added');
+         ShowData('Estate price is: '+Status.result)
        }
   }
   return (<MyContext.Consumer>{
@@ -84,9 +84,9 @@ const PredictionForm = ()=> {
     <FormInputs  validation={validation.floor} type={"number"} name={"floor"} label={"Floor"} helperText={"Please enter in which floor or number of floors if villa"} handleChange={handleChange} value={data.floor||""}/>
     <FormInputs  validation={validation.Number_Of_Rooms} type={"number"} name={"numOfRooms"} label={"Number of Rooms"} helperText={""} handleChange={handleChange} value={data.numOfRooms||""}/>
     <FormInputs  validation={validation.Number_Of_BathRooms} type={"number"} name={"numOfBathRooms"} label={"Number of Bathrooms"} helperText={""} handleChange={handleChange} value={data.numOfBathRooms||""}/>
-    <FormInputs  validation={validation.Description} label={"Description"} type={"text"} name={"desc"} helperText={"Please describe the estate, neighborhood and any constraints"} handleChange={handleChange} multiline={true} value={data.desc||""}/>
-    <FormInputs  fullWidth={true} validation={validation.Address} label={"Address"} name={"address"}  type={"text"} helperText={"Please enter the estate address and mark it on map"} handleChange={handleChange} value={data.address||""}/>
-
+    <PredictionFormBackBtn>
+      <FormInputs  fullWidth={true} validation={validation.Description} label={"Description"} type={"text"} name={"desc"} helperText={"Please describe the estate, neighborhood and any constraints"} handleChange={handleChange} multiline={true} value={data.desc||""}/>
+    </PredictionFormBackBtn>
     {map &&
         <PredictionFormBackBtn>
               <MyMap Change={handleChange} Location={data.addressOnMap} />

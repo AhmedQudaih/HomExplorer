@@ -37,6 +37,9 @@ exports.CompareMood = (on)=> {
   })
 }
 
+exports.ShowData = (msg) => {
+  Swal.fire(msg)
+}
 
 exports.CheckOperation = (props) =>{
   return (Swal.fire({

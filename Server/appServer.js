@@ -15,6 +15,7 @@ app.use(bodyParser.json())
 app.use('/uploads', express.static('uploads'));
 app.use("/" , require(path.join(__dirname +"/Routes/estateRoutes")));
 app.use("/user" , require(path.join(__dirname +"/Routes/userRoutes")));
+app.use("/ai" , require(path.join(__dirname +"/Routes/aiRoutes")));
 
 cloudinary.config({
   cloud_name: process.env.cloudinaryCloudName,

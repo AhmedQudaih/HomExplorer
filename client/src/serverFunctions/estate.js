@@ -224,5 +224,5 @@ exports.predictEstate = function(formData){
          body: JSON.stringify(formData)
      };
      Waiting.Waiting(true);
-    return callServer(url+"predictEstatePrice", requestOptions );
+    return callServer(url+"ai/predictEstatePrice", requestOptions );
 }

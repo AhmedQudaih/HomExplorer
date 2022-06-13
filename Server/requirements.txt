@@ -98,3 +98,4 @@ webencodings==0.5.1
 widgetsnbextension==3.6.0
 xgboost==1.6.1
 zipp==3.8.0
+surprise==1.1.1

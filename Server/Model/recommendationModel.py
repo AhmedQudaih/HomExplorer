@@ -46,7 +46,8 @@ sim_options ={
 algo = KNNWithMeans(sim_options=sim_options)
 trainingSet = data.build_full_trainset()
 algo.fit(trainingSet)
-UserID = ""# the userID should be in this form "625cc5d60803f00590a76333" ## user id in strinfy form
+UserID = sys.argv[1] # the userID should be in this form "625cc5d60803f00590a76333" ## user id in strinfy form
+print(UserID)
 estate_results = Estate_collection.find()
 myestates = []
 for estate in estate_results:
@@ -59,4 +60,4 @@ for estate in myestates:
    predections.append(predection)
    print(predection)
 recommended = sorted(predections, key=itemgetter('rate'), reverse=True)
-## return recommended
+print(recommended)

@@ -54,7 +54,6 @@ export const EstateFormVali = (validation,estate) => {
     validation.floor = estate.floor!==undefined && estate.floor >= 0 && estate.floor < 164  ? "success":"error";
     validation.Size= estate.size!==undefined && estate.size > 20 && estate.size < 10000?"success":"error";
     validation.Description= estate.desc!==undefined && estate.desc.length > 30 && estate.desc.match("[a-zA-Z0-9,#.-]+") ?"success":"error" ;
-    validation.Type= estate.type!==undefined && estate.type.length > 0 ?"success":"error";
     validation.Category= estate.category!==undefined && estate.category.length > 0 ?"success":"error";
 
     }

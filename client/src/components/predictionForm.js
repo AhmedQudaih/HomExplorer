@@ -78,8 +78,9 @@ const PredictionForm = ()=> {
         <KeyboardArrowLeft />
     </Button>
 </PredictionFormBackBtn>
-    <DropDownLists  name={"category"} handleChange={handleChange} helperText={"Please select estate category"} validation={validation.Category} value={data.category||""} options={context.categoryAndType.category}/>
-    <DropDownLists  name={"type"} handleChange={handleChange} helperText={"Please select estate type"} validation={validation.Type} value={data.type||""} options={context.categoryAndType.type}/>
+  <PredictionFormBackBtn>
+    <DropDownLists fullWidth={true} name={"category"} handleChange={handleChange} helperText={"Please select estate category"} validation={validation.Category} value={data.category||""} options={context.categoryAndType.category}/>
+  </PredictionFormBackBtn>
     <FormInputs  validation={validation.Size} type={"number"} name={"size"} label={"Size"} helperText={"Please enter size in meter square (&#13217;)"} handleChange={handleChange} value={data.size||""}/>
     <FormInputs  validation={validation.floor} type={"number"} name={"floor"} label={"Floor"} helperText={"Please enter in which floor or number of floors if villa"} handleChange={handleChange} value={data.floor||""}/>
     <FormInputs  validation={validation.Number_Of_Rooms} type={"number"} name={"numOfRooms"} label={"Number of Rooms"} helperText={""} handleChange={handleChange} value={data.numOfRooms||""}/>

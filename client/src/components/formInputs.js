@@ -8,6 +8,7 @@ const DropDownLists = (props) =>{
     select label = "Select"
     required
     value = {props.value }
+    fullWidth={props.fullWidth||false}
     onChange = {props.handleChange}
     helperText = {props.helperText} >
     {

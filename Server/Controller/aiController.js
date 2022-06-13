@@ -59,9 +59,9 @@ exports.predictEstate = async function(req, res) {
 }
 
 exports.getRecommendedEstate = async function(req, res) {
-  const python = await spawn('python',[path.join(__dirname, '..', 'Model', 'recommendationModel.py'), req.user.id]);
+  const python = await spawn('python',[path.join(__dirname, '..', 'Model', 'recommendationModel.py'), '625cc5d60803f00590a76333']);
   //get Recommended estates code heree
-  console.log("before model: user Id:", req.user.id );
+  console.log("before model:" );
   python.stdout.on('data',(data)=>{
       console.log(data.toString('utf8'))
   })

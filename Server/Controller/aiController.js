@@ -45,16 +45,15 @@ function preprocess_request(req) {
 exports.predictEstate = async function(req, res) {
   //predict estate code heree
   const formData = preprocess_request(req);
-
   const python = await spawn('python',[path.join(__dirname, '..', 'Model', 'predictionModel.py'), formData]);
 
   python.stdout.on('data',(data)=>{
-
+    console.log(data.toString('utf8'));
     const price = Number(data.toString('utf8')).toFixed(0);
       res.send({result:price})
   })
   python.stderr.on('data',(data)=>{
-      res.send({error:data.toString('utf8')})
+    console.log(data.toString('utf8'));
   })
 }
 

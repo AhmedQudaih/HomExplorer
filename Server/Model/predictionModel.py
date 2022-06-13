@@ -10,7 +10,7 @@ from sklearn import ensemble
 warnings.filterwarnings('ignore')
 
 cwd = os.getcwd()
-df = pd.read_csv(cwd+"\Data/predictionModelData.csv") #read data
+df = pd.read_csv(cwd+"/Data/predictionModelData.csv") #read data
 X = df.drop(["price","Address","Title"],axis=1)
 Y = df["price"]
 X_train, X_test, y_train, y_test = train_test_split(X,Y,test_size=.2, random_state=5)

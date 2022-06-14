@@ -226,3 +226,12 @@ exports.predictEstate = function(formData){
      Waiting.Waiting(true);
     return callServer(url+"ai/predictEstatePrice", requestOptions );
 }
+
+exports.getRecommendetEstates = function(){
+  const requestOptions = {
+     method: 'get',
+     headers: { 'Content-Type': 'application/json',
+     'x-access-token': localStorage.getItem("HomExplorerToken") },
+  };
+  return callServer(url+"ai/getRecommendedEstate", requestOptions );  
+}

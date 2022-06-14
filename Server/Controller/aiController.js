@@ -1,6 +1,7 @@
 const express = require("express");
 const {spawn} = require("child_process");
 const path = require('path')
+const estate = require("../Model/estateModel");
 
 
 function contains(target, pattern) {
@@ -58,12 +59,23 @@ exports.predictEstate = async function(req, res) {
   })
 }
 
+
+async function getRecommendedEstate(ids){
+  const estates = await estate.estateModel.find({
+    status: 'approve',
+    _id: { $in: ids}
+  }).populate('category').populate("type").exec()
+
+  return estates
+}
+
 exports.getRecommendedEstate = async function(req, res) {
-  const python = await spawn('python',[path.join(__dirname, '..', 'Model', 'recommendationModel.py'), '625cc5d60803f00590a76333']);
+  const python = await spawn('python',[path.join(__dirname, '..', 'Model', 'recommendationModel.py'), req.user.id]);
   //get Recommended estates code heree
-  console.log("before model:" );
-  python.stdout.on('data',(data)=>{
-      console.log(data.toString('utf8'))
+  python.stdout.on('data', async (data)=>{
+    const ids = JSON.parse(data.toString('utf8').split("\r")[2].replace("\n",""));
+    const estates = await getRecommendedEstate(ids)
+    res.send(estates)
   })
   python.stderr.on('data',(data)=>{
       console.log(data.toString('utf8'))

@@ -1,6 +1,6 @@
-print("Welcome in recommendation")
-
+import sys
 import pymongo
+import json
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure
 import pandas as pd
@@ -9,9 +9,8 @@ from surprise import accuracy
 from surprise import KNNWithMeans
 from surprise import Reader
 from operator import itemgetter
-
-#pip install surprise to install model libs
-#pip install pymongo to install mongo for python
+import warnings
+warnings.simplefilter("ignore", category=RuntimeWarning)
 
 client = MongoClient("mongodb://wamb:wamb123@homeexplorerdb-shard-00-00.ykmn0.mongodb.net:27017,homeexplorerdb-shard-00-01.ykmn0.mongodb.net:27017,homeexplorerdb-shard-00-02.ykmn0.mongodb.net:27017/?ssl=true&replicaSet=atlas-l781p1-shard-0&authSource=admin&retryWrites=true&w=majority")
 try:
@@ -46,8 +45,7 @@ sim_options ={
 algo = KNNWithMeans(sim_options=sim_options)
 trainingSet = data.build_full_trainset()
 algo.fit(trainingSet)
-UserID = '625cc5d60803f00590a76333' # the userID should be in this form "625cc5d60803f00590a76333" ## user id in strinfy form
-print(UserID)
+UserID = sys.argv[1]
 estate_results = Estate_collection.find()
 myestates = []
 for estate in estate_results:
@@ -58,6 +56,9 @@ for estate in myestates:
    "rate": algo.predict(uid=UserID, iid=estate).est
    }
    predections.append(predection)
-   print(predection)
+
 recommended = sorted(predections, key=itemgetter('rate'), reverse=True)
-print(recommended)
+recommendedIds = []
+for id in recommended[:20]:
+   recommendedIds.append(id["iid"])
+print(json.dumps(recommendedIds))

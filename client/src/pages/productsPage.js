@@ -2,26 +2,39 @@ import React from 'react';
 import Search from '../components/search.js';
 import Services from '../components/services';
 import serverFunctions from '../serverFunctions/estate'
-import { useLocation} from "react-router-dom";
+import { useLocation, useNavigate} from "react-router-dom";
+import {CheckAuth} from '../components/checkData';
 function Products(props) {
 
   const [data, setData] = React.useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   React.useEffect(()=>{
 
-    const fetchData = async () => {
-
+    const fetchAuctionData = async () => {
       delete location.state;
-     let res = await serverFunctions.searchData({type:"625cc20fc17223a46e1a97ed"});
+      let res = await serverFunctions.searchData({type:"625cc20fc17223a46e1a97ed"});
       setData(res);
     }
-      if(location.state === "Auction"){
-    fetchData();
-  }
 
-  },[location.state])
+    const fetchRecommendationData = async () => {
+      delete location.state;
+      if (!CheckAuth()) {
+          return navigate("/authPage", { state: "signIn" })
+      }
+      let res = await serverFunctions.getRecommendetEstates();
+      setData(res);
+    }
+
+    if(location.state === "Auction"){
+      fetchAuctionData();
+    }else if(location.state === "Recommendation"){
+      fetchRecommendationData();
+    }
+
+  },[location.state,navigate])
 
 
   const FilterData = async (formData) => {
@@ -42,7 +55,7 @@ function Products(props) {
         data[key] = value;
       }
     }
- 
+
     if(Object.values(data).length === 0){
       return ;
      }
@@ -50,9 +63,6 @@ function Products(props) {
     let res = await serverFunctions.searchData(data);
     setData(res);
   }
-
-
-
 
   return (<div>
     <Search filterFunc={FilterData} />

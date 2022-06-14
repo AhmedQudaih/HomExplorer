@@ -67,7 +67,7 @@ pyparsing==3.0.9
 pyrsistent==0.18.1
 python-dateutil==2.8.2
 pytz==2022.1
-pytz-deprecation-shim==0.1.0.post0s
+pytz-deprecation-shim==0.1.0.post0
 pyzmq==23.1.0
 requests==2.28.0
 rich==12.4.4

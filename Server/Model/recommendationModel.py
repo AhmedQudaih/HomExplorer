@@ -46,7 +46,7 @@ algo = KNNWithMeans(sim_options=sim_options)
 trainingSet = data.build_full_trainset()
 algo.fit(trainingSet)
 UserID = sys.argv[1]
-estate_results = Estate_collection.find()
+estate_results = Estate_collection.find({'status':"approve"})
 myestates = []
 for estate in estate_results:
    myestates.append(str(estate["_id"]))

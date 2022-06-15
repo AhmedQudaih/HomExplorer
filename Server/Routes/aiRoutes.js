@@ -13,7 +13,9 @@ router.get("/getRecommendedEstate",auth,function(req,res){ // add auth middlewar
   aiController.getRecommendedEstate(req, res);
 })
 
-
+router.get("/TrainPredictModel",function(req,res){
+  aiController.TrainPredictModel(req,res);
+})
 
 
 

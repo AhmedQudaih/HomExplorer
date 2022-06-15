@@ -43,8 +43,32 @@ function preprocess_request(req) {
 }
 
 
+async function getRecommendedEstate(ids){
+  const estates = await estate.estateModel.find({
+    status: 'approve',
+    _id: { $in: ids}
+  }).populate('category').populate("type").exec()
+
+  return estates
+}
+
+
+exports.TrainPredictModel = async function(req, res) {
+
+  const python = await spawn('python',[path.join(__dirname, '..', 'Model', 'predictionTrainingModel.py')]);
+
+  python.stdout.on('data',(data)=>{
+    const status = data.toString('utf8');
+      res.send({result:status})
+  })
+  python.stderr.on('data',(data)=>{
+    console.log(data.toString('utf8'))
+  })
+}
+
+
 exports.predictEstate = async function(req, res) {
-  //predict estate code heree
+
   const formData = preprocess_request(req);
 
   const python = await spawn('python',[path.join(__dirname, '..', 'Model', 'predictionModel.py'), formData]);
@@ -55,23 +79,15 @@ exports.predictEstate = async function(req, res) {
       res.send({result:price})
   })
   python.stderr.on('data',(data)=>{
-      res.send({error:data.toString('utf8')})
+    console.log(data.toString('utf8'))
   })
 }
 
 
-async function getRecommendedEstate(ids){
-  const estates = await estate.estateModel.find({
-    status: 'approve',
-    _id: { $in: ids}
-  }).populate('category').populate("type").exec()
-
-  return estates
-}
-
 exports.getRecommendedEstate = async function(req, res) {
+
   const python = await spawn('python',[path.join(__dirname, '..', 'Model', 'recommendationModel.py'), req.user.id]);
-  //get Recommended estates code heree
+
   python.stdout.on('data', async (data)=>{
     const ids = JSON.parse(data.toString('utf8').split("\r")[2].replace("\n",""));
     const estates = await getRecommendedEstate(ids)

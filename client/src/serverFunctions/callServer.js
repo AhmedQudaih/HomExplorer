@@ -1,5 +1,5 @@
-const url = "https://homeexplorerapi.herokuapp.com/";
-//const url = "http://localhost:4000/";
+//const url = "https://homeexplorerapi.herokuapp.com/";
+const url = "http://localhost:4000/";
 const Waiting = require("../components/waiting");
 
 

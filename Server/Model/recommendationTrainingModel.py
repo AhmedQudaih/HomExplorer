@@ -46,7 +46,7 @@ algo = KNNWithMeans(sim_options=sim_options)
 trainingSet = data.build_full_trainset()
 algo.fit(trainingSet)
 
-with open (cwd+"\Data/estateRecommendationModel",'wb') as f:
+with open (cwd+"Data/estateRecommendationModel",'wb') as f:
     pickle.dump(algo,f)
 
 print("Model Trained")

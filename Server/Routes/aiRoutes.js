@@ -13,8 +13,10 @@ router.get("/getRecommendedEstate",auth,function(req,res){ // add auth middlewar
   aiController.getRecommendedEstate(req, res);
 })
 
-router.get("/TrainPredictModel",function(req,res){
-  aiController.TrainPredictModel(req,res);
+router.get("/TrainModels", async function(req,res){
+  await aiController.TrainPredictModel();
+  await aiController.recommendationTrainingModel();
+  res.send("Models Training")
 })
 
 

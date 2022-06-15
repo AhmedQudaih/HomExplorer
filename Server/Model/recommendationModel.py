@@ -28,7 +28,7 @@ UserID = sys.argv[1]
 estate_results = Estate_collection.find({'status':"approve"})
 
 
-with open (cwd+"Data/estateRecommendationModel",'rb') as f:
+with open (cwd+"\Data/estateRecommendationModel",'rb') as f:
     mymodel=pickle.load(f)
 
 myestates = []

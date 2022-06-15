@@ -58,10 +58,11 @@ const PredictionForm = ()=> {
       return;
     }
       const Status = await serverFunctions.predictEstate(data);
-      if(Status ==='error'){
+      if(Status ==='error'|| Status.result === 'undefined'){
          StatusAlert("error");
        }else{
          ShowData('Estate price is: '+Status.result)
+         setData({addressOnMap: [30.044417093043883 ,31.235753400264315]});
        }
   }
   return (<MyContext.Consumer>{

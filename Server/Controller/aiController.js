@@ -57,16 +57,15 @@ async function getRecommendedEstate(ids){
 exports.predictEstate = async function(req, res) {
 
   const formData = preprocess_request(req);
-
   const python = await spawn('python',[path.join(__dirname, '..', 'Model', 'predictionModel.py'), formData]);
 
   python.stdout.on('data',(data)=>{
-
+    console.log(data.toString('utf8'));
     const price = Number(data.toString('utf8')).toFixed(0);
       res.send({result:price})
   })
   python.stderr.on('data',(data)=>{
-    console.log(data.toString('utf8'))
+    console.log(data.toString('utf8'));
   })
 }
 

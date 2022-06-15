@@ -4,6 +4,7 @@ import Services from '../components/services';
 import serverFunctions from '../serverFunctions/estate'
 import { useLocation, useNavigate} from "react-router-dom";
 import {CheckAuth} from '../components/checkData';
+import Loading from '../components/loading';
 function Products(props) {
 
   const [data, setData] = React.useState(false);
@@ -64,9 +65,20 @@ function Products(props) {
     setData(res);
   }
 
+
+function checkDataFrom(){
+  if(location.state){
+    if(!data){
+       return <Loading mood={"loading"} />
+    }
+  }
+  return  <Services ID="services" from=" Services" Data={data}/>
+}
   return (<div>
     <Search filterFunc={FilterData} />
-    <Services ID="services" from=" Services" Data={data}/>
+    {
+      checkDataFrom()
+    }
   </div>)
 }
 

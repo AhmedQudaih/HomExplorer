@@ -44,6 +44,6 @@ for estate in myestates:
 
 recommended = sorted(predections, key=itemgetter('rate'), reverse=True)
 recommendedIds = []
-for id in recommended[:1]:
+for id in recommended[:20]:
    recommendedIds.append(id["iid"])
 print(json.dumps(recommendedIds))

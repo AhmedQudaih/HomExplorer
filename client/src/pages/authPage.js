@@ -1,18 +1,22 @@
 import React from 'react'
 import LoginForm from '../components/loginForm';
 import RegistrationForm from '../components/registrationForm';
-import { useLocation} from "react-router-dom";
+import { useLocation, useNavigate} from "react-router-dom";
+import {CheckAuth} from '../components/checkData';
 function AuthPage(props) {
 
     const [signInPage, setsignInPage] = React.useState(false);
 
     const location = useLocation();
+    const navigate = useNavigate();
 
     React.useEffect(()=>{
-        if(location.state === "signIn"){
-          setsignInPage(true);
-        }
-    },[location.state])
+      if(CheckAuth()){
+        return navigate("/", { state: "signIn" })
+      }else if(location.state === "signIn"){
+        setsignInPage(true);
+      }
+    },[location.state,navigate])
 
     if(signInPage){
       return (

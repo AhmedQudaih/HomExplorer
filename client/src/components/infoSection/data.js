@@ -14,7 +14,8 @@ export const homeObjOne = {
     dark: true,
     primary: true,
     darkText: false,
-    to:'products'
+    to:'products',
+    state:"Recommendation"
 };
 
 export const homeObjTwo = {

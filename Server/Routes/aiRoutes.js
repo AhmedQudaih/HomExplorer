@@ -9,11 +9,15 @@ router.post("/predictEstatePrice",function(req,res){
   aiController.predictEstate(req, res);
 })
 
-router.get("/getRecommendedEstate",function(req,res){ // add auth middleware
+router.get("/getRecommendedEstate",auth,function(req,res){ // add auth middleware
   aiController.getRecommendedEstate(req, res);
 })
 
-
+router.get("/TrainModels", async function(req,res){
+  await aiController.TrainPredictModel();
+  await aiController.recommendationTrainingModel();
+  res.send("Models Training")
+})
 
 
 

@@ -24,8 +24,8 @@ function Services(props) {
   React.useEffect(() => {
     const fetchData = async () => {
       if (props.Data) {
-          setData(props.Data);
           setPage(1);
+          setData(props.Data);
       } else {
         var data = await serverFunctions.getEstates(partition);
         setData((pre) => {

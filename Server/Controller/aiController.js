@@ -1,6 +1,7 @@
 const express = require("express");
 const {spawn} = require("child_process");
 const path = require('path')
+const estate = require("../Model/estateModel");
 
 
 function contains(target, pattern) {
@@ -42,8 +43,19 @@ function preprocess_request(req) {
 }
 
 
+async function getRecommendedEstate(ids){
+  const estates = await estate.estateModel.find({
+    status: 'approve',
+    _id: { $in: ids}
+  }).populate('category').populate("type").exec()
+
+  return estates
+}
+
+
+
 exports.predictEstate = async function(req, res) {
-  //predict estate code heree
+
   const formData = preprocess_request(req);
   const python = await spawn('python',[path.join(__dirname, '..', 'Model', 'predictionModel.py'), formData]);
 
@@ -57,9 +69,44 @@ exports.predictEstate = async function(req, res) {
   })
 }
 
-exports.getRecommendedEstate = async function(req, res) {
-  const python = await spawn('python',[path.join(__dirname, '..', 'Model', 'recommendationModel.py'), 'paraam']);
-  //get Recommended estates code heree
-  res.send({result:true})
 
+exports.getRecommendedEstate = async function(req, res) {
+
+  const python = await spawn('python',[path.join(__dirname, '..', 'Model', 'recommendationModel.py'), req.user.id]);
+
+  python.stdout.on('data', async (data)=>{
+    const ids = JSON.parse(data.toString('utf8').replace("\n",""));
+    const estates = await getRecommendedEstate(ids)
+    res.send(estates)
+  })
+  python.stderr.on('data',(data)=>{
+      console.log(data.toString('utf8'))
+  })
+
+}
+
+
+exports.recommendationTrainingModel = async function() {
+
+  const python = await spawn('python',[path.join(__dirname, '..', 'Model', 'recommendationTrainingModel.py')]);
+
+  python.stdout.on('data', (data)=>{
+    console.log(data.toString('utf8'));
+  })
+  python.stderr.on('data',(data)=>{
+      console.log(data.toString('utf8'))
+  })
+
+}
+
+exports.TrainPredictModel = async function(req, res) {
+
+  const python = await spawn('python',[path.join(__dirname, '..', 'Model', 'predictionTrainingModel.py')]);
+
+  python.stdout.on('data',(data)=>{
+    console.log(data.toString('utf8'))
+  })
+  python.stderr.on('data',(data)=>{
+    console.log(data.toString('utf8'))
+  })
 }

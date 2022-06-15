@@ -24,7 +24,13 @@ exports.login = function(formData) {
            body: JSON.stringify(formData)
        };
        Waiting.Waiting(true);
-          return callServer(url+"user/addUser", requestOptions );
+          return callServer(url+"user/addUser", requestOptions ).then(res =>{
+            if(res.token){
+              localStorage.setItem("HomExplorerToken", res.token);
+              localStorage.setItem("HomExplorerUserId", res.userId);
+            }
+            return res.message;
+         });
   }
 
 exports.checkAdmin = function(id) {

@@ -17,7 +17,7 @@ X_train, X_test, y_train, y_test = train_test_split(X,Y,test_size=.2, random_sta
 
 clf = ensemble.GradientBoostingRegressor(n_estimators=300,max_depth=2,learning_rate=0.15,loss="huber")
 clf.fit(X_train,y_train)
-with open (cwd+"\Data/estatePredicitonModel",'wb') as f:
+with open (cwd+"\Data\estatePredicitonModel",'wb') as f:
     pickle.dump(clf,f)
 
 print("accuracy:",clf.score(X_test,y_test)) #model accuracy

@@ -89,6 +89,7 @@ exports.getRecommendedEstate = async function(req, res) {
   const python = await spawn('python',[path.join(__dirname, '..', 'Model', 'recommendationModel.py'), req.user.id]);
 
   python.stdout.on('data', async (data)=>{
+    console.log(data.toString('utf8'));
     const ids = JSON.parse(data.toString('utf8').split("\r")[2].replace("\n",""));
     const estates = await getRecommendedEstate(ids)
     res.send(estates)

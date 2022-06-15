@@ -90,9 +90,9 @@ exports.getRecommendedEstate = async function(req, res) {
 
   python.stdout.on('data', async (data)=>{
     console.log(data.toString('utf8'));
-    const ids = JSON.parse(data.toString('utf8').split("\r")[2].replace("\n",""));
-    const estates = await getRecommendedEstate(ids)
-    res.send(estates)
+  //  const ids = JSON.parse(data.toString('utf8').split("\r")[2].replace("\n",""));
+    //const estates = await getRecommendedEstate(ids)
+    //res.send(estates)
   })
   python.stderr.on('data',(data)=>{
       console.log(data.toString('utf8'))

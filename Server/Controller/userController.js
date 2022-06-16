@@ -112,8 +112,8 @@ exports.checkAdmin = function(req,res){
   }
 
   exports.ChangeRole= function(req,res)
-  {
-      user.userModel.findOneAndUpdate({userId:req.body.userId},{admin:req.body.roleValue}).then(result => {
+  { 
+      user.userModel.findOneAndUpdate({_id:req.body.userId},{admin:req.body.roleValue}).then(result => {
         res.send(JSON.stringify("ok"));
       })
       .catch(err => {

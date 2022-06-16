@@ -18,8 +18,15 @@ router.delete("/deleteEstate",auth,function(req,res){
 })
 
 const upFi = uploadpPic.upload.fields([{name: 'contract'}, {name: 'pic'}])
-router.post("/addEstate",auth,upFi,function(req,res){
-  estate.addEstate(req , res);
+router.post("/addEstate",auth,function(req,res){
+  upFi(req, res, function (err) {
+   if (err instanceof multer.MulterError) {
+     res.send({error:"type of pic not acceptable"})
+   } else if (err) {
+     res.send({error:err})
+   }
+   estate.addEstate(req , res);
+ })
 })
 
 router.put("/updateEstate",auth,upFi,function(req,res){

@@ -73,6 +73,9 @@ exports.deleteEstate = function(req, res) {
 
 exports.addEstate = function(req, res) {
 
+  if(req.file_error){
+    return res.status(400).send(JSON.stringify(req.file_error));
+  }
   var newEstate = new estate.estateModel(req.body);
   newEstate.sellerId = req.user.id;
   picAddOperation(req.files, newEstate);
@@ -88,6 +91,9 @@ exports.addEstate = function(req, res) {
 }
 
 exports.updateEstate = function(req, res) {
+  if(req.file_error){
+    return res.status(400).send(JSON.stringify(req.file_error));
+  }
   estate.estateModel.findById({
     _id: req.body._id
   }).then((data) => {

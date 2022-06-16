@@ -15,8 +15,8 @@ exports.upload = multer({
   if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
  	 cb(null, true);
   } else {
- 	 cb(null, false);
- 	 return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+    req.file_error = "file not allowed Only .png, .jpg and .jpeg format allowed!";
+    return cb(null,false);
   }
 }
  });
